@@ -1,0 +1,1 @@
+# lcm-nextjs-boilerplate
