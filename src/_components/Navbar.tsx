@@ -5,6 +5,7 @@ import Link from "next/link";
 import * as React from "react";
 
 import Image from "next/image";
+import { ThemeModeToggle } from "./ThemeModeToggle";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,8 +15,6 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "./ui/navigation-menu";
-import { ThemeModeToggle } from "./ThemeModeToggle";
-import SignIn from "./SignIn";
 
 interface NavbarLinks {
   title: string;
@@ -53,6 +52,7 @@ const Navbar = () => {
                 {NavbarLinks &&
                   NavbarLinks.map((link) => (
                     <ListItem
+                      key={link.title}
                       title={link.title}
                       href={link.href}
                       icon={link.icon}
