@@ -1,29 +1,50 @@
-# Create T3 App
+# lcm-nextjs-boilerplate
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A production-grade Next.js boilerplate for LCM, designed to help teams start new projects quickly with best practices and batteries-included setup.
 
-## What's next? How do I make an app with this?
+## Features
+- [T3 Stack](https://create.t3.gg/): Next.js, tRPC, Prisma, Tailwind CSS, NextAuth, Zod
+- [shadcn/ui](https://ui.shadcn.com/): Modern UI components
+- [react-intl](https://formatjs.io/docs/react-intl/): Internationalization
+- [Jest](https://jestjs.io/) + [jest-axe](https://github.com/nickcolley/jest-axe): Unit & accessibility testing
+- [Playwright](https://playwright.dev/) + [axe-core/playwright](https://github.com/abhinaba-ghosh/axe-playwright): E2E & accessibility testing
+- [Dark mode](https://github.com/pacocoursey/next-themes)
+- Feature toggles via Makefile (WIP)
+- Example WebSocket integration (WIP)
+- User settings page with image upload (WIP)
+- Boilerplate routes for rapid prototyping
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Getting Started
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+```sh
+pnpm install
+pnpm dev
+```
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Testing
+- `pnpm test` for Jest unit tests
+- `pnpm exec playwright test` for E2E tests
 
-## Learn More
+## Environment Variables
+See `.env.example` for required variables.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Jira Board
+This project is tracked in [WKSP Jira Board](https://lastcall.atlassian.net/jira/software/projects/WKSP/boards/203/backlog).
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Future Plans
+- Makefile feature toggles for enabling/disabling features
+- WebSocket example route
+- User settings page with image upload
+- More example routes (auth, protected, public, etc.)
+- Improved i18n setup
+- More robust testing (unit, integration, E2E, accessibility)
+- GitHub Actions CI/CD
+- Husky, lint-staged, commitlint
+- SEO best practices
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+---
 
-## How do I deploy this?
+### Contributing
+See [GitHub Issues](https://github.com/LastCallMedia/lcm-nextjs-boilerplate/issues) for tasks and ideas.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+---
