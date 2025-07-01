@@ -1,7 +1,65 @@
+# Dependencies
 node_modules
+npm-debug.log*
+pnpm-debug.log*
+package-lock.json
+
+# Testing
+coverage
+.nyc_output
+tests/
+*.test.*
+*.spec.*
+jest.config.*
+jest.setup.*
+playwright.config.*
+
+# Next.js
+.next/
+out/
+build
+dist
+
+# Environment files
+.env*
+!.env.example
+
+# Misc
+.DS_Store
+*.pem
+
+# Local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+
+# Docker
 .dockerignore
+docker-compose*
+
+# Git
 .git
 .gitignore
-package-lock.json
+README.md
+
+# CI/CD
+.github/
+
+# Lambda (legacy)
 lambda_functions
 lambda_layers

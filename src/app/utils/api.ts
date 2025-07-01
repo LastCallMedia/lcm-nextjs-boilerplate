@@ -1,6 +1,9 @@
-import { api } from "~/trpc/server";
+import type { Post } from "../../../prisma/generated/client";
+// Import the correct function or client for fetching posts
+import { db } from "~/server/db";
 
-export const getAllPosts = async () => {
-  const posts = await api.post.getAll();
+export const getAllPosts = async (): Promise<Post[]> => {
+  // Use the Prisma client to fetch all posts
+  const posts = await db.post.findMany();
   return posts;
 };

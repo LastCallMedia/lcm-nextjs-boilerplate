@@ -1,7 +1,6 @@
-import type { Post } from "@prisma/client";
+import type { Post } from "../../../prisma/generated/client";
 import React from "react";
-import PostForm from "~/_components/PostForm";
-import PostCard from "~/_components/PostCard";
+import { PostForm, PostCardDefault as PostCard } from "~/_components/posts";
 
 interface AllPostsClientProps {
   posts: Post[];

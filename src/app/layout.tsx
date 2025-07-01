@@ -3,8 +3,7 @@ import "~/styles/globals.css";
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
-import Navbar from "~/_components/Navbar";
-import Footer from "~/_components/Footer";
+import { Navbar, Footer } from "~/_components/layout";
 import { ThemeProvider } from "~/_components/ui/theme-provider";
 
 export const metadata: Metadata = {

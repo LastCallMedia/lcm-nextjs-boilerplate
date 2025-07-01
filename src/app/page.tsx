@@ -1,9 +1,7 @@
-import { Sign } from "crypto";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { LatestPost } from "~/_components/LastestPost";
-import SignIn from "~/_components/SignIn";
+import { LatestPost } from "~/_components/posts";
 import { Button } from "~/_components/ui/button";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";

@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import PostClient from "./client";
-import PostSkeleton from "~/_components/PostSkeleton";
+import { PostSkeleton } from "~/_components/posts";
 
 const page = () => {
   return (
