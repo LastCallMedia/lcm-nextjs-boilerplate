@@ -36,7 +36,9 @@ export default async function Home() {
           </div>
         </div>
 
-        {session && <LatestPost />}
+        <div className="m-4 flex w-full justify-center">
+          {session && <LatestPost />}
+        </div>
         <Button>
           <Link href={"/posts"}>See all posts</Link>
           <ArrowUpRight />
