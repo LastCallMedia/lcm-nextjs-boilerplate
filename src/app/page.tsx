@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { LatestPost } from "~/_components/LastestPost";
+import SignIn from "~/_components/SignIn";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 
@@ -30,7 +31,6 @@ export default async function Home() {
               {hello ? hello.greeting : "Loading tRPC query..."}
             </p>
           </div>
-
           {session?.user && (
             <>
               <LatestPost />

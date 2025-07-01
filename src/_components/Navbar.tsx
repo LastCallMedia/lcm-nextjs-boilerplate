@@ -1,5 +1,3 @@
-"use client";
-
 import { File, Files, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
@@ -15,6 +13,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "./ui/navigation-menu";
+import SignIn from "./SignIn";
 
 interface NavbarLinks {
   title: string;
@@ -28,15 +27,15 @@ const NavbarLinks: NavbarLinks[] = [
 ];
 const Navbar = () => {
   return (
-    <NavigationMenu viewport={false} className="m-auto">
-      <NavigationMenuList>
+    <NavigationMenu viewport={false} className="m-5 block max-w-full">
+      <NavigationMenuList className="w-full justify-between">
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
             <Link href="/">
               <Image
-                src={"/lcm-logo-teal.png"}
-                width={30}
-                height={30}
+                src={"/lcm-logo-teal.svg"}
+                width={40}
+                height={40}
                 alt="lcm logo"
                 title="Home"
                 aria-label="Home"
@@ -44,30 +43,30 @@ const Navbar = () => {
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[200px] gap-4">
-              {NavbarLinks &&
-                NavbarLinks.map((link) => (
-                  <ListItem
-                    key={link.title}
-                    title={link.title}
-                    href={link.href}
-                    icon={link.icon}
-                  />
-                ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        {/* <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+        <div className="flex items-center gap-4">
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[200px] gap-4">
+                {NavbarLinks &&
+                  NavbarLinks.map((link) => (
+                    <ListItem
+                      key={link.title}
+                      title={link.title}
+                      href={link.href}
+                      icon={link.icon}
+                    />
+                  ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
             <SignIn />
-          </NavigationMenuLink>
-        </NavigationMenuItem> */}
-        <NavigationMenuItem>
-          <ThemeModeToggle />
-        </NavigationMenuItem>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <ThemeModeToggle />
+          </NavigationMenuItem>
+        </div>
       </NavigationMenuList>
     </NavigationMenu>
   );
