@@ -1,7 +1,10 @@
+import { Sign } from "crypto";
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { LatestPost } from "~/_components/LastestPost";
 import SignIn from "~/_components/SignIn";
+import { Button } from "~/_components/ui/button";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 
@@ -31,13 +34,13 @@ export default async function Home() {
               {hello ? hello.greeting : "Loading tRPC query..."}
             </p>
           </div>
-          {session?.user && (
-            <>
-              <LatestPost />
-              <Link href={"/posts"}>See more posts</Link>
-            </>
-          )}
         </div>
+
+        {session && <LatestPost />}
+        <Button>
+          <Link href={"/posts"}>See all posts</Link>
+          <ArrowUpRight />
+        </Button>
       </main>
     </HydrateClient>
   );

@@ -3,8 +3,8 @@ import PostForm from "~/_components/PostForm";
 
 const AllPostsClient = () => {
   return (
-    <div>
-      <PostForm />
+    <div className="m-auto w-2/3">
+      <PostForm className="m-auto w-1/3" />
     </div>
   );
 };
