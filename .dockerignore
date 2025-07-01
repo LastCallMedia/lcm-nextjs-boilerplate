@@ -1,0 +1,7 @@
+node_modules
+.dockerignore
+.git
+.gitignore
+package-lock.json
+lambda_functions
+lambda_layers

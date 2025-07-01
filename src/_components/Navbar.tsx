@@ -48,17 +48,15 @@ const Navbar = () => {
           <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[200px] gap-4">
-              <li>
-                {NavbarLinks &&
-                  NavbarLinks.map((link) => (
-                    <ListItem
-                      key={link.title}
-                      title={link.title}
-                      href={link.href}
-                      icon={link.icon}
-                    />
-                  ))}
-              </li>
+              {NavbarLinks &&
+                NavbarLinks.map((link) => (
+                  <ListItem
+                    key={link.title}
+                    title={link.title}
+                    href={link.href}
+                    icon={link.icon}
+                  />
+                ))}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>

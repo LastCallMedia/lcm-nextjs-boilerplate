@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: lcm-nextjs-boilerplate
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5932:5432"
+    networks:
+      - lcm-nextjs-boilerplate
+
+  mailhog:
+    container_name: mailhog
+    image: mailhog/mailhog:latest
+    platform: linux/amd64
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - lcm-nextjs-boilerplate
+
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - lcm-nextjs-boilerplate
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+
+networks:
+  lcm-nextjs-boilerplate:
+    driver: bridge
