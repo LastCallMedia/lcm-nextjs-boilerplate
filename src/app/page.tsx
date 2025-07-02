@@ -1,6 +1,8 @@
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { LatestPost } from "~/_components/LastestPost";
+import { LatestPost } from "~/_components/posts";
+import { Button } from "~/_components/ui/button";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 
@@ -30,14 +32,15 @@ export default async function Home() {
               {hello ? hello.greeting : "Loading tRPC query..."}
             </p>
           </div>
-
-          {session?.user && (
-            <>
-              <LatestPost />
-              <Link href={"/posts"}>See more posts</Link>
-            </>
-          )}
         </div>
+
+        <div className="m-4 flex w-full justify-center">
+          {session && <LatestPost />}
+        </div>
+        <Button>
+          <Link href={"/posts"}>See all posts</Link>
+          <ArrowUpRight />
+        </Button>
       </main>
     </HydrateClient>
   );

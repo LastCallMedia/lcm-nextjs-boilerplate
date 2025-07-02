@@ -1,11 +1,11 @@
 import React, { Suspense } from "react";
 import PostClient from "./client";
-import PostSkeleton from "~/_components/PostSkeleton";
+import { PostSkeleton } from "~/_components/posts";
 
 const page = () => {
   return (
     <div>
-      <h1>All Posts</h1>
+      <h1 className="m-4 text-center text-2xl font-bold">My Posts</h1>
       <Suspense fallback={<PostSkeleton />}>
         <Post />
       </Suspense>
