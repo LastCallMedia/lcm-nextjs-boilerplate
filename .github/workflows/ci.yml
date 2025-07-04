@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [22.x]
 
     steps:
       - name: Checkout code
@@ -46,15 +46,23 @@ jobs:
 
       - name: Run type checking
         run: pnpm typecheck
+        env:
+          SKIP_ENV_VALIDATION: true
 
       - name: Run linting
         run: pnpm lint
+        env:
+          SKIP_ENV_VALIDATION: true
 
       - name: Run Jest unit tests
         run: pnpm test
+        env:
+          SKIP_ENV_VALIDATION: true
 
       - name: Run Jest tests with coverage
         run: pnpm test:coverage
+        env:
+          SKIP_ENV_VALIDATION: true
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
