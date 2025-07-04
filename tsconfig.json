@@ -49,6 +49,9 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "jest.setup.js",
+    "jest.config.cjs",
+    "coverage"
   ]
 }
