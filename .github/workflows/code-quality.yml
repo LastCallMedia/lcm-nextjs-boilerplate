@@ -1,4 +1,4 @@
-name: CI
+name: Code Quality
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  code-quality:
+    name: Lint & Type Check
     runs-on: ubuntu-latest
 
     strategy:
@@ -53,21 +54,3 @@ jobs:
         run: pnpm lint
         env:
           SKIP_ENV_VALIDATION: true
-
-      - name: Run Jest unit tests
-        run: pnpm test
-        env:
-          SKIP_ENV_VALIDATION: true
-
-      - name: Run Jest tests with coverage
-        run: pnpm test:coverage
-        env:
-          SKIP_ENV_VALIDATION: true
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          file: ./coverage/coverage-final.json
-          flags: unittests
-          name: codecov-umbrella
-          fail_ci_if_error: false
