@@ -67,4 +67,5 @@ export type User = Prisma.UserModel
  */
 export type VerificationToken = Prisma.VerificationTokenModel
 
-
+export type Role = $Enums.Role
+export const Role = $Enums.Role

@@ -1,0 +1,265 @@
+import { z } from "zod";
+import { TRPCError } from "@trpc/server";
+
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+
+// Admin-only procedure that checks user role
+const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
+  if (ctx.session.user.role !== "ADMIN") {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Admin access required",
+    });
+  }
+  return next();
+});
+
+export const adminRouter = createTRPCRouter({
+  // Get all users with pagination, sorting, and filtering
+  getUsers: adminProcedure
+    .input(
+      z.object({
+        page: z.number().min(1).default(1),
+        pageSize: z.number().min(1).max(100).default(10),
+        sortBy: z.string().default("createdAt"),
+        sortOrder: z.enum(["asc", "desc"]).default("desc"),
+        search: z.string().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { page, pageSize, sortBy, sortOrder, search } = input;
+      const skip = (page - 1) * pageSize;
+
+      // Build where clause for search
+      const where = search
+        ? {
+            OR: [
+              { name: { contains: search, mode: "insensitive" as const } },
+              { email: { contains: search, mode: "insensitive" as const } },
+            ],
+          }
+        : {};
+
+      // Get total count for pagination
+      const totalCount = await ctx.db.user.count({ where });
+
+      // Get users with pagination and sorting
+      const users = await ctx.db.user.findMany({
+        where,
+        skip,
+        take: pageSize,
+        orderBy: { [sortBy]: sortOrder },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          emailVerified: true,
+          image: true,
+          _count: {
+            select: {
+              posts: true,
+              sessions: true,
+            },
+          },
+        },
+      });
+
+      return {
+        users,
+        pagination: {
+          page,
+          pageSize,
+          totalCount,
+          totalPages: Math.ceil(totalCount / pageSize),
+        },
+      };
+    }),
+
+  // Get all posts with user information, pagination, sorting, and filtering
+  getPosts: adminProcedure
+    .input(
+      z.object({
+        page: z.number().min(1).default(1),
+        pageSize: z.number().min(1).max(100).default(10),
+        sortBy: z.string().default("createdAt"),
+        sortOrder: z.enum(["asc", "desc"]).default("desc"),
+        search: z.string().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { page, pageSize, sortBy, sortOrder, search } = input;
+      const skip = (page - 1) * pageSize;
+
+      // Build where clause for search
+      const where = search
+        ? {
+            OR: [
+              { name: { contains: search, mode: "insensitive" as const } },
+              {
+                createdBy: {
+                  OR: [
+                    {
+                      name: { contains: search, mode: "insensitive" as const },
+                    },
+                    {
+                      email: { contains: search, mode: "insensitive" as const },
+                    },
+                  ],
+                },
+              },
+            ],
+          }
+        : {};
+
+      // Get total count for pagination
+      const totalCount = await ctx.db.post.count({ where });
+
+      // Get posts with user information
+      const posts = await ctx.db.post.findMany({
+        where,
+        skip,
+        take: pageSize,
+        orderBy: { [sortBy]: sortOrder },
+        include: {
+          createdBy: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              role: true,
+            },
+          },
+        },
+      });
+
+      return {
+        posts,
+        pagination: {
+          page,
+          pageSize,
+          totalCount,
+          totalPages: Math.ceil(totalCount / pageSize),
+        },
+      };
+    }),
+
+  // Get dashboard statistics
+  getStats: adminProcedure.query(async ({ ctx }) => {
+    const [userCount, postCount, adminCount, recentUsers] = await Promise.all([
+      ctx.db.user.count(),
+      ctx.db.post.count(),
+      ctx.db.user.count({ where: { role: "ADMIN" } }),
+      ctx.db.user.findMany({
+        take: 5,
+        orderBy: { emailVerified: "desc" },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          emailVerified: true,
+          role: true,
+        },
+      }),
+    ]);
+
+    return {
+      userCount,
+      postCount,
+      adminCount,
+      recentUsers,
+    };
+  }),
+
+  // Update user role
+  updateUserRole: adminProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        role: z.enum(["USER", "ADMIN"]),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { userId, role } = input;
+
+      // Prevent demoting the last admin
+      if (role === "USER") {
+        const adminCount = await ctx.db.user.count({
+          where: { role: "ADMIN" },
+        });
+
+        const targetUser = await ctx.db.user.findUnique({
+          where: { id: userId },
+          select: { role: true },
+        });
+
+        if (targetUser?.role === "ADMIN" && adminCount <= 1) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Cannot demote the last admin user",
+          });
+        }
+      }
+
+      try {
+        return await ctx.db.user.update({
+          where: { id: userId },
+          data: { role },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+          },
+        });
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to update user role",
+          cause: error,
+        });
+      }
+    }),
+
+  // Delete user (admin only, with restrictions)
+  deleteUser: adminProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = input;
+
+      // Prevent deleting self
+      if (userId === ctx.session.user.id) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Cannot delete your own account",
+        });
+      }
+
+      // Prevent deleting the last admin
+      const targetUser = await ctx.db.user.findUnique({
+        where: { id: userId },
+        select: { role: true },
+      });
+
+      if (targetUser?.role === "ADMIN") {
+        const adminCount = await ctx.db.user.count({
+          where: { role: "ADMIN" },
+        });
+
+        if (adminCount <= 1) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Cannot delete the last admin user",
+          });
+        }
+      }
+
+      return ctx.db.user.delete({
+        where: { id: userId },
+      });
+    }),
+});

@@ -1,8 +1,9 @@
-import { File, Files, type LucideIcon } from "lucide-react";
+import { File, Files, ShieldIcon, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 
 import Image from "next/image";
+import { auth } from "~/server/auth";
 import { ThemeModeToggle } from "~/_components/theme";
 import {
   NavigationMenu,
@@ -21,11 +22,23 @@ interface NavbarLinks {
   icon: LucideIcon;
 }
 
-const NavbarLinks: NavbarLinks[] = [
-  { title: "Post", href: "/post", icon: File },
-  { title: "All Posts", href: "/posts", icon: Files },
-];
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await auth();
+
+  const baseNavbarLinks: NavbarLinks[] = [
+    { title: "Post", href: "/post", icon: File },
+    { title: "All Posts", href: "/posts", icon: Files },
+  ];
+
+  // Add admin link for admin users
+  const navbarLinks =
+    session?.user.role === "ADMIN"
+      ? [
+          ...baseNavbarLinks,
+          { title: "Admin", href: "/admin", icon: ShieldIcon },
+        ]
+      : baseNavbarLinks;
+
   return (
     <NavigationMenu viewport={false} className="m-5 block max-w-full">
       <NavigationMenuList className="w-full justify-between">
@@ -48,7 +61,7 @@ const Navbar = () => {
             <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-4">
-                {NavbarLinks?.map((link) => (
+                {navbarLinks?.map((link) => (
                   <ListItem
                     key={link.title}
                     title={link.title}
