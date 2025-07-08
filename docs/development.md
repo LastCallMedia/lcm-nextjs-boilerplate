@@ -77,12 +77,91 @@ Configure for optimal TypeScript and React development:
 # 1. Start development services
 pnpm docker:dev
 
-# 2. Start development server
+# 2. Set up database (first time only)
+pnpm db:generate
+
+# 3. Start development server
 pnpm dev
 
-# 3. Open browser to http://localhost:3000
+# 4. Open browser to http://localhost:3000
+```
 
-# 4. Start developing!
+### Docker Development Services
+
+The project uses Docker for local development services:
+
+| Service        | URL                   | Purpose                       |
+| -------------- | --------------------- | ----------------------------- |
+| Next.js App    | http://localhost:3000 | Main application              |
+| PostgreSQL     | localhost:5732        | Database                      |
+| MailHog Web UI | http://localhost:8025 | Email testing interface       |
+| MailHog SMTP   | localhost:1025        | SMTP server for email testing |
+
+#### Docker Commands
+
+```bash
+# Start all development services
+pnpm docker:dev
+
+# Stop all services
+pnpm docker:dev:down
+
+# Check service status
+docker compose ps
+
+# View service logs
+docker compose logs postgres
+docker compose logs mailhog
+
+# Access PostgreSQL directly
+docker compose exec postgres psql -U postgres -d lcm-nextjs-boilerplate
+
+# Restart specific service
+docker compose restart postgres
+```
+
+#### Environment Configuration
+
+Ensure your `.env` file has the correct settings:
+
+```bash
+# Database (matches docker-compose.yml port)
+DATABASE_URL=postgresql://postgres:password@localhost:5732/lcm-nextjs-boilerplate
+
+# Docker service configuration (optional - has defaults)
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=password
+POSTGRES_DB=lcm-nextjs-boilerplate
+POSTGRES_PORT=5732
+MAILHOG_SMTP_PORT=1025
+MAILHOG_WEB_PORT=8025
+```
+
+#### Troubleshooting Docker
+
+**Port conflicts:**
+
+```bash
+# Find what's using port 5732
+lsof -i :5732
+
+# Kill process using the port
+sudo kill -9 <PID>
+```
+
+**Database connection issues:**
+
+```bash
+# Restart Docker services
+pnpm docker:dev:down && pnpm docker:dev
+
+# Check if services are healthy
+docker compose ps
+
+# Reset database volume (WARNING: deletes all data)
+docker compose down -v
+docker volume rm lcm-nextjs-boilerplate_postgres_data
+pnpm docker:dev
 ```
 
 ### Code Organization

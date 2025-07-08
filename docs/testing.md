@@ -37,16 +37,18 @@ const createJestConfig = nextJest({
   dir: "./",
 });
 
-const customJestConfig = {
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
-  testEnvironment: "jest-environment-jsdom",
-  moduleNameMapping: {
+const config = {
+  testEnvironment: "jsdom",
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1",
     "^~/(.*)$": "<rootDir>/src/$1",
   },
   collectCoverageFrom: [
     "src/**/*.{js,jsx,ts,tsx}",
     "!src/**/*.d.ts",
     "!src/**/*.stories.{js,jsx,ts,tsx}",
+    "!src/**/index.{js,ts}",
   ],
   coverageThreshold: {
     global: {
@@ -56,9 +58,22 @@ const customJestConfig = {
       statements: 70,
     },
   },
+  testMatch: [
+    "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+    "<rootDir>/src/**/*.{test,spec}.{js,jsx,ts,tsx}",
+    "<rootDir>/tests/**/*.{test,spec}.{js,jsx,ts,tsx}",
+  ],
+  testPathIgnorePatterns: [
+    "<rootDir>/tests/e2e/",
+    "<rootDir>/.next/",
+    "<rootDir>/node_modules/",
+  ],
+  testEnvironmentOptions: {
+    customExportConditions: [""],
+  },
 };
 
-module.exports = createJestConfig(customJestConfig);
+module.exports = createJestConfig(config);
 ```
 
 ### Jest Setup
@@ -68,7 +83,6 @@ The `jest.setup.js` file configures global test utilities:
 ```javascript
 import "@testing-library/jest-dom";
 import { toHaveNoViolations } from "jest-axe";
-import { server } from "./src/__mocks__/server";
 
 // Extend Jest matchers
 expect.extend(toHaveNoViolations);
@@ -87,10 +101,9 @@ jest.mock("next-auth/react", () => ({
   signOut: jest.fn(),
 }));
 
-// Setup MSW
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+// Mock environment variables
+process.env.NEXTAUTH_SECRET = "test-secret";
+process.env.NEXTAUTH_URL = "http://localhost:3000";
 ```
 
 ## Unit Testing

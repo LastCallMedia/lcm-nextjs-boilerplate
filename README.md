@@ -177,7 +177,52 @@ Comprehensive documentation is available in the [`docs/`](./docs/) directory:
 - **Docker** - Containerization
 - **pnpm** - Fast package manager
 
-## 🤝 Contributing
+## � Testing
+
+This project includes Jest setup for unit testing with accessibility testing support.
+
+### Unit Testing with Jest
+
+- **Framework**: Jest with React Testing Library
+- **Accessibility**: jest-axe for accessibility testing
+- **Coverage**: Built-in coverage reporting
+- **Configuration**: `jest.config.js` and `jest.setup.js`
+
+#### Running Tests
+
+```bash
+# Run all unit tests
+pnpm test
+
+# Run tests in watch mode
+pnpm test:watch
+
+# Run tests with coverage
+pnpm test:coverage
+```
+
+#### Writing Tests
+
+Tests are co-located with components in `__tests__` directories:
+
+```
+src/
+└── _components/
+    └── posts/
+        ├── PostCard.tsx
+        └── __tests__/
+            └── PostCard.test.tsx
+```
+
+### CI/CD Integration
+
+Tests automatically run in CI/CD pipeline:
+
+- Unit tests with Jest
+- Coverage reporting
+- Accessibility checks
+
+## �🤝 Contributing
 
 We welcome contributions! Please see our [Contributing Guide](./docs/contributing.md) for details.
 
