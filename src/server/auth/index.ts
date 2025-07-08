@@ -24,6 +24,9 @@ const buildProviders = () => {
   return providers;
 };
 
+// Custom adapter that ensures role is set on user creation
+const customAdapter = PrismaAdapter(db);
+
 const {
   auth: uncachedAuth,
   handlers,
@@ -36,7 +39,22 @@ const {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,
   },
-  adapter: PrismaAdapter(db),
+  adapter: {
+    ...customAdapter,
+    createUser: async (user) => {
+      if (!customAdapter.createUser) {
+        throw new Error("createUser method not found on adapter");
+      }
+
+      // Ensure role is set when creating user
+      const userWithRole = {
+        ...user,
+        role: user.role ?? "USER",
+      };
+
+      return customAdapter.createUser(userWithRole);
+    },
+  },
 });
 
 const auth = cache(uncachedAuth);
