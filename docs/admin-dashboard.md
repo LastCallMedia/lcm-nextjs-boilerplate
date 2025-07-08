@@ -19,7 +19,7 @@ The admin dashboard provides a complete administrative interface with the follow
 - **User Table**: Paginated, sortable, and searchable user interface
 - **Profile Images**: Robust handling of OAuth provider avatars (Google, GitHub, Facebook)
 - **Role Management**: Promote/demote users between USER and ADMIN roles
-- **User Actions**: Delete users with confirmation dialogs
+- **User Actions**: Delete users with confirmation dialogs (automatically removes all user's posts)
 - **Advanced Search**: Real-time search with debouncing and focus management
 
 ### Post Management
@@ -279,5 +279,12 @@ The main dashboard at `/admin` shows:
 - **Input Validation**: All forms include proper validation
 - **Image Security**: External images are whitelisted and validated
 - **Session Protection**: Admin sessions are properly secured
+
+## Data Integrity
+
+- **Cascading Deletion**: When a user is deleted, all their posts are automatically removed
+- **Transaction Safety**: User deletion uses database transactions to ensure data consistency
+- **Foreign Key Constraints**: Database-level constraints prevent orphaned records
+- **Admin Protection**: Cannot delete the last admin user or your own account
 
 The admin dashboard provides a complete, production-ready administrative interface with excellent user experience and robust security.

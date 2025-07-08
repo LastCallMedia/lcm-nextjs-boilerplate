@@ -258,8 +258,25 @@ export const adminRouter = createTRPCRouter({
         }
       }
 
-      return ctx.db.user.delete({
-        where: { id: userId },
-      });
+      try {
+        // Use transaction to ensure data consistency
+        return await ctx.db.$transaction(async (prisma) => {
+          // First, delete all posts created by the user
+          await prisma.post.deleteMany({
+            where: { createdById: userId },
+          });
+
+          // Then delete the user
+          return await prisma.user.delete({
+            where: { id: userId },
+          });
+        });
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to delete user and associated data",
+          cause: error,
+        });
+      }
     }),
 });
