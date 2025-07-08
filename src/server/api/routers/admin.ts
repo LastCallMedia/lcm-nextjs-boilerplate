@@ -182,22 +182,33 @@ export const adminRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { userId, role } = input;
 
+      // Prevent self-demotion
+      if (userId === ctx.session.user.id && role === "USER") {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message:
+            "Cannot demote your own account. Ask another admin to change your role.",
+        });
+      }
+
       // Prevent demoting the last admin
       if (role === "USER") {
-        const adminCount = await ctx.db.user.count({
-          where: { role: "ADMIN" },
-        });
-
         const targetUser = await ctx.db.user.findUnique({
           where: { id: userId },
           select: { role: true },
         });
 
-        if (targetUser?.role === "ADMIN" && adminCount <= 1) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Cannot demote the last admin user",
+        if (targetUser?.role === "ADMIN") {
+          const adminCount = await ctx.db.user.count({
+            where: { role: "ADMIN" },
           });
+
+          if (adminCount <= 1) {
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: "Cannot demote the last admin user",
+            });
+          }
         }
       }
 
@@ -259,17 +270,9 @@ export const adminRouter = createTRPCRouter({
       }
 
       try {
-        // Use transaction to ensure data consistency
-        return await ctx.db.$transaction(async (prisma) => {
-          // First, delete all posts created by the user
-          await prisma.post.deleteMany({
-            where: { createdById: userId },
-          });
-
-          // Then delete the user
-          return await prisma.user.delete({
-            where: { id: userId },
-          });
+        // Delete user - cascading deletion will handle posts automatically
+        return await ctx.db.user.delete({
+          where: { id: userId },
         });
       } catch (error) {
         throw new TRPCError({

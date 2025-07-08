@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import { api } from "~/trpc/react";
 import { DataTable, type DataTableColumn } from "./data-table";
+import { SearchInput } from "./search-input";
+import { useAdminTable } from "~/hooks/use-admin-table";
 import { Badge } from "~/_components/ui/badge";
-import { Input } from "~/_components/ui/input";
-import { SearchIcon } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 type Post = {
@@ -22,30 +21,20 @@ type Post = {
 };
 
 export function PostsTable() {
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [sortBy, setSortBy] = useState("createdAt");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
-
-  // Search input ref for focus management
-  const searchInputRef = useRef<HTMLInputElement>(null);
-
-  // Debounce search input
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearch(search);
-      setIsSearching(false);
-    }, 300);
-
-    if (search !== debouncedSearch) {
-      setIsSearching(true);
-    }
-
-    return () => clearTimeout(timer);
-  }, [search, debouncedSearch]);
+  const {
+    search,
+    setSearch,
+    debouncedSearch,
+    isSearching,
+    searchInputRef,
+    page,
+    pageSize,
+    setPage,
+    handlePaginationChange,
+    sortBy,
+    sortOrder,
+    handleSortChange,
+  } = useAdminTable();
 
   const { data } = api.admin.getPosts.useQuery({
     page,
@@ -54,19 +43,6 @@ export function PostsTable() {
     sortOrder,
     search: debouncedSearch || undefined,
   });
-
-  const handlePaginationChange = (newPage: number, newPageSize: number) => {
-    setPage(newPage);
-    setPageSize(newPageSize);
-  };
-
-  const handleSortChange = (
-    newSortBy: string,
-    newSortOrder: "asc" | "desc",
-  ) => {
-    setSortBy(newSortBy);
-    setSortOrder(newSortOrder);
-  };
 
   const columns: DataTableColumn<Post>[] = [
     {
@@ -141,23 +117,14 @@ export function PostsTable() {
   return (
     <div className="space-y-4">
       {/* Search Box */}
-      <div className="relative max-w-sm">
-        <SearchIcon
-          className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2"
-          aria-hidden="true"
-        />
-        <Input
-          ref={searchInputRef}
-          placeholder="Search posts by title or author..."
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setPage(1); // Reset to first page when searching
-          }}
-          className="cursor-text pl-9"
-          aria-label="Search posts by title or author"
-        />
-      </div>
+      <SearchInput
+        placeholder="Search posts by title or author..."
+        value={search}
+        onChange={setSearch}
+        onPageReset={() => setPage(1)}
+        inputRef={searchInputRef}
+        ariaLabel="Search posts by title or author"
+      />
 
       {/* Data Table - Only this part shows loading states */}
       <DataTable

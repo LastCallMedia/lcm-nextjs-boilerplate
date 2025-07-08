@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { api } from "~/trpc/react";
 import { DataTable, type DataTableColumn } from "./data-table";
+import { SearchInput } from "./search-input";
+import { useAdminTable } from "~/hooks/use-admin-table";
 import { Badge } from "~/_components/ui/badge";
 import { Button } from "~/_components/ui/button";
-import { Input } from "~/_components/ui/input";
-import { SearchIcon } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -93,32 +93,22 @@ function UserAvatar({
 }
 
 export function UsersTable() {
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [sortBy, setSortBy] = useState("name");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
-
-  // Search input ref for focus management
-  const searchInputRef = useRef<HTMLInputElement>(null);
+  const {
+    search,
+    setSearch,
+    debouncedSearch,
+    isSearching,
+    searchInputRef,
+    page,
+    pageSize,
+    setPage,
+    handlePaginationChange,
+    sortBy,
+    sortOrder,
+    handleSortChange,
+  } = useAdminTable("name", "asc");
 
   const utils = api.useUtils();
-
-  // Debounce search input
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearch(search);
-      setIsSearching(false);
-    }, 300);
-
-    if (search !== debouncedSearch) {
-      setIsSearching(true);
-    }
-
-    return () => clearTimeout(timer);
-  }, [search, debouncedSearch]);
 
   const { data } = api.admin.getUsers.useQuery({
     page,
@@ -140,6 +130,13 @@ export function UsersTable() {
       if (error.message.includes("Cannot demote the last admin user")) {
         toast.error(
           "Cannot demote the last admin user. At least one admin must remain in the system.",
+          {
+            duration: 5000,
+          },
+        );
+      } else if (error.message.includes("Cannot demote your own account")) {
+        toast.error(
+          "You cannot change your own role. Ask another admin to modify your permissions.",
           {
             duration: 5000,
           },
@@ -166,19 +163,6 @@ export function UsersTable() {
       });
     },
   });
-
-  const handlePaginationChange = (newPage: number, newPageSize: number) => {
-    setPage(newPage);
-    setPageSize(newPageSize);
-  };
-
-  const handleSortChange = (
-    newSortBy: string,
-    newSortOrder: "asc" | "desc",
-  ) => {
-    setSortBy(newSortBy);
-    setSortOrder(newSortOrder);
-  };
 
   const handleRoleUpdate = (userId: string, newRole: "USER" | "ADMIN") => {
     updateUserRoleMutation.mutate({ userId, role: newRole });
@@ -316,23 +300,14 @@ export function UsersTable() {
   return (
     <div className="space-y-4">
       {/* Search Box */}
-      <div className="relative max-w-sm">
-        <SearchIcon
-          className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2"
-          aria-hidden="true"
-        />
-        <Input
-          ref={searchInputRef}
-          placeholder="Search users by name or email..."
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setPage(1); // Reset to first page when searching
-          }}
-          className="cursor-text pl-9"
-          aria-label="Search users by name or email"
-        />
-      </div>
+      <SearchInput
+        placeholder="Search users by name or email..."
+        value={search}
+        onChange={setSearch}
+        onPageReset={() => setPage(1)}
+        inputRef={searchInputRef}
+        ariaLabel="Search users by name or email"
+      />
 
       {/* Data Table - Only this part shows loading states */}
       <DataTable
