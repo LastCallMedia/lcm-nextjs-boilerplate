@@ -88,28 +88,55 @@ getStats(); // Dashboard statistics
 
 ### Image Optimization
 
-External OAuth provider images are configured in `next.config.js`:
+External OAuth provider images are configured in `next.config.js` to allow Next.js Image component to optimize avatars from trusted sources:
 
 ```javascript
 module.exports = {
   images: {
     remotePatterns: [
       {
+        // Google OAuth avatars - Required for Google Sign-In profile pictures
         protocol: "https",
-        hostname: "lh3.googleusercontent.com", // Google avatars
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "/**",
       },
       {
+        // Unsplash images - Used for placeholder avatars and demo content
+        // Can be removed in production if not using Unsplash content
         protocol: "https",
-        hostname: "avatars.githubusercontent.com", // GitHub avatars
-      },
-      {
-        protocol: "https",
-        hostname: "platform-lookaside.fbsbx.com", // Facebook avatars
+        hostname: "images.unsplash.com",
+        port: "",
+        pathname: "/**",
       },
     ],
   },
 };
 ```
+
+**Why these patterns are needed:**
+
+1. **Google OAuth Images**: When users sign in with Google, their profile pictures are hosted on `lh3.googleusercontent.com`. Next.js requires explicit permission to optimize images from external domains.
+
+2. **Unsplash Images**: Used for placeholder avatars and demo content in development. The seed script uses Unsplash images to create realistic-looking test users.
+
+3. **Security**: By explicitly defining allowed domains, we prevent malicious actors from using our image optimization service to proxy arbitrary images.
+
+4. **Performance**: Next.js can optimize these external images, providing better loading performance and automatic format conversion (WebP, AVIF).
+   },
+   {
+   protocol: "https",
+   hostname: "avatars.githubusercontent.com", // GitHub avatars
+   },
+   {
+   protocol: "https",
+   hostname: "platform-lookaside.fbsbx.com", // Facebook avatars
+   },
+   ],
+   },
+   };
+
+````
 
 ### Route Protection
 
@@ -122,7 +149,7 @@ export default function middleware(request: NextRequest) {
     // Role verification logic
   }
 }
-```
+````
 
 ## Setup Instructions
 
@@ -134,7 +161,23 @@ Run the Prisma migration to add role support:
 npx prisma db push
 ```
 
-### 2. Create Admin User
+### 2. Seed Development Data (Optional)
+
+For local development, you can populate the database with dummy users and posts:
+
+```bash
+pnpm db:seed
+```
+
+**⚠️ Important**: The seed script is designed for **LOCAL DEVELOPMENT ONLY**. It creates test users with known email addresses and should never be run in production environments.
+
+The seed script creates:
+
+- 4 test users (3 regular users + 1 admin)
+- 12 sample posts with realistic content
+- User avatars from Unsplash for testing image handling
+
+### 3. Create Admin User (Production)
 
 Promote your first admin user in the database:
 

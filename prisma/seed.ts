@@ -3,8 +3,18 @@ import { Role } from "./generated/enums";
 
 const prisma = new PrismaClient();
 
+/**
+ * Database Seeding Script - LOCAL DEVELOPMENT ONLY
+ *
+ * Creates dummy users and posts for testing admin dashboard features.
+ * ⚠️  Do NOT run in production - contains test data with known credentials.
+ *
+ * Usage: pnpm db:seed
+ */
+
 async function main() {
   console.log("🌱 Seeding database with dummy users and posts...");
+  console.log("📝 NOTE: This is for LOCAL DEVELOPMENT ONLY");
 
   // Create dummy users
   const user1 = await prisma.user.upsert({
