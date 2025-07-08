@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useMemo, useRef } from "react";
 import React from "react";
 
 import { useForm } from "react-hook-form";
@@ -18,6 +19,9 @@ interface PostFormProps {
 }
 const PostForm = ({ className }: PostFormProps) => {
   const utils = api.useUtils();
+  const userId = useMemo(() => crypto.randomUUID(), []);
+  const channelId = "landing"; // could be "post-form" if you prefer
+  const typingRef = useRef(false);
 
   const form = useForm<z.infer<typeof createPostSchema>>({
     resolver: zodResolver(createPostSchema),
@@ -25,6 +29,24 @@ const PostForm = ({ className }: PostFormProps) => {
       name: "",
     },
   });
+
+  const nameValue = form.watch("name");
+  const mutation = api.typing.isTyping.useMutation();
+  useEffect(() => {
+    if (!nameValue?.length) return;
+
+    if (typingRef.current) return;
+    typingRef.current = true;
+
+    mutation.mutate({ channelId, userId, typing: true });
+
+    const timeout = setTimeout(() => {
+      typingRef.current = false;
+      mutation.mutate({ channelId, userId, typing: false });
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  }, [nameValue]);
 
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {
