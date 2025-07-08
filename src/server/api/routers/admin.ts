@@ -151,7 +151,7 @@ export const adminRouter = createTRPCRouter({
       ctx.db.post.count(),
       ctx.db.user.count({ where: { role: "ADMIN" } }),
       ctx.db.user.findMany({
-        take: 5,
+        take: 3,
         orderBy: { emailVerified: "desc" },
         select: {
           id: true,
