@@ -109,8 +109,7 @@ The display is decoupled from the typing logic, making the component reusable.
 
 ## Auth Notes
 
-- `isTyping` is protected via `protectedProcedure`, requiring the user is authenticated
-- `whoIsTyping` is currently public — you may want to guard this in the future
+- `isTyping` and `whoIsTyping` is currently public — you may want to guard this in the future
 - `userId` can be generated anonymously (`crypto.randomUUID`) or tied to `ctx.session.user.id`
 
 ---

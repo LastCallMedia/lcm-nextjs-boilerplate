@@ -1,4 +1,8 @@
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  publicProcedure,
+  protectedProcedure,
+} from "~/server/api/trpc";
 import { z } from "zod";
 import EventEmitter, { on } from "node:events";
 
