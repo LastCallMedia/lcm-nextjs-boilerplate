@@ -67,6 +67,7 @@ const PostForm = ({ className }: PostFormProps) => {
       <Input
         type="text"
         placeholder="What's on your mind?"
+        {...form.register("name")}
         value={form.watch("name")}
         onChange={handleInputChange}
         className="w-full"
