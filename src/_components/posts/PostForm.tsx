@@ -19,7 +19,8 @@ interface PostFormProps {
 const PostForm = ({ className }: PostFormProps) => {
   const utils = api.useUtils();
   const userId = useMemo(() => crypto.randomUUID(), []);
-  const channelId = "landing"; // could be "post-form" or any unique form ID
+  /** Channel ID to group typing state per-input or page section */
+  const channelId = "landing";
   const typingTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const form = useForm<z.infer<typeof createPostSchema>>({

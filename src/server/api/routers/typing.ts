@@ -94,7 +94,7 @@ export const typingRouter = createTRPCRouter({
       const { channelId } = input;
       let lastIndex = "";
 
-      // Emit initial state
+      /** Emit initial state */
       yield Object.keys(currentlyTyping[channelId] ?? {});
 
       for await (const [emittedChannelId, who] of ee.toIterable(
