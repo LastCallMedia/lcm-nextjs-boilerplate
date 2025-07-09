@@ -90,7 +90,9 @@
     "server-only": "^0.0.1",
     "sonner": "^2.0.5",
     "superjson": "^2.2.2",
+    "swagger-ui-react": "^5.26.2",
     "tailwind-merge": "^3.3.1",
+    "trpc-to-openapi": "^2.3.2",
     "vaul": "^1.1.2",
     "zod": "^3.25.67"
   },
@@ -107,6 +109,7 @@
     "@types/node": "^24.0.10",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "@types/swagger-ui-react": "^5.18.0",
     "axe-core": "^4.10.3",
     "eslint": "^9.30.1",
     "eslint-config-next": "^15.3.4",
