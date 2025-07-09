@@ -52,11 +52,15 @@ jobs:
         run: pnpm build
         env:
           SKIP_ENV_VALIDATION: true
+          NEXTAUTH_SECRET: test-secret-for-ci
+          NEXTAUTH_URL: http://localhost:3000
 
       - name: Run Playwright tests
         run: pnpm test:e2e
         env:
           SKIP_ENV_VALIDATION: true
+          NEXTAUTH_SECRET: test-secret-for-ci
+          NEXTAUTH_URL: http://localhost:3000
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
