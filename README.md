@@ -167,6 +167,7 @@ Comprehensive documentation is available in the [`docs/`](./docs/) directory:
 - **Prisma** - Type-safe database ORM
 - **PostgreSQL** - Primary database
 - **Zod** - Schema validation
+- **In-memory Event System** – Lightweight pub/sub for features like typing indicators built on tRPC subscriptions
 
 ### Development & Testing
 

@@ -2,6 +2,20 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 import EventEmitter, { on } from "node:events";
 
+/**
+ * This boilerplate includes a real-time typing indicator
+ * using tRPC subscriptions and a lightweight in-memory pub/sub system.
+ * It's a simple, performant pattern for building collaborative UI
+ * features without requiring a separate WebSocket or Redis infrastructure
+ *
+ * The typing indicator consists of:
+ *
+ * A mutation to signal when a user starts/stops typing
+ * A subscription to stream typing state updates to clients
+ * An in-memory EventEmitter (wrapped in an IterableEventEmitter) for broadcasting updates
+ * UI integration that detects input and displays active typers
+ */
+
 /** WhoIsTyping maps a user ID (or name) to their last typed timestamp */
 export type WhoIsTyping = Record<string, { lastTyped: Date }>;
 
