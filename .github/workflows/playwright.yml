@@ -11,6 +11,21 @@ jobs:
     name: E2E & Accessibility Tests
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: test-password
+          POSTGRES_USER: test-user
+          POSTGRES_DB: test-db
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
     strategy:
       matrix:
         node-version: [22.x]
@@ -48,12 +63,19 @@ jobs:
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
 
+      - name: Setup test database
+        run: |
+          pnpm prisma db push --force-reset
+        env:
+          DATABASE_URL: postgresql://test-user:test-password@localhost:5432/test-db
+
       - name: Build application
         run: pnpm build
         env:
           SKIP_ENV_VALIDATION: true
           NEXTAUTH_SECRET: test-secret-for-ci
           NEXTAUTH_URL: http://localhost:3000
+          DATABASE_URL: postgresql://test-user:test-password@localhost:5432/test-db
 
       - name: Run Playwright tests
         run: pnpm test:e2e
@@ -61,6 +83,7 @@ jobs:
           SKIP_ENV_VALIDATION: true
           NEXTAUTH_SECRET: test-secret-for-ci
           NEXTAUTH_URL: http://localhost:3000
+          DATABASE_URL: postgresql://test-user:test-password@localhost:5432/test-db
 
       - name: Upload test results
         uses: actions/upload-artifact@v4

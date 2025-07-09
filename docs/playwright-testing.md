@@ -72,6 +72,12 @@ Tests automatically adjust for CI environments:
 - Single worker on CI for stability
 - Dot reporter for cleaner output
 - Automatic retries for flaky tests
+- PostgreSQL service for database-dependent tests
+
+The CI workflow includes:
+1. **PostgreSQL service**: Provides a test database
+2. **Database setup**: Runs `prisma db push` to create schema
+3. **Environment variables**: Sets `DATABASE_URL`, `NEXTAUTH_SECRET`, etc.
 
 ## Writing Tests
 
@@ -139,6 +145,8 @@ pnpm test:e2e tests/e2e/navigation.spec.ts
 ### Common Issues
 
 1. **Port conflicts**: Stop other services on port 3000
+2. **Database errors**: Ensure `DATABASE_URL` is set for tests that load pages with Prisma queries
+3. **Slow tests**: Check network timeouts and server startup time
 2. **Browser installation**: Run `pnpm install:playwright`
 3. **Test timeouts**: Check network conditions and page load times
 
