@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
       value: "prisma-client",
     },
     output: {
-      value: "/Users/ash_bergs/Desktop/lcm-nextjs-boilerplate/prisma/generated",
+      value: "/Users/luke/Projects/lcm-nextjs-boilerplate/prisma/generated",
       fromEnvVar: null,
     },
     config: {
@@ -35,7 +35,7 @@ const config: runtime.GetPrismaClientConfig = {
     ],
     previewFeatures: [],
     sourceFilePath:
-      "/Users/ash_bergs/Desktop/lcm-nextjs-boilerplate/prisma/schema.prisma",
+      "/Users/luke/Projects/lcm-nextjs-boilerplate/prisma/schema.prisma",
     isCustomOutput: true,
   },
   relativePath: "..",
