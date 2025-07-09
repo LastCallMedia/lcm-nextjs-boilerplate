@@ -39,42 +39,19 @@ pnpm test:e2e:headed
 
 ## Test Structure
 
-### Install Browsers
-
-```bash
-pnpm install:playwright
-```
-
-### Run Tests
-
-```bash
-# Run all E2E tests
-pnpm test:e2e
-
-# Run with visual interface
-pnpm test:e2e:ui
-
-# Run in headed mode (visible browser)
-pnpm test:e2e:headed
-```
-
-## Test Structure
-
 ### Test Files
 
 ```
 tests/e2e/
 ├── accessibility.spec.ts    # WCAG compliance tests
 ├── navigation.spec.ts       # Basic navigation and UI
-├── auth.spec.ts            # Authentication flows
-└── admin.spec.ts           # Admin functionality
+└── auth.spec.ts            # Authentication flows
 ```
 
 ### Current Test Coverage
 
 - **Navigation**: Homepage, posts page, navigation menu, 404 handling
 - **Authentication**: Sign-in page, provider buttons, protected routes
-- **Admin**: Access control and basic admin functionality
 - **Accessibility**: WCAG 2.1 AA compliance across all pages
 
 ## Configuration
