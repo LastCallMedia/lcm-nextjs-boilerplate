@@ -1,27 +1,37 @@
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 import EventEmitter, { on } from "node:events";
 
+/** WhoIsTyping maps a user ID (or name) to their last typed timestamp */
 export type WhoIsTyping = Record<string, { lastTyped: Date }>;
 
-type EventMap<T> = Record<keyof T, any[]>;
-class IterableEventEmitter<T extends EventMap<T>> extends EventEmitter {
+/** Utility type for the event emitter map */
+type EventMap = {
+  isTypingUpdate: [channelId: string, who: WhoIsTyping];
+};
+
+class IterableEventEmitter<
+  T extends Record<string, unknown[]>,
+> extends EventEmitter {
   toIterable<TEventName extends keyof T & string>(
-    event: TEventName,
+    eventName: TEventName,
     opts?: NonNullable<Parameters<typeof on>[2]>,
   ): AsyncIterable<T[TEventName]> {
-    return on(this as any, event, opts) as any;
+    return on(
+      this as unknown as EventEmitter,
+      eventName,
+      opts,
+    ) as AsyncIterable<T[TEventName]>;
   }
 }
 
-export interface MyEvents {
-  isTypingUpdate: [channelId: string, who: WhoIsTyping];
-}
+/** Instantiate the custom event emitter */
+export const ee = new IterableEventEmitter<EventMap>();
 
-export const ee = new IterableEventEmitter<MyEvents>();
-export const currentlyTyping: Record<string, WhoIsTyping> = Object.create(null);
+/** In-memory store for who is currently typing per "channel" */
+export const currentlyTyping: Record<string, WhoIsTyping> = {};
 
-// Clear out typers after inactivity
+/** Clean out users who stopped typing (after 3s of inactivity) */
 setInterval(() => {
   const now = Date.now();
   const updatedChannels = new Set<string>();
@@ -35,56 +45,56 @@ setInterval(() => {
     }
   }
 
-  updatedChannels.forEach((channelId) => {
+  for (const channelId of updatedChannels) {
     ee.emit("isTypingUpdate", channelId, currentlyTyping[channelId] ?? {});
-  });
+  }
 }, 3000).unref();
 
 export const typingRouter = createTRPCRouter({
   isTyping: publicProcedure
     .input(
       z.object({
-        channelId: z.string().min(1),
-        userId: z.string().min(1), // can be anon UUID
+        channelId: z.string(),
+        userId: z.string(),
         typing: z.boolean(),
       }),
     )
     .mutation(({ input }) => {
       const { channelId, userId, typing } = input;
-
       currentlyTyping[channelId] ??= {};
 
-      if (typing) {
-        currentlyTyping[channelId][userId] = { lastTyped: new Date() };
-      } else {
+      if (!typing) {
         delete currentlyTyping[channelId][userId];
+      } else {
+        currentlyTyping[channelId][userId] = {
+          lastTyped: new Date(),
+        };
       }
 
       ee.emit("isTypingUpdate", channelId, currentlyTyping[channelId]);
     }),
 
   whoIsTyping: publicProcedure
-    .input(z.object({ channelId: z.string().min(1) }))
-    .subscription(async function* ({ input, signal }) {
+    .input(z.object({ channelId: z.string() }))
+    .subscription(async function* ({ input, ctx }) {
       const { channelId } = input;
-      let lastEmit = "";
+      let lastIndex = "";
 
-      function* maybeYield(who: WhoIsTyping) {
-        const sorted = Object.keys(who).toSorted().toString();
-        if (sorted === lastEmit) return;
-        lastEmit = sorted;
-        yield Object.keys(who);
-      }
+      // Emit initial state
+      yield Object.keys(currentlyTyping[channelId] ?? {});
 
-      // Send current state immediately
-      yield* maybeYield(currentlyTyping[channelId] ?? {});
-
-      for await (const [updatedChannelId, who] of ee.toIterable(
+      for await (const [emittedChannelId, who] of ee.toIterable(
         "isTypingUpdate",
-        { signal },
+        {
+          signal: ctx.signal,
+        },
       )) {
-        if (updatedChannelId === channelId) {
-          yield* maybeYield(who);
+        if (emittedChannelId !== channelId) continue;
+
+        const index = Object.keys(who).sort().join(",");
+        if (index !== lastIndex) {
+          yield Object.keys(who);
+          lastIndex = index;
         }
       }
     }),

@@ -19,8 +19,10 @@ interface PostFormProps {
 }
 const PostForm = ({ className }: PostFormProps) => {
   const utils = api.useUtils();
+  /** Unique ID for the visitor - could be connected to users */
   const userId = useMemo(() => crypto.randomUUID(), []);
-  const channelId = "landing"; // could be "post-form" if you prefer
+  /** Typing context ID - e.g. input scope */
+  const channelId = "landing";
   const typingRef = useRef(false);
 
   const form = useForm<z.infer<typeof createPostSchema>>({
@@ -32,6 +34,8 @@ const PostForm = ({ className }: PostFormProps) => {
 
   const nameValue = form.watch("name");
   const mutation = api.typing.isTyping.useMutation();
+
+  /** Trigger the typing indicator */
   useEffect(() => {
     if (!nameValue?.length) return;
 
@@ -46,7 +50,7 @@ const PostForm = ({ className }: PostFormProps) => {
     }, 2000);
 
     return () => clearTimeout(timeout);
-  }, [nameValue]);
+  }, [nameValue, mutation, userId]);
 
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {
