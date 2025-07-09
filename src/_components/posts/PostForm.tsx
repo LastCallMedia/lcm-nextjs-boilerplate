@@ -1,8 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
-import React from "react";
-
+import React, { useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -17,13 +15,12 @@ const createPostSchema = z.object({
 interface PostFormProps {
   className?: string;
 }
+
 const PostForm = ({ className }: PostFormProps) => {
   const utils = api.useUtils();
-  /** Unique ID for the visitor - could be connected to users */
   const userId = useMemo(() => crypto.randomUUID(), []);
-  /** Typing context ID - e.g. input scope */
-  const channelId = "landing";
-  const typingRef = useRef(false);
+  const channelId = "landing"; // could be "post-form" or any unique form ID
+  const typingTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const form = useForm<z.infer<typeof createPostSchema>>({
     resolver: zodResolver(createPostSchema),
@@ -32,25 +29,24 @@ const PostForm = ({ className }: PostFormProps) => {
     },
   });
 
-  const nameValue = form.watch("name");
   const mutation = api.typing.isTyping.useMutation();
 
-  /** Trigger the typing indicator */
-  useEffect(() => {
-    if (!nameValue?.length) return;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    form.setValue("name", value);
 
-    if (typingRef.current) return;
-    typingRef.current = true;
+    if (value.length === 0) {
+      mutation.mutate({ channelId, userId, typing: false });
+      return;
+    }
 
     mutation.mutate({ channelId, userId, typing: true });
 
-    const timeout = setTimeout(() => {
-      typingRef.current = false;
+    if (typingTimeout.current) clearTimeout(typingTimeout.current);
+    typingTimeout.current = setTimeout(() => {
       mutation.mutate({ channelId, userId, typing: false });
     }, 2000);
-
-    return () => clearTimeout(timeout);
-  }, [nameValue, mutation, userId]);
+  };
 
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {
@@ -62,6 +58,7 @@ const PostForm = ({ className }: PostFormProps) => {
   const onSubmit = (values: z.infer<typeof createPostSchema>) => {
     createPost.mutate({ name: values.name });
   };
+
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
@@ -70,7 +67,8 @@ const PostForm = ({ className }: PostFormProps) => {
       <Input
         type="text"
         placeholder="What's on your mind?"
-        {...form.register("name")}
+        value={form.watch("name")}
+        onChange={handleInputChange}
         className="w-full"
       />
       {form.formState.errors.name && (
