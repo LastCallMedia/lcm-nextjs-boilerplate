@@ -69,10 +69,4 @@ getCategories: adminProcedure
 
 ## Development
 
-For local development, seed test data:
-
-```bash
-pnpm db:seed
-```
-
-**Note**: Seed script creates test users with known emails for development only.
+The admin dashboard is accessible at `/admin` and requires proper authentication with admin privileges.
