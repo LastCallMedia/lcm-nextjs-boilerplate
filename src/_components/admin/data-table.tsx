@@ -37,7 +37,7 @@ function renderCellValue(value: unknown): React.ReactNode {
   return "";
 }
 
-export interface DataTableProps<T> {
+export interface DataTableProps<T, TSortField extends string = string> {
   data: T[];
   columns: DataTableColumn<T>[];
   pagination: {
@@ -47,9 +47,9 @@ export interface DataTableProps<T> {
     totalPages: number;
   };
   onPaginationChange: (page: number, pageSize: number) => void;
-  onSortChange: (sortBy: string, sortOrder: "asc" | "desc") => void;
+  onSortChange: (sortBy: TSortField, sortOrder: "asc" | "desc") => void;
   isLoading?: boolean;
-  sortBy?: string;
+  sortBy?: TSortField;
   sortOrder?: "asc" | "desc";
   isSearching?: boolean;
 }
@@ -61,7 +61,7 @@ export interface DataTableColumn<T> {
   sortable?: boolean;
 }
 
-export function DataTable<T>({
+export function DataTable<T, TSortField extends string = string>({
   data,
   columns,
   pagination,
@@ -71,13 +71,11 @@ export function DataTable<T>({
   sortBy,
   sortOrder,
   isSearching = false,
-}: DataTableProps<T>) {
+}: DataTableProps<T, TSortField>) {
   const handleSort = (columnKey: string) => {
-    if (sortBy === columnKey) {
-      onSortChange(columnKey, sortOrder === "asc" ? "desc" : "asc");
-    } else {
-      onSortChange(columnKey, "asc");
-    }
+    const newOrder =
+      sortBy === columnKey && sortOrder === "asc" ? "desc" : "asc";
+    onSortChange(columnKey as TSortField, newOrder);
   };
 
   const getSortIcon = (columnKey: string) => {

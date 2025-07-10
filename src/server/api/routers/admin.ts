@@ -3,6 +3,20 @@ import { TRPCError } from "@trpc/server";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
+// Add enum for user sort fields
+const userSortFields = z.enum([
+  "id",
+  "name",
+  "email",
+  "role",
+  "createdAt",
+  "updatedAt",
+  "emailVerified",
+]);
+
+// Add enum for post sort fields
+const postSortFields = z.enum(["id", "name", "createdAt", "updatedAt"]);
+
 // Admin-only procedure that checks user role
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.session.user.role !== "ADMIN") {
@@ -21,7 +35,7 @@ export const adminRouter = createTRPCRouter({
       z.object({
         page: z.number().min(1).default(1),
         pageSize: z.number().min(1).max(100).default(10),
-        sortBy: z.string().default("createdAt"),
+        sortBy: userSortFields.default("createdAt"),
         sortOrder: z.enum(["asc", "desc"]).default("desc"),
         search: z.string().optional(),
       }),
@@ -82,7 +96,7 @@ export const adminRouter = createTRPCRouter({
       z.object({
         page: z.number().min(1).default(1),
         pageSize: z.number().min(1).max(100).default(10),
-        sortBy: z.string().default("createdAt"),
+        sortBy: postSortFields.default("createdAt"),
         sortOrder: z.enum(["asc", "desc"]).default("desc"),
         search: z.string().optional(),
       }),

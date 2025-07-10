@@ -56,19 +56,6 @@ export default function AdminPage() {
             </div>
           </Button>
         </Link>
-
-        <Button
-          variant="outline"
-          className="flex h-24 w-full flex-col space-y-2"
-          disabled
-          aria-label="Analytics coming soon"
-        >
-          <BarChart3Icon className="h-8 w-8" aria-hidden="true" />
-          <div className="text-center">
-            <div className="font-medium">Analytics</div>
-            <div className="text-muted-foreground text-sm">Coming soon</div>
-          </div>
-        </Button>
       </div>
     </div>
   );

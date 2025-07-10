@@ -4,9 +4,20 @@
  */
 import { useState, useEffect, useRef } from "react";
 
-export function useAdminTable(
-  initialSortBy = "createdAt",
-  initialSortOrder: "asc" | "desc" = "desc"
+export type UserSortField =
+  | "id"
+  | "name"
+  | "email"
+  | "role"
+  | "createdAt"
+  | "updatedAt"
+  | "emailVerified";
+export type PostSortField = "id" | "name" | "createdAt" | "updatedAt";
+export type SortOrder = "asc" | "desc";
+
+export function useAdminTable<T extends string>(
+  defaultSortBy: T,
+  defaultSortOrder: SortOrder = "asc",
 ) {
   // Search state
   const [search, setSearch] = useState("");
@@ -19,8 +30,8 @@ export function useAdminTable(
   const [pageSize, setPageSize] = useState(10);
 
   // Sorting state
-  const [sortBy, setSortBy] = useState(initialSortBy);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(initialSortOrder);
+  const [sortBy, setSortBy] = useState<T>(defaultSortBy);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(defaultSortOrder);
 
   // Debounce search input
   useEffect(() => {
@@ -42,9 +53,9 @@ export function useAdminTable(
     setPageSize(newPageSize);
   };
 
-  const handleSortChange = (newSortBy: string, newSortOrder: "asc" | "desc") => {
-    setSortBy(newSortBy);
-    setSortOrder(newSortOrder);
+  const handleSortChange = (field: T, order: SortOrder) => {
+    setSortBy(field);
+    setSortOrder(order);
   };
 
   return {

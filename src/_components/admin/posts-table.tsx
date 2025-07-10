@@ -3,7 +3,7 @@
 import { api } from "~/trpc/react";
 import { DataTable, type DataTableColumn } from "./data-table";
 import { SearchInput } from "./search-input";
-import { useAdminTable } from "~/hooks/use-admin-table";
+import { useAdminTable, type PostSortField } from "~/hooks/use-admin-table";
 import { Badge } from "~/_components/ui/badge";
 import { formatDistanceToNow } from "date-fns";
 
@@ -34,7 +34,7 @@ export function PostsTable() {
     sortBy,
     sortOrder,
     handleSortChange,
-  } = useAdminTable();
+  } = useAdminTable<PostSortField>("name", "asc");
 
   const { data } = api.admin.getPosts.useQuery({
     page,

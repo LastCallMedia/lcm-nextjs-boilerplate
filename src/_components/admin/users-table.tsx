@@ -5,7 +5,7 @@ import Image from "next/image";
 import { api } from "~/trpc/react";
 import { DataTable, type DataTableColumn } from "./data-table";
 import { SearchInput } from "./search-input";
-import { useAdminTable } from "~/hooks/use-admin-table";
+import { useAdminTable, type UserSortField } from "~/hooks/use-admin-table";
 import { Badge } from "~/_components/ui/badge";
 import { Button } from "~/_components/ui/button";
 import {
@@ -106,7 +106,7 @@ export function UsersTable() {
     sortBy,
     sortOrder,
     handleSortChange,
-  } = useAdminTable("name", "asc");
+  } = useAdminTable<UserSortField>("name", "asc");
 
   const utils = api.useUtils();
 
