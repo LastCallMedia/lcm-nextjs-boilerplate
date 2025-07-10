@@ -150,7 +150,86 @@ Comprehensive documentation is available in the [`docs/`](./docs/) directory:
 └── docker-compose.yml      # Docker services
 ```
 
-## 🔧 Tech Stack
+## �️ Routes & API Structure
+
+This boilerplate demonstrates comprehensive routing patterns with authentication, showcasing different types of routes and access levels.
+
+### Public Routes (No Authentication Required)
+
+| Route      | Description       | Features                                             |
+| ---------- | ----------------- | ---------------------------------------------------- |
+| `/`        | Homepage          | Landing page with overview and basic navigation      |
+| `/about`   | About page        | Information about the boilerplate and its features   |
+| `/contact` | Contact page      | Contact form and information (demo only)             |
+| `/terms`   | Terms of Service  | Legal terms and service conditions                   |
+| `/privacy` | Privacy Policy    | Privacy policy and data handling practices           |
+| `/posts`   | All posts display | View all public posts (no authentication required)   |
+| `/post`    | Post display      | Basic post display page (no authentication required) |
+
+### Authentication Routes (Mixed Access)
+
+| Route       | Description   | Access Level                               |
+| ----------- | ------------- | ------------------------------------------ |
+| `/login`    | Sign in page  | Public (redirects if authenticated)        |
+| `/register` | Sign up page  | Public (redirects if authenticated)        |
+| `/logout`   | Sign out page | Protected (redirects if not authenticated) |
+
+### Protected Routes (Authentication Required)
+
+| Route       | Description             | Features                                 |
+| ----------- | ----------------------- | ---------------------------------------- |
+| `/profile`  | User profile management | Profile settings and information display |
+| `/settings` | Application settings    | User preferences and account settings    |
+
+### API Routes
+
+#### Public API Endpoints
+
+| Endpoint             | Method | Description                   | Response                                  |
+| -------------------- | ------ | ----------------------------- | ----------------------------------------- |
+| `/api/public/status` | GET    | API health check and status   | Server status, version, timestamp         |
+| `/api/public/info`   | GET    | Application metadata and info | App details, features, routes, tech stack |
+
+#### Protected API Endpoints
+
+| Endpoint               | Method | Description              | Authentication |
+| ---------------------- | ------ | ------------------------ | -------------- |
+| `/api/protected/user`  | GET    | Current user information | Required       |
+| `/api/protected/posts` | GET    | User's posts list        | Required       |
+| `/api/protected/posts` | POST   | Create new post          | Required       |
+
+#### Framework API Routes
+
+| Endpoint      | Description           | Purpose                                              |
+| ------------- | --------------------- | ---------------------------------------------------- |
+| `/api/auth/*` | NextAuth.js endpoints | Authentication handling (signin, signout, callbacks) |
+| `/api/trpc/*` | tRPC API endpoints    | Type-safe API calls for all application data         |
+
+### Route Groups and Layouts
+
+The application uses Next.js 14+ App Router with route groups for organization:
+
+- `(public)/` - Public pages with minimal layout
+- `(auth)/` - Authentication pages with centered layout
+- `(protected)/` - Protected pages with authenticated user layout
+
+### Middleware Protection
+
+The application includes middleware (`middleware.ts`) that:
+
+- Protects routes requiring authentication
+- Handles redirects for unauthenticated users
+- Manages session validation
+- Provides seamless navigation experience
+
+### Navigation Features
+
+- **Dynamic Navigation**: Menu items change based on authentication status
+- **Breadcrumbs**: Clear navigation hierarchy
+- **User Menus**: Account-specific navigation for authenticated users
+- **Responsive Design**: Mobile-friendly navigation patterns
+
+## �🔧 Tech Stack
 
 ### Frontend
 
