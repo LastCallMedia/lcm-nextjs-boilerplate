@@ -2,26 +2,6 @@
 
 This API is built with tRPC and automatically generates OpenAPI documentation for REST API compatibility.
 
-## � Authentication
-
-### Get Session Token from Browser
-
-![openAPI authorization form](../../../public/openAPIAuthorizationForm.png)
-
-1. Sign in to your application through the normal login flow (Google OAuth)
-2. Open browser developer tools (F12)
-3. Go to **Application/Storage** tab → **Cookies** → Your domain
-4. Find the cookie named `next-auth.session-token` or `__Secure-next-auth.session-token`
-5. Copy the value of that cookie - this is your Bearer token
-
-### Using the API
-
-Use the session token as a Bearer token in the Authorization header:
-
-```
-Authorization: Bearer <your-session-token>
-```
-
 ## 🚀 Quick Start
 
 ### Available Endpoints
@@ -33,7 +13,7 @@ Authorization: Bearer <your-session-token>
   - `POST /api/posts` - Create a new post (protected)
   - `GET /api/posts/latest` - Get the latest post (protected)
 
-## �️ Adding New Routers
+## 🚗 Adding New Routers
 
 When you add new tRPC routers, follow these steps:
 
@@ -43,16 +23,17 @@ When you add new tRPC routers, follow these steps:
 export const userRouter = createTRPCRouter({
   getProfile: protectedProcedure
     .meta({
+      // Must add .meta
       openapi: {
         method: "GET",
         path: "/users/profile",
         tags: ["users"],
         summary: "Get user profile",
-        protect: true, // for protected procedures
+        protect: true, // For protected procedures
       },
     })
     .input(z.void())
-    .output(UserSchema)
+    .output(UserSchema) // Must add .output
     .query(async ({ ctx }) => {
       // Your implementation
     }),
@@ -81,8 +62,28 @@ export const openApiDocument = generateOpenApiDocument(appRouter, {
   version: "1.0.0",
   baseUrl: "http://localhost:3000/api",
   docsUrl: "https://github.com/mcampa/trpc-to-openapi",
-  tags: ["posts", "users"], // Add your tags
+  tags: ["posts", "users"], // Must add your tags
 });
+```
+
+## 🔒 Authentication
+
+### Get Session Token from Browser
+
+![openAPI authorization form](../../../public/openAPIAuthorizationForm.png)
+
+1. Sign in to your application through the normal login flow (Google OAuth)
+2. Open browser developer tools (F12)
+3. Go to **Application/Storage** tab → **Cookies** → Your domain
+4. Find the cookie named `next-auth.session-token` or `__Secure-next-auth.session-token`
+5. Copy the value of that cookie - this is your Bearer token
+
+### Using the API
+
+Use the session token as a Bearer token in the Authorization header:
+
+```
+Authorization: Bearer <your-session-token>
 ```
 
 ## 🔧 Why Each Component is Needed
