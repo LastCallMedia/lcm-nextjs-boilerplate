@@ -6,7 +6,6 @@ import {
   Shield,
   User,
   Settings,
-  ScrollText,
   UserPlus,
   type LucideIcon,
 } from "lucide-react";
@@ -47,18 +46,6 @@ const publicLinks: NavbarLinks[] = [
     href: "/contact",
     icon: Mail,
     description: "Get in touch with us",
-  },
-  {
-    title: "Terms",
-    href: "/terms",
-    icon: ScrollText,
-    description: "Terms of service",
-  },
-  {
-    title: "Privacy",
-    href: "/privacy",
-    icon: Shield,
-    description: "Privacy policy",
   },
 ];
 

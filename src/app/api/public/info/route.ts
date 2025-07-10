@@ -22,15 +22,7 @@ export async function GET() {
         "Playwright for E2E testing",
       ],
       routes: {
-        public: [
-          "/",
-          "/about",
-          "/contact",
-          "/terms",
-          "/privacy",
-          "/posts",
-          "/post",
-        ],
+        public: ["/", "/about", "/contact", "/posts", "/post"],
         auth: ["/login", "/register", "/logout"],
         protected: ["/profile", "/settings"],
       },

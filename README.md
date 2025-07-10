@@ -161,8 +161,6 @@ This boilerplate demonstrates comprehensive routing patterns with authentication
 | `/`        | Homepage          | Landing page with overview and basic navigation      |
 | `/about`   | About page        | Information about the boilerplate and its features   |
 | `/contact` | Contact page      | Contact form and information (demo only)             |
-| `/terms`   | Terms of Service  | Legal terms and service conditions                   |
-| `/privacy` | Privacy Policy    | Privacy policy and data handling practices           |
 | `/posts`   | All posts display | View all public posts (no authentication required)   |
 | `/post`    | Post display      | Basic post display page (no authentication required) |
 
