@@ -35,17 +35,14 @@ export function useAdminTable<T extends string>(
 
   // Debounce search input
   useEffect(() => {
+    setIsSearching(true);
     const timer = setTimeout(() => {
       setDebouncedSearch(search);
       setIsSearching(false);
     }, 300);
 
-    if (search !== debouncedSearch) {
-      setIsSearching(true);
-    }
-
     return () => clearTimeout(timer);
-  }, [search, debouncedSearch]);
+  }, [search]);
 
   // Simple handlers
   const handlePaginationChange = (newPage: number, newPageSize: number) => {
