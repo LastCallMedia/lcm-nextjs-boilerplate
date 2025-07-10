@@ -13,11 +13,39 @@ This API is built with tRPC and automatically generates OpenAPI documentation fo
   - `POST /api/posts` - Create a new post (protected)
   - `GET /api/posts/latest` - Get the latest post (protected)
 
+## 🤝 How It All Works Together
+
+```
+User makes REST API call
+         ↓
+/api/posts/hello?name=World
+         ↓
+[...openapi]/route.ts catches the request
+         ↓
+createOpenApiFetchHandler converts to tRPC
+         ↓
+Calls postRouter.hello procedure
+         ↓
+Returns JSON response
+```
+
 ## 🚗 Adding New Routers
 
 When you add new tRPC routers, follow these steps:
 
 ### 1. Create Router with OpenAPI Metadata
+
+#### Required Fields for Each Procedure
+
+- **`.meta()`** - OpenAPI configuration (method, path, tags, summary, protect)
+- **`.input()`** - Zod schema (use `z.void()` if no input)
+- **`.output()`** - Zod schema for response
+- **`protect: true/false`** - Security requirement in metadata
+
+#### Public vs Protected Procedures
+
+- **`publicProcedure`** - No authentication required (`protect: false`)
+- **`protectedProcedure`** - Requires authentication (`protect: true`)
 
 ```typescript
 export const userRouter = createTRPCRouter({
@@ -85,29 +113,6 @@ Use the session token as a Bearer token in the Authorization header:
 ```
 Authorization: Bearer <your-session-token>
 ```
-
-## 🔧 Why Each Component is Needed
-
-### Required Setup Components
-
-1. **`/api/openapi.json/route.ts`** - Serves the OpenAPI schema document
-2. **`trpc.ts` with OpenAPI meta** - Enables OpenAPI metadata on procedures
-3. **`openapi.ts` with openApiDocument** - Generates the complete API schema
-4. **Router procedures** - Need `.meta()`, `.input()`, `.output()` for OpenAPI generation
-
-### Required Fields for Each Procedure
-
-For OpenAPI generation, each procedure needs:
-
-- **`.meta()`** - OpenAPI configuration (method, path, tags, summary, protect)
-- **`.input()`** - Zod schema (use `z.void()` if no input)
-- **`.output()`** - Zod schema for response
-- **`protect: true/false`** - Security requirement in metadata
-
-### Public vs Protected Procedures
-
-- **`publicProcedure`** - No authentication required (`protect: false`)
-- **`protectedProcedure`** - Requires authentication (`protect: true`)
 
 ## 🧪 Testing Your API
 
