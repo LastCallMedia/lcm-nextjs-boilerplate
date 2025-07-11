@@ -185,10 +185,9 @@ This boilerplate demonstrates comprehensive routing patterns with authentication
 
 #### Public API Endpoints
 
-| Endpoint             | Method | Description                   | Response                                  |
-| -------------------- | ------ | ----------------------------- | ----------------------------------------- |
-| `/api/public/status` | GET    | API health check and status   | Server status, version, timestamp         |
-| `/api/public/info`   | GET    | Application metadata and info | App details, features, routes, tech stack |
+| Endpoint           | Method | Description                   | Response                                  |
+| ------------------ | ------ | ----------------------------- | ----------------------------------------- |
+| `/api/public/info` | GET    | Application metadata and info | App details, features, routes, tech stack |
 
 #### Protected API Endpoints
 
