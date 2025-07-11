@@ -15,6 +15,20 @@ export const postRouter = createTRPCRouter({
       };
     }),
 
+  getAllPublic: publicProcedure.query(async ({ ctx }) => {
+    return ctx.db.post.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        createdBy: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
+      },
+    });
+  }),
+
   getAll: protectedProcedure.query(async ({ ctx }) => {
     return ctx.db.post.findMany({
       orderBy: { createdAt: "desc" },

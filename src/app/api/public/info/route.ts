@@ -23,17 +23,11 @@ export async function GET() {
       ],
       routes: {
         public: ["/", "/about", "/contact", "/posts", "/post"],
-        auth: ["/login", "/register", "/logout"],
-        protected: ["/profile", "/settings"],
-      },
-      api: {
-        public: ["/api/public/status", "/api/public/info"],
-        protected: ["/api/protected/user", "/api/protected/posts"],
-        tRPC: "/api/trpc",
-        auth: "/api/auth",
+        auth: ["/login"],
+        protected: ["/dashboard", "/profile", "/settings"],
       },
       authentication: {
-        providers: ["Google OAuth"],
+        providers: ["Magic Link Email", "Google OAuth"],
         strategies: ["NextAuth.js"],
       },
       database: {

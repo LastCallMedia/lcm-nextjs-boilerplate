@@ -166,18 +166,17 @@ This boilerplate demonstrates comprehensive routing patterns with authentication
 
 ### Authentication Routes (Mixed Access)
 
-| Route       | Description   | Access Level                               |
-| ----------- | ------------- | ------------------------------------------ |
-| `/login`    | Sign in page  | Public (redirects if authenticated)        |
-| `/register` | Sign up page  | Public (redirects if authenticated)        |
-| `/logout`   | Sign out page | Protected (redirects if not authenticated) |
+| Route    | Description  | Access Level                            |
+| -------- | ------------ | --------------------------------------- |
+| `/login` | Sign in page | Magic link email and Google OAuth login |
 
 ### Protected Routes (Authentication Required)
 
-| Route       | Description             | Features                                 |
-| ----------- | ----------------------- | ---------------------------------------- |
-| `/profile`  | User profile management | Profile settings and information display |
-| `/settings` | Application settings    | User preferences and account settings    |
+| Route        | Description             | Features                                 |
+| ------------ | ----------------------- | ---------------------------------------- |
+| `/dashboard` | Main dashboard overview | Default landing page after login         |
+| `/profile`   | User profile management | Profile settings and information display |
+| `/settings`  | Application settings    | User preferences and account settings    |
 
 ### API Routes
 

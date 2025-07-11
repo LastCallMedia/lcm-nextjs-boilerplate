@@ -6,12 +6,11 @@ Simple overview of the routes included in this Next.js boilerplate.
 
 ### Authentication Routes
 
-- `/login` - User sign-in with OAuth providers
-- `/register` - User registration page
-- `/logout` - Sign-out confirmation
+- `/login` - User sign-in with magic link email and Google OAuth
 
 ### Protected Routes (Requires Authentication)
 
+- `/dashboard` - Main dashboard overview (default after login)
 - `/profile` - User profile management
 - `/settings` - Account settings and preferences
 
@@ -23,25 +22,12 @@ Simple overview of the routes included in this Next.js boilerplate.
 - `/posts` - Public posts listing
 - `/post` - Individual post view
 
-### API Routes
-
-#### Public API
-
-- `GET /api/public/status` - Health check
-- `GET /api/public/info` - App metadata
-
-#### Protected API
-
-- `GET /api/protected/user` - Current user data
-- `GET /api/protected/posts` - User's posts
-- `POST /api/protected/posts` - Create new post
-
 ## How Authentication Works
 
 1. Visit protected route → redirected to `/login`
-2. Sign in → redirected to `/profile`
+2. Sign in → redirected to `/dashboard`
 3. Access any protected route while signed in
-4. Sign out → redirected to homepage
+4. Sign out → redirected to homepage (instant logout)
 
 ## Adding New Routes
 
@@ -53,15 +39,6 @@ Create a new page in `src/app/(public)/your-route/page.tsx`
 
 Create a new page in `src/app/(protected)/your-route/page.tsx`
 
-### API Route
-
-Create `route.ts` in `src/app/api/your-endpoint/route.ts`
-
-For protected API routes, add authentication check:
-
-```typescript
-const session = await auth();
-if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
-```
+For protected routes, authentication is handled automatically by the route group layout.
 
 That's it! The boilerplate handles the rest automatically.

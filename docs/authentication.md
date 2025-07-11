@@ -6,6 +6,7 @@ This guide covers the authentication system built with NextAuth.js, including se
 
 The authentication system uses **NextAuth.js v5** (beta) with the following features:
 
+- **Magic Link Authentication**: Email-based passwordless login using Nodemailer
 - **OAuth Integration**: Google OAuth provider configured
 - **Session Management**: Secure session handling with database persistence
 - **Type Safety**: Full TypeScript integration
@@ -19,27 +20,71 @@ The authentication system uses **NextAuth.js v5** (beta) with the following feat
 The authentication configuration is located in `src/server/auth/config.ts`:
 
 ```typescript
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { type NextAuthConfig } from "next-auth";
-import Google from "next-auth/providers/google";
-import { db } from "~/server/db";
+import { type DefaultSession, type NextAuthConfig } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import Nodemailer from "next-auth/providers/nodemailer";
+import { isGoogleAuthConfigured } from "~/lib/auth-utils";
+import { env } from "~/env";
+
+const buildProviders = () => {
+  const providers = [];
+
+  if (env.EMAIL_SERVER && env.EMAIL_FROM) {
+    providers.push(
+      Nodemailer({
+        server: env.EMAIL_SERVER as string,
+        from: env.EMAIL_FROM as string,
+      }),
+    );
+  }
+
+  if (isGoogleAuthConfigured()) {
+    providers.push(
+      GoogleProvider({
+        clientId: env.AUTH_GOOGLE_ID!,
+        clientSecret: env.AUTH_GOOGLE_SECRET!,
+        allowDangerousEmailAccountLinking: true,
+      }),
+    );
+  }
+
+  return providers;
+};
 
 export const authConfig = {
-  adapter: PrismaAdapter(db),
-  providers: [
-    Google({
-      clientId: env.AUTH_GOOGLE_ID,
-      clientSecret: env.AUTH_GOOGLE_SECRET,
-    }),
-  ],
+  providers: buildProviders(),
+  session: {
+    strategy: "jwt" as const,
+    maxAge: 30 * 24 * 60 * 60,
+  },
+  pages: {
+    signIn: "/login",
+  },
   callbacks: {
-    session: ({ session, user }) => ({
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    session: ({ session, token }) => ({
       ...session,
       user: {
         ...session.user,
-        id: user.id,
+        id: token.id as string,
       },
     }),
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith(`${baseUrl}/api/auth/signout`)) {
+        return baseUrl;
+      }
+      if (url === baseUrl || url === `${baseUrl}/login`) {
+        return `${baseUrl}/dashboard`;
+      }
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
+    },
   },
 } satisfies NextAuthConfig;
 ```
@@ -58,6 +103,10 @@ AUTH_GOOGLE_SECRET=your-google-client-secret
 
 # Authentication URL
 AUTH_URL=http://localhost:3000
+
+# Email Configuration for Magic Links
+EMAIL_SERVER=smtp://localhost:1025
+EMAIL_FROM=noreply@yourapp.local
 ```
 
 ## Database Schema
@@ -351,13 +400,13 @@ export const authConfig = {
 ### Email Provider
 
 ```typescript
-import Resend from "next-auth/providers/resend";
+import Nodemailer from "next-auth/providers/nodemailer";
 
 export const authConfig = {
   providers: [
-    Resend({
-      apiKey: env.RESEND_API_KEY,
-      from: "noreply@yourdomain.com",
+    Nodemailer({
+      server: env.EMAIL_SERVER,
+      from: env.EMAIL_FROM,
     }),
   ],
   // ... rest of config

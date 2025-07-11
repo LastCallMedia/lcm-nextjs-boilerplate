@@ -23,42 +23,31 @@ export default async function LoginPage() {
 
   // Redirect if already logged in
   if (session) {
-    redirect("/profile");
+    redirect("/dashboard");
   }
 
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
-      <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+      <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
         <Card>
           <CardHeader className="space-y-1">
             <CardTitle className="text-center text-2xl">Sign in</CardTitle>
             <CardDescription className="text-center">
-              Choose your preferred sign in method
+              Enter your email to receive a magic link or use Google to sign in
             </CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4">
+          <CardContent>
             <Suspense fallback={<div>Loading...</div>}>
               <SignIn />
             </Suspense>
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background text-muted-foreground px-2">
-                  Or continue as guest
-                </span>
-              </div>
-            </div>
-            <Button variant="outline" asChild>
-              <Link href="/">Continue as Guest</Link>
-            </Button>
           </CardContent>
         </Card>
-        <p className="text-muted-foreground px-8 text-center text-sm">
-          By clicking continue, you agree to our terms of service and privacy
-          policy.
-        </p>
+
+        <div className="text-center">
+          <Button variant="link" asChild>
+            <Link href="/">Continue as Guest</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );

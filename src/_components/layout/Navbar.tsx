@@ -6,7 +6,9 @@ import {
   Shield,
   User,
   Settings,
-  UserPlus,
+  LayoutDashboard,
+  LogIn,
+  LogOut,
   type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -14,7 +16,6 @@ import * as React from "react";
 
 import Image from "next/image";
 import { ThemeModeToggle } from "~/_components/theme";
-import { Button } from "~/_components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -24,8 +25,8 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/_components/ui";
-import { SignIn } from "~/_components/auth";
-import { auth } from "~/server/auth";
+import { Button } from "~/_components/ui/button";
+import { auth, signOut } from "~/server/auth";
 
 interface NavbarLinks {
   title: string;
@@ -65,6 +66,12 @@ const postLinks: NavbarLinks[] = [
 ];
 
 const protectedLinks: NavbarLinks[] = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+    icon: LayoutDashboard,
+    description: "Your dashboard overview",
+  },
   {
     title: "Profile",
     href: "/profile",
@@ -138,18 +145,6 @@ const Navbar = async () => {
             </NavigationMenuContent>
           </NavigationMenuItem>
 
-          {/* Register Link - Only show if not authenticated */}
-          {!session && (
-            <NavigationMenuItem>
-              <Button variant="outline">
-                <Link href="/register" className="flex items-center gap-2">
-                  <UserPlus className="h-4 w-4" />
-                  Register
-                </Link>
-              </Button>
-            </NavigationMenuItem>
-          )}
-
           {/* Protected Links - Only show if authenticated */}
           {session && (
             <NavigationMenuItem>
@@ -175,7 +170,24 @@ const Navbar = async () => {
           )}
 
           <NavigationMenuItem>
-            <SignIn />
+            {session ? (
+              <form
+                action={async () => {
+                  "use server";
+                  await signOut({ redirectTo: "/" });
+                }}
+              >
+                <Button type="submit" variant="ghost" size="sm">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sign out
+                </Button>
+              </form>
+            ) : (
+              <Link href="/login" className={navigationMenuTriggerStyle()}>
+                <LogIn className="mr-2 h-4 w-4" />
+                Sign in
+              </Link>
+            )}
           </NavigationMenuItem>
           <NavigationMenuItem>
             <ThemeModeToggle />
