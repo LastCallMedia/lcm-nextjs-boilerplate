@@ -156,13 +156,16 @@ This boilerplate demonstrates comprehensive routing patterns with authentication
 
 ### Public Routes (No Authentication Required)
 
-| Route      | Description       | Features                                             |
-| ---------- | ----------------- | ---------------------------------------------------- |
-| `/`        | Homepage          | Landing page with overview and basic navigation      |
-| `/about`   | About page        | Information about the boilerplate and its features   |
-| `/contact` | Contact page      | Contact form and information (demo only)             |
-| `/posts`   | All posts display | View all public posts (no authentication required)   |
-| `/post`    | Post display      | Basic post display page (no authentication required) |
+| Route           | Description        | Features                                                     |
+| --------------- | ------------------ | ------------------------------------------------------------ |
+| `/`             | Homepage           | Landing page with overview and basic navigation              |
+| `/about`        | About page         | Information about the boilerplate and its features           |
+| `/contact`      | Contact page       | Contact form and information (demo only)                     |
+| `/posts`        | Posts listing      | Browse all posts (public access)                             |
+| `/dashboard`    | User dashboard     | Protected dashboard with user info (authentication required) |
+| `/profile`      | Profile management | User profile settings (authentication required)              |
+| `/settings`     | App settings       | Application preferences (authentication required)            |
+| `/posts/create` | Create post        | Create new posts (authentication required)                   |
 
 ### Authentication Routes (Mixed Access)
 

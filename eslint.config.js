@@ -35,6 +35,13 @@ export default tseslint.config(
       ],
     },
   },
+  // Specific override for auth config file due to @t3-oss/env-nextjs type narrowing limitations
+  {
+    files: ["src/server/auth/config.ts"],
+    rules: {
+      "@typescript-eslint/no-unnecessary-type-assertion": "off",
+    },
+  },
   {
     linterOptions: {
       reportUnusedDisableDirectives: true,

@@ -22,9 +22,9 @@ export async function GET() {
         "Playwright for E2E testing",
       ],
       routes: {
-        public: ["/", "/about", "/contact", "/posts", "/post"],
+        public: ["/", "/about", "/contact", "/posts"],
+        protected: ["/dashboard", "/profile", "/settings", "/posts/create"],
         auth: ["/login"],
-        protected: ["/dashboard", "/profile", "/settings"],
       },
       authentication: {
         providers: ["Magic Link Email", "Google OAuth"],

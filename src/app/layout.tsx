@@ -5,6 +5,7 @@ import { Geist } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
 import { Navbar, Footer } from "~/_components/layout";
 import { ThemeProvider } from "~/_components/ui/theme-provider";
+import { Toaster } from "~/_components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Create LCM App",
@@ -33,6 +34,7 @@ export default function RootLayout({
             <Navbar />
             {children}
             <Footer />
+            <Toaster />
           </ThemeProvider>
         </TRPCReactProvider>
       </body>

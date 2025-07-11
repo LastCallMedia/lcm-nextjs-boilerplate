@@ -6,18 +6,22 @@ const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
 
-  if (
-    nextUrl.pathname.startsWith("/post") ||
-    (req.auth && nextUrl.pathname === "/")
-  ) {
-    return NextResponse.redirect(new URL("/", req.url));
+  // Protect routes that start with /posts/create
+  const isProtectedRoute =
+    nextUrl.pathname.startsWith("/posts/create") ||
+    nextUrl.pathname.startsWith("/dashboard") ||
+    nextUrl.pathname.startsWith("/profile") ||
+    nextUrl.pathname.startsWith("/settings");
+
+  if (isProtectedRoute && !isLoggedIn) {
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 
   return NextResponse.next();
 });
 
-// Define the routes that should be handled by this middleware
 export const config = {
-  matcher: ["/post/:path*", "/posts/:path*", "/"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

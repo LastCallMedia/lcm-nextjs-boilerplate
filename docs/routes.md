@@ -13,14 +13,14 @@ Simple overview of the routes included in this Next.js boilerplate.
 - `/dashboard` - Main dashboard overview (default after login)
 - `/profile` - User profile management
 - `/settings` - Account settings and preferences
+- `/posts/create` - Create new posts
 
 ### Public Routes
 
 - `/` - Homepage
 - `/about` - Information about the boilerplate
 - `/contact` - Contact form (demo)
-- `/posts` - Public posts listing
-- `/post` - Individual post view
+- `/posts` - Browse all posts
 
 ## How Authentication Works
 

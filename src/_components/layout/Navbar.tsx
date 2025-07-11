@@ -1,5 +1,4 @@
 import {
-  File,
   Files,
   Info,
   Mail,
@@ -48,17 +47,8 @@ const publicLinks: NavbarLinks[] = [
     icon: Mail,
     description: "Get in touch with us",
   },
-];
-
-const postLinks: NavbarLinks[] = [
   {
-    title: "Create Post",
-    href: "/post",
-    icon: File,
-    description: "Write a new post",
-  },
-  {
-    title: "All Posts",
+    title: "Posts",
     href: "/posts",
     icon: Files,
     description: "Browse all posts",
@@ -71,6 +61,12 @@ const protectedLinks: NavbarLinks[] = [
     href: "/dashboard",
     icon: LayoutDashboard,
     description: "Your dashboard overview",
+  },
+  {
+    title: "Create Post",
+    href: "/posts/create",
+    icon: Files,
+    description: "Write a new post",
   },
   {
     title: "Profile",
@@ -127,24 +123,6 @@ const Navbar = async () => {
           </NavigationMenuItem>
 
           {/* Posts Links */}
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Posts</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid w-[280px] gap-3 p-4">
-                {postLinks.map((link) => (
-                  <ListItem
-                    key={link.title}
-                    title={link.title}
-                    href={link.href}
-                    icon={link.icon}
-                  >
-                    {link.description}
-                  </ListItem>
-                ))}
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-
           {/* Protected Links - Only show if authenticated */}
           {session && (
             <NavigationMenuItem>

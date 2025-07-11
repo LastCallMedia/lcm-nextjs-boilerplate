@@ -5,6 +5,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { toast } from "sonner";
 
 import { api } from "~/trpc/react";
 import { Input, Button } from "~/_components/ui";
@@ -30,6 +31,10 @@ const PostForm = ({ className }: PostFormProps) => {
     onSuccess: async () => {
       await utils.post.invalidate();
       form.reset();
+      toast.success("Post created successfully!");
+    },
+    onError: (_error) => {
+      toast.error("Failed to create post. Please try again.");
     },
   });
 
@@ -37,25 +42,31 @@ const PostForm = ({ className }: PostFormProps) => {
     createPost.mutate({ name: values.name });
   };
   return (
-    <form
-      onSubmit={form.handleSubmit(onSubmit)}
-      className={`flex flex-col gap-2 ${className}`}
-    >
-      <Input
-        type="text"
-        placeholder="What's on your mind?"
-        {...form.register("name")}
-        className="w-full"
-      />
-      {form.formState.errors.name && (
-        <p className="text-destructive text-sm">
-          {form.formState.errors.name.message}
-        </p>
-      )}
-      <Button type="submit" disabled={createPost.isPending} className="w-full">
-        {createPost.isPending ? "Submitting..." : "Submit"}
-      </Button>
-    </form>
+    <div className={`w-full max-w-xs ${className}`}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
+        <Input
+          type="text"
+          placeholder="What's on your mind?"
+          {...form.register("name")}
+          disabled={createPost.isPending}
+        />
+        {form.formState.errors.name && (
+          <p className="text-sm text-red-500">
+            {form.formState.errors.name.message}
+          </p>
+        )}
+        <Button
+          type="submit"
+          disabled={createPost.isPending}
+          className="w-full"
+        >
+          {createPost.isPending ? "Submitting..." : "Submit"}
+        </Button>
+      </form>
+    </div>
   );
 };
 

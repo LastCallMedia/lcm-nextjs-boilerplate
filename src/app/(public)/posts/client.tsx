@@ -1,6 +1,6 @@
 import type { Post } from "../../../../prisma/generated/client";
 import React from "react";
-import { PostForm, PostCardDefault as PostCard } from "~/_components/posts";
+import { PostCardDefault as PostCard } from "~/_components/posts";
 
 interface AllPostsClientProps {
   posts: Post[];
@@ -9,7 +9,6 @@ interface AllPostsClientProps {
 const AllPostsClient = ({ posts }: AllPostsClientProps) => {
   return (
     <div className="m-auto w-2/3">
-      <PostForm className="m-auto w-1/3" />
       {posts.length < 1 ? (
         <p className="m-4 text-center">No posts available</p>
       ) : (

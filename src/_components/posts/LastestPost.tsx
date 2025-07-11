@@ -1,20 +1,14 @@
 "use client";
 
 import { api } from "~/trpc/react";
-import PostForm from "./PostForm";
 
 export function LatestPost() {
   const [latestPost] = api.post.getLatest.useSuspenseQuery();
 
   return (
     <div className="w-full max-w-xs text-center">
-      {latestPost ? (
+      {latestPost && (
         <p className="truncate">Your most recent post: {latestPost.name}</p>
-      ) : (
-        <div className="space-y-4">
-          <p>You have no posts yet.</p>
-          <PostForm />
-        </div>
       )}
     </div>
   );
