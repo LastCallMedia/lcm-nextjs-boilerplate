@@ -21,7 +21,7 @@ const PostForm = ({ className }: PostFormProps) => {
   const userId = useMemo(() => crypto.randomUUID(), []);
   /** Channel ID to group typing state per-input or page section */
   const channelId = "landing";
-  const typingTimeout = useRef<NodeJS.Timeout | null>(null);
+  const typingTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const form = useForm<z.infer<typeof createPostSchema>>({
     resolver: zodResolver(createPostSchema),
