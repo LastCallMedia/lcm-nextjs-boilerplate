@@ -37,6 +37,8 @@ const PostForm = ({ className }: PostFormProps) => {
     form.setValue("name", value);
 
     if (value.length === 0) {
+      // clear timeout and update channel
+      if (typingTimeout.current) clearTimeout(typingTimeout.current);
       mutation.mutate({ channelId, userId, typing: false });
       return;
     }

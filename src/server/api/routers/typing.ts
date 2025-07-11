@@ -1,8 +1,4 @@
-import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 import EventEmitter, { on } from "node:events";
 
@@ -56,7 +52,7 @@ setInterval(() => {
 
   for (const [channelId, typers] of Object.entries(currentlyTyping)) {
     for (const [id, info] of Object.entries(typers ?? {})) {
-      if (now - info.lastTyped.getTime() > 3000) {
+      if (now - info.lastTyped.getTime() > 2000) {
         delete typers[id];
         updatedChannels.add(channelId);
       }
@@ -66,7 +62,14 @@ setInterval(() => {
   for (const channelId of updatedChannels) {
     ee.emit("isTypingUpdate", channelId, currentlyTyping[channelId] ?? {});
   }
-}, 3000).unref();
+
+  // clean up empty channels
+  for (const channelId of updatedChannels) {
+    if (Object.keys(currentlyTyping[channelId] ?? {}).length === 0) {
+      delete currentlyTyping[channelId];
+    }
+  }
+}, 3000);
 
 export const typingRouter = createTRPCRouter({
   isTyping: publicProcedure
