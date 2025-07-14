@@ -2,7 +2,6 @@ import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { LatestPost } from "~/_components/posts";
-import { Button } from "~/_components/ui/button";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 
@@ -25,7 +24,7 @@ export default async function Home() {
         />
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-            Hello, <span className="text-glacier">LCM</span>ers!!
+            Hello, <span className="text-deep-ocean">LCM</span>ers!!
           </h1>
           <div className="flex flex-col items-center gap-2">
             <p className="text-2xl">
@@ -37,10 +36,13 @@ export default async function Home() {
         <div className="m-4 flex w-full justify-center">
           {session && <LatestPost />}
         </div>
-        <Button>
-          <Link href={"/posts"}>See all posts</Link>
+        <Link 
+          href="/posts"
+          className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2"
+        >
+          See all posts
           <ArrowUpRight />
-        </Button>
+        </Link>
       </main>
     </HydrateClient>
   );

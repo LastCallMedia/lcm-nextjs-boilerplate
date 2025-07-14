@@ -1,0 +1,94 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  e2e-tests:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: lcm_nextjs_boilerplate
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm playwright install --with-deps
+
+      - name: Setup test environment
+        run: |
+          cp .env.example .env
+          echo "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/lcm_nextjs_boilerplate" >> .env
+          echo "AUTH_SECRET=test-secret-for-ci-cd-pipeline-only" >> .env
+          echo "NEXTAUTH_URL=http://localhost:3000" >> .env
+
+      - name: Run database migrations
+        run: pnpm db:push
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/lcm_nextjs_boilerplate
+
+      - name: Build application
+        run: pnpm build
+        env:
+          SKIP_ENV_VALIDATION: true
+          NODE_ENV: production
+          NEXT_TELEMETRY_DISABLED: 1
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/lcm_nextjs_boilerplate
+          AUTH_SECRET: test-secret-for-ci-cd-pipeline-only
+          NEXTAUTH_URL: http://localhost:3000
+
+      - name: Run E2E tests
+        run: pnpm test:e2e
+        env:
+          CI: true
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/lcm_nextjs_boilerplate
+          AUTH_SECRET: test-secret-for-ci-cd-pipeline-only
+          NEXTAUTH_URL: http://localhost:3000

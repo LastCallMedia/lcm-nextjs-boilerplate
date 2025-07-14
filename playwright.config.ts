@@ -12,7 +12,14 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: "html",
   use: {
+    baseURL: "http://localhost:3000",
     trace: "on-first-retry",
+  },
+  webServer: {
+    command: "pnpm dev:only",
+    url: "http://localhost:3000",
+    stdout: "ignore",
+    stderr: "pipe",
   },
   projects: [
     {

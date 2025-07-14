@@ -52,6 +52,7 @@
     "node_modules",
     "jest.setup.js",
     "jest.config.cjs",
-    "coverage"
+    "coverage",
+    "scripts"
   ]
 }
