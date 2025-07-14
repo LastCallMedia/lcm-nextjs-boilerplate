@@ -78,6 +78,97 @@ A production-ready Next.js boilerplate for Last Call Media, designed to accelera
 
 Visit [http://localhost:3000](http://localhost:3000) to see your application.
 
+## 🎭 Local GitHub Actions Testing with Act
+
+This project supports running GitHub Actions workflows locally using [act](https://github.com/nektos/act), which allows you to test your CI/CD pipeline before pushing to GitHub.
+
+### Installing Act
+
+#### macOS
+
+```bash
+# Using Homebrew
+brew install act
+
+# Using MacPorts
+sudo port install act
+```
+
+#### Linux
+
+```bash
+# Using curl (recommended)
+curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
+
+# Using package managers
+# Ubuntu/Debian
+sudo apt install act
+
+# Arch Linux
+sudo pacman -S act
+
+# Fedora/CentOS/RHEL
+sudo dnf install act
+```
+
+#### Windows
+
+```powershell
+# Using Chocolatey
+choco install act-cli
+
+# Using Scoop
+scoop install act
+
+# Using Winget
+winget install nektos.act
+```
+
+#### Manual Installation
+
+Download the latest release from [GitHub Releases](https://github.com/nektos/act/releases) and add it to your PATH.
+
+### Running Workflows with Act
+
+#### Prerequisites
+
+- Docker installed and running
+- Act installed (see above)
+- Repository cloned locally
+
+#### Available Commands
+
+```bash
+# Run all workflows (entire pipeline)
+act
+
+# Run specific workflow job (tests only)
+act -j test
+
+# Run E2E tests specifically
+act -j e2e-tests
+
+# View workflow execution graph and available jobs
+act -l
+
+# Run with verbose output for debugging
+act -v
+
+# Run with specific environment variables
+act --env NODE_ENV=production
+
+# Use specific Docker image
+act --container-architecture linux/amd64
+```
+
+### Benefits of Local Testing
+
+- **🚀 Faster Feedback**: Test changes without pushing to GitHub
+- **💰 Cost Savings**: Avoid using GitHub Actions minutes during development
+- **🔍 Debugging**: Better debugging capabilities with local access
+- **🔒 Security**: Test sensitive workflows in isolated environment
+
+
 ## 📚 Documentation
 
 Comprehensive documentation is available in the [`docs/`](./docs/) directory:
