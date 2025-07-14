@@ -8,13 +8,16 @@ import { cn } from "~/lib/utils";
 // Format: { THEME_NAME        ? (config[label]?.label ?? label) CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const;
 
-export type ChartConfig = Record<string, {
-  label?: React.ReactNode;
-  icon?: React.ComponentType;
-} & (
-  | { color?: string; theme?: never }
-  | { color?: never; theme: Record<keyof typeof THEMES, string> }
-)>;
+export type ChartConfig = Record<
+  string,
+  {
+    label?: React.ReactNode;
+    icon?: React.ComponentType;
+  } & (
+    | { color?: string; theme?: never }
+    | { color?: never; theme: Record<keyof typeof THEMES, string> }
+  )
+>;
 
 type ChartContextProps = {
   config: ChartConfig;
@@ -132,7 +135,13 @@ function ChartTooltipContent({
   hideIndicator?: boolean;
   labelFormatter?: (value: unknown, payload: unknown) => string;
   labelClassName?: string;
-  formatter?: (value: unknown, name: string, item: unknown, index: number, payload: unknown) => string;
+  formatter?: (
+    value: unknown,
+    name: string,
+    item: unknown,
+    index: number,
+    payload: unknown,
+  ) => string;
   color?: string;
   nameKey?: string;
   labelKey?: string;
@@ -245,16 +254,16 @@ function ChartTooltipContent({
                     </div>
                     {item.value != null && (
                       <span className="text-foreground font-mono font-medium tabular-nums">
-                        {typeof item.value === 'number' 
-                          ? item.value.toLocaleString() 
-                          : typeof item.value === 'string' 
-                            ? item.value 
-                            : item.value != null 
-                              ? typeof item.value === 'object' 
-                                ? JSON.stringify(item.value) 
-                                // eslint-disable-next-line @typescript-eslint/no-base-to-string
-                                : String(item.value)
-                              : ''}
+                        {typeof item.value === "number"
+                          ? item.value.toLocaleString()
+                          : typeof item.value === "string"
+                            ? item.value
+                            : item.value != null
+                              ? typeof item.value === "object"
+                                ? JSON.stringify(item.value)
+                                : // eslint-disable-next-line @typescript-eslint/no-base-to-string
+                                  String(item.value)
+                              : ""}
                       </span>
                     )}
                   </div>
@@ -365,7 +374,7 @@ function getPayloadConfigFromPayload(
 
   return configLabelKey in config
     ? config[configLabelKey]
-    : config[key] ?? undefined;
+    : (config[key] ?? undefined);
 }
 
 export {
