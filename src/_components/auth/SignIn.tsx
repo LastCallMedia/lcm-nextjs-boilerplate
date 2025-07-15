@@ -17,12 +17,9 @@ const SignIn = async () => {
   // If user is signed in, show sign out button
   if (session) {
     return (
-      <Link 
-        href="/api/auth/signout"
-        className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2"
-      >
-        Sign out
-      </Link>
+      <Button asChild>
+        <Link href="/api/auth/signout">Sign out</Link>
+      </Button>
     );
   }
 
@@ -56,12 +53,9 @@ const SignIn = async () => {
 
   // Google auth is configured, show normal sign in button
   return (
-    <Link 
-      href="/api/auth/signin"
-      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2"
-    >
-      Sign in with Google
-    </Link>
+    <Button asChild>
+      <Link href="/api/auth/signin">Sign in with Google</Link>
+    </Button>
   );
 };
 

@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-
+import React, { useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -16,8 +15,13 @@ const createPostSchema = z.object({
 interface PostFormProps {
   className?: string;
 }
+
 const PostForm = ({ className }: PostFormProps) => {
   const utils = api.useUtils();
+  const userId = useMemo(() => crypto.randomUUID(), []);
+  /** Channel ID to group typing state per-input or page section */
+  const channelId = "landing";
+  const typingTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const form = useForm<z.infer<typeof createPostSchema>>({
     resolver: zodResolver(createPostSchema),
@@ -25,6 +29,27 @@ const PostForm = ({ className }: PostFormProps) => {
       name: "",
     },
   });
+
+  const mutation = api.typing.isTyping.useMutation();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    form.setValue("name", value);
+
+    if (value.length === 0) {
+      // clear timeout and update channel
+      if (typingTimeout.current) clearTimeout(typingTimeout.current);
+      mutation.mutate({ channelId, userId, typing: false });
+      return;
+    }
+
+    mutation.mutate({ channelId, userId, typing: true });
+
+    if (typingTimeout.current) clearTimeout(typingTimeout.current);
+    typingTimeout.current = setTimeout(() => {
+      mutation.mutate({ channelId, userId, typing: false });
+    }, 2000);
+  };
 
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {
@@ -36,6 +61,7 @@ const PostForm = ({ className }: PostFormProps) => {
   const onSubmit = (values: z.infer<typeof createPostSchema>) => {
     createPost.mutate({ name: values.name });
   };
+
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
@@ -45,6 +71,8 @@ const PostForm = ({ className }: PostFormProps) => {
         type="text"
         placeholder="What's on your mind?"
         {...form.register("name")}
+        value={form.watch("name")}
+        onChange={handleInputChange}
         className="w-full"
       />
       {form.formState.errors.name && (

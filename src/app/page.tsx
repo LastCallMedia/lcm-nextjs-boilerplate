@@ -17,7 +17,7 @@ export default async function Home() {
     <HydrateClient>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b">
         <Image
-          src={"/lcm-logo-teal.png"}
+          src="/lcm-logo-teal.png"
           alt="LCM logo"
           width={100}
           height={100}
@@ -36,13 +36,12 @@ export default async function Home() {
         <div className="m-4 flex w-full justify-center">
           {session && <LatestPost />}
         </div>
-        <Link 
-          href="/posts"
-          className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2"
-        >
-          See all posts
-          <ArrowUpRight />
-        </Link>
+        {/* Accessible button for navigation, avoids nested interactive controls */}
+        <Button asChild>
+          <Link href="/posts" aria-label="See all posts">
+            <span>See all posts</span> <ArrowUpRight aria-hidden="true" />
+          </Link>
+        </Button>
       </main>
     </HydrateClient>
   );
