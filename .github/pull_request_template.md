@@ -1,6 +1,6 @@
 ## 🎫 Ticket
 
-https://lastcall.atlassian.net/browse/{TICKET ID}
+https://lastcall.atlassian.net/browse/{TICKET_ID}
 
 ## 🛠 Changes
 
