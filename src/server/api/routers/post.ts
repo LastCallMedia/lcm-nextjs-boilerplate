@@ -1,3 +1,4 @@
+import type { Prisma } from "@/prisma/generated/client";
 import { z } from "zod";
 
 import {
@@ -43,5 +44,19 @@ export const postRouter = createTRPCRouter({
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
+  }),
+
+  getAllPublic: publicProcedure.query(async ({ ctx }) => {
+    const posts = (await ctx.db.post.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        createdBy: {
+          select: { name: true, image: true },
+        },
+      },
+    })) as Prisma.PostGetPayload<{
+      include: { createdBy: { select: { name: true; image: true } } };
+    }>[];
+    return posts;
   }),
 });

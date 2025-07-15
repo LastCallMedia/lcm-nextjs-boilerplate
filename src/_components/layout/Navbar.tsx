@@ -1,4 +1,4 @@
-import { File, Files, type LucideIcon } from "lucide-react";
+import { File, Files, Info, Mail, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 
@@ -19,11 +19,33 @@ interface NavbarLinks {
   title: string;
   href: string;
   icon: LucideIcon;
+  description?: string;
 }
 
+const publicLinks: NavbarLinks[] = [
+  {
+    title: "About",
+    href: "/about",
+    icon: Info,
+    description: "Learn about this boilerplate",
+  },
+  {
+    title: "Contact",
+    href: "/contact",
+    icon: Mail,
+    description: "Get in touch with us",
+  },
+  {
+    title: "All Posts",
+    href: "/public-post",
+    icon: Files,
+    description: "Browse all posts",
+  },
+];
+
 const NavbarLinks: NavbarLinks[] = [
-  { title: "Post", href: "/post", icon: File },
-  { title: "All Posts", href: "/posts", icon: Files },
+  { title: "My Posts", href: "/post", icon: File },
+  { title: "All Posts", href: "/all-post", icon: Files },
 ];
 const Navbar = () => {
   return (
@@ -45,10 +67,10 @@ const Navbar = () => {
         </NavigationMenuItem>
         <div className="flex items-center gap-4">
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
+            <NavigationMenuTrigger>Explore</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-4">
-                {NavbarLinks?.map((link) => (
+                {publicLinks?.map((link) => (
                   <ListItem
                     key={link.title}
                     title={link.title}
