@@ -30,32 +30,23 @@ test.describe("Authentication Tests", () => {
 
     // Look for sign in link
     const signInLink = page.locator('a[href*="signin"]');
-    
+
     // Assert that sign-in link exists
     expect(await signInLink.count()).toBeGreaterThan(0);
     await expect(signInLink.first()).toBeVisible();
-    
+
     await signInLink.first().click();
 
-    // Wait for navigation to complete
-    await page.waitForLoadState("domcontentloaded");
-
-    // Wait for either URL change or page content to load
+    // Wait for navigation to complete using built-in Playwright methods
     try {
-      await page.waitForFunction(
-        () => {
-          return (
-            document.readyState === "complete" &&
-            (document.body?.innerHTML?.length > 50 ||
-              window.location.href.includes("signin") ||
-              window.location.href.includes("auth"))
-          );
-        },
+      await page.waitForURL(
+        (url) =>
+          url.toString().includes("signin") ?? url.toString().includes("auth"),
         { timeout: 10000 },
       );
     } catch {
-      // If the above fails, just wait for basic page content
-      await page.waitForTimeout(2000);
+      // If URL doesn't change, wait for navigation completion
+      await page.waitForLoadState("domcontentloaded");
     }
 
     // Should navigate to sign in page or stay on homepage - check URL or content
