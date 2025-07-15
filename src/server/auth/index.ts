@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import { cache } from "react";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "~/server/db";
+import { type PrismaClient } from "@prisma/client";
 import { authConfig } from "./config";
 import GoogleProvider from "next-auth/providers/google";
 import { isGoogleAuthConfigured } from "~/lib/auth-utils";
@@ -24,8 +25,7 @@ const buildProviders = () => {
   return providers;
 };
 
-// Custom adapter that ensures role is set on user creation
-const customAdapter = PrismaAdapter(db);
+const customAdapter = PrismaAdapter(db as PrismaClient);
 
 const {
   auth: uncachedAuth,
