@@ -23,6 +23,7 @@ Guides for active development:
 
 - **[Development Guide](./development.md)** - Workflow, patterns, and best practices
 - **[Testing](./testing.md)** - Unit, integration, and E2E testing strategies
+- **[Local GitHub Actions Testing](./local-github-action-testing.md)** - Run GitHub Actions locally with act
 
 ## 🚀 Deployment & Infrastructure
 
