@@ -16,6 +16,15 @@ import {
   UserCheckIcon,
 } from "lucide-react";
 
+// RecentUser defines the type for users in the recentUsers array from getStats.
+interface RecentUser {
+  id: string;
+  name: string | null;
+  email: string | null;
+  role: string;
+  emailVerified: Date | null;
+}
+
 export function AdminStats() {
   const { data: stats, isLoading } = api.admin.getStats.useQuery();
 
@@ -121,7 +130,7 @@ export function AdminStats() {
             </p>
           ) : (
             <div className="space-y-3">
-              {stats.recentUsers.map((user) => (
+              {stats.recentUsers.map((user: RecentUser) => (
                 <div
                   key={user.id}
                   className="flex items-center justify-between space-x-4"
