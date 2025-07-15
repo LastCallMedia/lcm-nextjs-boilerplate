@@ -43,17 +43,18 @@ test.describe("Authentication Tests", () => {
     page,
   }) => {
     await page.goto("/admin");
-    await waitForPageLoad(page, "body");
 
-    // Should either redirect to sign in or show sign in prompt
+    // Wait for either sign in button or sign in page to appear
+    const signInButton = page.locator(
+      'button:has-text("Sign in"), a:has-text("Sign in")',
+    );
+    const signInVisible = await signInButton
+      .first()
+      .isVisible()
+      .catch(() => false);
     const isOnSignIn =
       page.url().includes("signin") || page.url().includes("auth");
-    const hasSignInButton =
-      (await page
-        .locator('button:has-text("Sign in"), a:has-text("Sign in")')
-        .count()) > 0;
 
-    // One of these should be true
-    expect(isOnSignIn || hasSignInButton).toBeTruthy();
+    expect(isOnSignIn || signInVisible).toBeTruthy();
   });
 });
