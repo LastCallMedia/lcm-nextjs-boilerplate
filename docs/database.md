@@ -332,64 +332,6 @@ npx prisma migrate deploy
 4. **Use transactions** for complex changes
 5. **Avoid destructive changes** without data migration
 
-## Data Seeding
-
-### Seed Script
-
-Create `prisma/seed.ts`:
-
-```typescript
-import { PrismaClient } from "./generated";
-
-const prisma = new PrismaClient();
-
-async function main() {
-  // Create sample data
-  const user = await prisma.user.create({
-    data: {
-      email: "test@example.com",
-      name: "Test User",
-    },
-  });
-
-  await prisma.post.createMany({
-    data: [
-      { name: "First Post", createdById: user.id },
-      { name: "Second Post", createdById: user.id },
-    ],
-  });
-}
-
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
-```
-
-### Package.json Configuration
-
-```json
-{
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
-  }
-}
-```
-
-### Run Seeding
-
-```bash
-# Run seed script
-npx prisma db seed
-
-# Reset database and seed
-pnpm db:push --force-reset && npx prisma db seed
-```
-
 ## Performance Optimization
 
 ### Indexing Strategy

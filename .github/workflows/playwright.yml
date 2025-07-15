@@ -73,6 +73,7 @@ jobs:
         run: pnpm build
         env:
           SKIP_ENV_VALIDATION: true
+          NODE_ENV: production
           NEXTAUTH_SECRET: test-secret-for-ci
           NEXTAUTH_URL: http://localhost:3000
           DATABASE_URL: postgresql://test-user:test-password@localhost:5432/test-db
