@@ -43,7 +43,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
       - name: Run type checking
         run: pnpm typecheck
@@ -54,3 +54,6 @@ jobs:
         run: pnpm lint
         env:
           SKIP_ENV_VALIDATION: true
+
+      - name: Run format check
+        run: pnpm format:check
