@@ -19,13 +19,6 @@ export default defineConfig({
     video: "retain-on-failure",
   },
 
-  webServer: {
-    command: "pnpm dev:only",
-    url: "http://localhost:3000",
-    timeout: 120 * 1000,
-    stdout: "ignore",
-    stderr: "pipe",
-  },
   projects: [
     {
       name: "chromium",
@@ -40,4 +33,11 @@ export default defineConfig({
       use: { ...devices["Desktop Safari"] },
     },
   ],
+
+  webServer: {
+    command: "pnpm dev:only",
+    url: "http://localhost:3000",
+    reuseExistingServer: !process.env.CI,
+    timeout: 120 * 1000,
+  },
 });
