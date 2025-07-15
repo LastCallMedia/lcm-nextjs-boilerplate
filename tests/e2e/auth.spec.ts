@@ -1,9 +1,10 @@
 import { test, expect } from "@playwright/test";
+import { waitForPageLoad } from "./utils/page-helpers";
 
 test.describe("Authentication Tests", () => {
   test("sign in page should load correctly", async ({ page }) => {
     await page.goto("/auth/signin");
-    await page.waitForLoadState("networkidle");
+    await waitForPageLoad(page, "body");
 
     // Page should load without errors
     await expect(page.locator("body")).toBeVisible();
@@ -11,7 +12,7 @@ test.describe("Authentication Tests", () => {
 
   test("sign in form should be functional", async ({ page }) => {
     await page.goto("/auth/signin");
-    await page.waitForLoadState("networkidle");
+    await waitForPageLoad(page, "body");
 
     // Look for OAuth provider buttons (Google sign-in)
     const providerButtons = page.locator(
@@ -25,7 +26,7 @@ test.describe("Authentication Tests", () => {
 
   test("navigation to sign in should work", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await waitForPageLoad(page, "body");
 
     // Look for sign in link
     const signInLink = page.locator('a[href*="signin"]');
@@ -33,10 +34,7 @@ test.describe("Authentication Tests", () => {
     if ((await signInLink.count()) > 0) {
       await expect(signInLink.first()).toBeVisible();
       await signInLink.first().click();
-      await page.waitForLoadState("networkidle");
-
-      // Should navigate to sign in page or stay on homepage
-      await expect(page.locator("body")).toBeVisible();
+      await waitForPageLoad(page, "body");
     }
   });
 
@@ -44,7 +42,7 @@ test.describe("Authentication Tests", () => {
     page,
   }) => {
     await page.goto("/admin");
-    await page.waitForLoadState("networkidle");
+    await waitForPageLoad(page, "body");
 
     // Should either redirect to sign in or show sign in prompt
     const isOnSignIn =
