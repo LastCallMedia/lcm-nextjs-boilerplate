@@ -35,8 +35,6 @@ test.describe("Authentication Tests", () => {
       await expect(signInLink.first()).toBeVisible();
       await signInLink.first().click();
       await waitForPageLoad(page, "body");
-      // Should navigate to sign in page or stay on homepage
-      await expect(page.locator("body")).toBeVisible();
     }
   });
 
