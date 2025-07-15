@@ -17,7 +17,7 @@ const SignIn = async () => {
   // If user is signed in, show sign out button
   if (session) {
     return (
-      <Button>
+      <Button asChild>
         <Link href="/api/auth/signout">Sign out</Link>
       </Button>
     );
@@ -53,7 +53,7 @@ const SignIn = async () => {
 
   // Google auth is configured, show normal sign in button
   return (
-    <Button>
+    <Button asChild>
       <Link href="/api/auth/signin">Sign in with Google</Link>
     </Button>
   );
