@@ -1,11 +1,4 @@
-import {
-  File,
-  Files,
-  ShieldIcon,
-  Info,
-  Mail,
-  type LucideIcon,
-} from "lucide-react";
+import { Files, ShieldIcon, Info, Mail, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 import Image from "next/image";
