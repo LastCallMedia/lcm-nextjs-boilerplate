@@ -17,7 +17,6 @@ test.describe("Accessibility Tests", () => {
     page,
   }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
 
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa"])
@@ -36,7 +35,6 @@ test.describe("Accessibility Tests", () => {
     page,
   }) => {
     await page.goto("/posts");
-    await page.waitForLoadState("networkidle");
 
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa"])
@@ -53,7 +51,6 @@ test.describe("Accessibility Tests", () => {
 
   test("navigation should be keyboard accessible", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
 
     // Test keyboard navigation
     await page.keyboard.press("Tab");
@@ -83,7 +80,6 @@ test.describe("Accessibility Tests", () => {
 
   test("color contrast should meet WCAG standards", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
 
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(["wcag2aa"])
@@ -101,7 +97,6 @@ test.describe("Accessibility Tests", () => {
 
   test("images should have alt text", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
 
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withRules(["image-alt"])
