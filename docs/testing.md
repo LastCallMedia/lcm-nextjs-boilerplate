@@ -20,8 +20,10 @@ tests/
 ├── __fixtures__/        # Test data fixtures
 ├── unit/                # Unit tests
 ├── integration/         # Integration tests
-├── e2e/                 # End-to-end tests
-└── accessibility.spec.ts # Accessibility tests
+└── e2e/                 # End-to-end tests
+    ├── accessibility.spec.ts    # WCAG compliance tests
+    ├── navigation.spec.ts       # Basic navigation and UI
+    └── auth.spec.ts            # Authentication flows
 ```
 
 ## Jest Configuration
@@ -39,7 +41,7 @@ const createJestConfig = nextJest({
 
 const config = {
   testEnvironment: "jsdom",
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
     "^~/(.*)$": "<rootDir>/src/$1",
@@ -418,6 +420,22 @@ describe("Database Integration", () => {
 
 ## End-to-End Testing
 
+### Quick Start
+
+```bash
+# Install Playwright browsers
+pnpm install:playwright
+
+# Run E2E tests
+pnpm test:e2e
+
+# Run with visual interface
+pnpm test:e2e:ui
+
+# Run in headed mode (visible browser)
+pnpm test:e2e:headed
+```
+
 ### Playwright Configuration
 
 The Playwright configuration in `playwright.config.ts`:
@@ -427,15 +445,23 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests/e2e",
+  timeout: 30 * 1000,
+  expect: {
+    timeout: 5000,
+  },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: "html",
+  reporter: process.env.CI ? "dot" : "html",
+
   use: {
     baseURL: "http://localhost:3000",
     trace: "on-first-retry",
+    screenshot: "only-on-failure",
+    video: "retain-on-failure",
   },
+
   projects: [
     {
       name: "chromium",
@@ -449,15 +475,13 @@ export default defineConfig({
       name: "webkit",
       use: { ...devices["Desktop Safari"] },
     },
-    {
-      name: "Mobile Chrome",
-      use: { ...devices["Pixel 5"] },
-    },
   ],
+
   webServer: {
-    command: "pnpm build && pnpm start",
+    command: "pnpm dev:only",
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
+    timeout: 120 * 1000,
   },
 });
 ```
