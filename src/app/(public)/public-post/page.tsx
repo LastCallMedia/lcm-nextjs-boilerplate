@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import PostClient from "./client";
 import { PostSkeleton } from "~/_components/posts";
 import { api } from "~/trpc/server";
-import type { Post } from "@/prisma/generated/client";
+import type { Post } from "@prisma/client";
 
 const page = async () => {
   // Fetch all public posts from tRPC server-side
