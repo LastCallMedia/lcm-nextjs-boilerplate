@@ -1,20 +1,24 @@
 import { test, expect } from "@playwright/test";
+import { waitForPageLoad } from "./utils/page-helpers";
 
 test.describe("Basic Navigation Tests", () => {
   test("should navigate to homepage", async ({ page }) => {
     await page.goto("/");
+    await waitForPageLoad(page);
     await expect(page).toHaveTitle(/Create LCM App/);
     await expect(page.locator("h1")).toBeVisible();
   });
 
   test("should navigate to posts page", async ({ page }) => {
     await page.goto("/posts");
+    await waitForPageLoad(page);
 
     await expect(page.locator("h1")).toContainText(/posts/i);
   });
 
   test("should have working navigation menu", async ({ page }) => {
     await page.goto("/");
+    await waitForPageLoad(page);
 
     // Check navigation structure exists
     const nav = page.locator("nav");
@@ -40,12 +44,14 @@ test.describe("Basic Navigation Tests", () => {
 test.describe("Post Management Tests", () => {
   test("should display posts list", async ({ page }) => {
     await page.goto("/posts");
+    await waitForPageLoad(page);
 
     await expect(page.locator("h1")).toContainText(/posts/i);
   });
 
   test("should show create post button/link", async ({ page }) => {
     await page.goto("/posts");
+    await waitForPageLoad(page);
 
     // Verify the page loaded correctly
     await expect(page.locator("h1")).toContainText(/posts/i);
@@ -61,6 +67,7 @@ test.describe("Post Management Tests", () => {
 
   test("should navigate to create post page", async ({ page }) => {
     await page.goto("/posts/create");
+    await waitForPageLoad(page, "body");
 
     // Page should load without error (may show login, create form, or 404)
     // Just verify that we got a response and the page has content
@@ -71,6 +78,7 @@ test.describe("Post Management Tests", () => {
 test.describe("Theme and UI Tests", () => {
   test("should have theme toggle functionality", async ({ page }) => {
     await page.goto("/");
+    await waitForPageLoad(page);
 
     // Look for theme toggle button
     const themeToggle = page.locator('[data-testid="theme-toggle"]');
@@ -91,6 +99,7 @@ test.describe("Theme and UI Tests", () => {
   test("should be responsive on mobile devices", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto("/");
+    await waitForPageLoad(page);
 
     // Verify content is visible and responsive
     await expect(page.locator("body")).toBeVisible();

@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { waitForPageLoad } from "./utils/page-helpers";
 
 test.describe("Accessibility Tests", () => {
   // Common exclusions for all tests
@@ -17,6 +18,8 @@ test.describe("Accessibility Tests", () => {
     page,
   }) => {
     await page.goto("/");
+
+    await waitForPageLoad(page);
 
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa"])
@@ -36,6 +39,8 @@ test.describe("Accessibility Tests", () => {
   }) => {
     await page.goto("/posts");
 
+    await waitForPageLoad(page);
+
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa"])
       .exclude(commonExclusions)
@@ -51,6 +56,8 @@ test.describe("Accessibility Tests", () => {
 
   test("navigation should be keyboard accessible", async ({ page }) => {
     await page.goto("/");
+
+    await waitForPageLoad(page);
 
     // Test keyboard navigation
     await page.keyboard.press("Tab");
@@ -81,6 +88,8 @@ test.describe("Accessibility Tests", () => {
   test("color contrast should meet WCAG standards", async ({ page }) => {
     await page.goto("/");
 
+    await waitForPageLoad(page);
+
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(["wcag2aa"])
       .withRules(["color-contrast"])
@@ -97,6 +106,8 @@ test.describe("Accessibility Tests", () => {
 
   test("images should have alt text", async ({ page }) => {
     await page.goto("/");
+
+    await waitForPageLoad(page);
 
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withRules(["image-alt"])
