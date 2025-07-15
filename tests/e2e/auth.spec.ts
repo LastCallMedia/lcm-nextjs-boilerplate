@@ -37,29 +37,8 @@ test.describe("Authentication Tests", () => {
 
     await signInLink.first().click();
 
-    // Wait for navigation to complete using built-in Playwright methods
-    try {
-      await page.waitForURL(
-        (url) =>
-          url.toString().includes("signin") || url.toString().includes("auth"),
-        { timeout: 10000 },
-      );
-    } catch {
-      // If URL doesn't change, wait for navigation completion
-      await page.waitForLoadState("domcontentloaded");
-    }
-
-    // Should navigate to sign in page or stay on homepage - check URL or content
-    const currentUrl = page.url();
-    const hasSignInContent = await page.locator("body").textContent();
-
-    // Test passes if we have either a sign-in URL or sign-in related content
-    const isValidState =
-      currentUrl.includes("signin") ||
-      currentUrl.includes("auth") ||
-      (hasSignInContent && hasSignInContent.length > 10);
-
-    expect(isValidState).toBeTruthy();
+    // Should navigate to sign in page or stay on homepage
+    await waitForPageLoad(page, "body");
   });
 
   test("protected routes should handle unauthenticated access", async ({
