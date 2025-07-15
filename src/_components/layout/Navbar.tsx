@@ -43,27 +43,29 @@ const Navbar = () => {
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[200px] gap-4">
-              {NavbarLinks?.map((link) => (
-                <ListItem
-                  key={link.title}
-                  title={link.title}
-                  href={link.href}
-                  icon={link.icon}
-                />
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <SignIn />
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <ThemeModeToggle />
-        </NavigationMenuItem>
+        <div className="flex items-center gap-4">
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[200px] gap-4">
+                {NavbarLinks?.map((link) => (
+                  <ListItem
+                    key={link.title}
+                    title={link.title}
+                    href={link.href}
+                    icon={link.icon}
+                  />
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <SignIn />
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <ThemeModeToggle />
+          </NavigationMenuItem>
+        </div>
       </NavigationMenuList>
     </NavigationMenu>
   );
