@@ -7,6 +7,17 @@ const { auth } = NextAuth(authConfig);
 export default auth((req) => {
   const { nextUrl } = req;
 
+  // Protect admin routes
+  if (nextUrl.pathname.startsWith("/admin")) {
+    if (!req.auth) {
+      return NextResponse.redirect(new URL("/api/auth/signin", req.url));
+    }
+
+    if (req.auth.user.role !== "ADMIN") {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+  }
+
   if (
     nextUrl.pathname.startsWith("/post") ||
     (req.auth && nextUrl.pathname === "/")
@@ -19,5 +30,5 @@ export default auth((req) => {
 
 // Define the routes that should be handled by this middleware
 export const config = {
-  matcher: ["/post/:path*", "/posts/:path*", "/"],
+  matcher: ["/post/:path*", "/posts/:path*", "/admin/:path*", "/"],
 };
