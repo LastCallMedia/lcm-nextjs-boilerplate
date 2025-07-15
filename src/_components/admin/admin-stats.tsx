@@ -132,7 +132,7 @@ export function AdminStats() {
                         {user.name ?? "No name"}
                       </p>
                       <p className="text-muted-foreground text-sm">
-                        {user.email}
+                        {user.email ?? ""}
                       </p>
                     </div>
                   </div>
