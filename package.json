@@ -36,7 +36,7 @@
     "act:full": "act",
     "act:lint": "act -j code-quality",
     "act:jest": "act -j jest-tests",
-    "act:e2e": "act -j e2e-tests --env NODE_ENV=production"
+    "act:e2e": "act -j e2e-tests --cross-env NODE_ENV=production"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",

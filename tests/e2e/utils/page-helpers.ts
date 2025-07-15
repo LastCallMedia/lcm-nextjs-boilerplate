@@ -12,6 +12,9 @@ import { type Page } from "@playwright/test";
  * @param expectedElement - CSS selector for an element that should be visible when the page is ready
  * @param timeout - Timeout in milliseconds for waiting for the expected element (default: 15000)
  */
+
+const DEFAULT_RENDER_DELAY_MS = 500;
+
 export async function waitForPageLoad(
   page: Page,
   expectedElement = "h1",
@@ -27,5 +30,5 @@ export async function waitForPageLoad(
   });
 
   // Add a small delay to ensure components are fully rendered
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(DEFAULT_RENDER_DELAY_MS);
 }

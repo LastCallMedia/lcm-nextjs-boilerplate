@@ -19,9 +19,9 @@ test.describe("Authentication Tests", () => {
       'button[type="submit"], a[href*="auth/signin"]',
     );
 
-    if ((await providerButtons.count()) > 0) {
-      await expect(providerButtons.first()).toBeVisible();
-    }
+    // Assert that sign-in functionality exists
+    expect(await providerButtons.count()).toBeGreaterThan(0);
+    await expect(providerButtons.first()).toBeVisible();
   });
 
   test("navigation to sign in should work", async ({ page }) => {
@@ -30,44 +30,45 @@ test.describe("Authentication Tests", () => {
 
     // Look for sign in link
     const signInLink = page.locator('a[href*="signin"]');
+    
+    // Assert that sign-in link exists
+    expect(await signInLink.count()).toBeGreaterThan(0);
+    await expect(signInLink.first()).toBeVisible();
+    
+    await signInLink.first().click();
 
-    if ((await signInLink.count()) > 0) {
-      await expect(signInLink.first()).toBeVisible();
-      await signInLink.first().click();
+    // Wait for navigation to complete
+    await page.waitForLoadState("domcontentloaded");
 
-      // Wait for navigation to complete
-      await page.waitForLoadState("domcontentloaded");
-
-      // Wait for either URL change or page content to load
-      try {
-        await page.waitForFunction(
-          () => {
-            return (
-              document.readyState === "complete" &&
-              (document.body?.innerHTML?.length > 50 ||
-                window.location.href.includes("signin") ||
-                window.location.href.includes("auth"))
-            );
-          },
-          { timeout: 10000 },
-        );
-      } catch {
-        // If the above fails, just wait for basic page content
-        await page.waitForTimeout(2000);
-      }
-
-      // Should navigate to sign in page or stay on homepage - check URL or content
-      const currentUrl = page.url();
-      const hasSignInContent = await page.locator("body").textContent();
-
-      // Test passes if we have either a sign-in URL or sign-in related content
-      const isValidState =
-        currentUrl.includes("signin") ||
-        currentUrl.includes("auth") ||
-        (hasSignInContent && hasSignInContent.length > 10);
-
-      expect(isValidState).toBeTruthy();
+    // Wait for either URL change or page content to load
+    try {
+      await page.waitForFunction(
+        () => {
+          return (
+            document.readyState === "complete" &&
+            (document.body?.innerHTML?.length > 50 ||
+              window.location.href.includes("signin") ||
+              window.location.href.includes("auth"))
+          );
+        },
+        { timeout: 10000 },
+      );
+    } catch {
+      // If the above fails, just wait for basic page content
+      await page.waitForTimeout(2000);
     }
+
+    // Should navigate to sign in page or stay on homepage - check URL or content
+    const currentUrl = page.url();
+    const hasSignInContent = await page.locator("body").textContent();
+
+    // Test passes if we have either a sign-in URL or sign-in related content
+    const isValidState =
+      currentUrl.includes("signin") ||
+      currentUrl.includes("auth") ||
+      (hasSignInContent && hasSignInContent.length > 10);
+
+    expect(isValidState).toBeTruthy();
   });
 
   test("protected routes should handle unauthenticated access", async ({
