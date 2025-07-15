@@ -36,7 +36,11 @@
     "act:full": "act",
     "act:lint": "act -j code-quality",
     "act:jest": "act -j jest-tests",
-    "act:e2e": "act -j e2e-tests"
+    "act:e2e": "act -j e2e-tests",
+    "db:seed": "tsx prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
@@ -120,6 +124,7 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "prisma": "^6.11.1",
     "tailwindcss": "^4.1.11",
+    "tsx": "^4.20.3",
     "tw-animate-css": "^1.3.5",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.37.0"

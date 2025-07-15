@@ -1,25 +1,31 @@
 # Admin Dashboard Guide
 
-Admin area for user management, post moderation, and extensible table management.
+Admin dashboard lets you manage users, posts, and roles. Only admins can access it.
 
 ## Quick Start
 
-1. **Create an admin user**:
+1. **Seed admin and user**:
 
-   ```sql
-   UPDATE "User" SET role = 'ADMIN' WHERE email = 'your-email@example.com';
+   Run the seed script to create a default admin and user:
+
+   ```bash
+   pnpm db:generate # Ensure migrations are applied
+   pnpm db:seed     # Run the seed script
    ```
 
-2. **Access dashboard**: Navigate to `/admin` (link appears in navbar for admin users)
+   - Admin: `admin@example.com` / `admin123`
+   - User: `user@example.com` / `user123`
+
+2. **Access dashboard**: Go to `/admin` (visible for admin users)
 
 ## Features
 
-- **User Management**: View, search, and manage user roles at `/admin/users`
-- **Post Management**: View and moderate posts at `/admin/posts`
+- **User Management**: View, search, and change user roles at `/admin/users`
+- **Post Management**: Moderate posts at `/admin/posts`
 
 ## User Roles
 
-Admin access is role-based - only users with ADMIN role can access these routes.
+Admin access is role-based. Only users with `ADMIN` role can access admin routes.
 
 ```prisma
 enum Role {
@@ -30,16 +36,18 @@ enum Role {
 
 Admin users can:
 
+Admins can:
+
 - View all users and posts
 - Change user roles (USER ↔ ADMIN)
 - Delete users (and their posts)
 
 ## API Routes
 
-Protected tRPC procedures in `src/server/api/routers/admin.ts`:
+Key API routes (see `src/server/api/routers/admin.ts`):
 
-- `getUsers()` - Paginated user list with search
-- `getPosts()` - Paginated post list with search
+- `getUsers()` - List/search users
+- `getPosts()` - List/search posts
 - `updateUserRole()` - Change user roles
 - `deleteUser()` - Remove users
 
@@ -47,26 +55,11 @@ Protected tRPC procedures in `src/server/api/routers/admin.ts`:
 
 To add new admin features:
 
-1. **Add new procedures** to `src/server/api/routers/admin.ts`
-2. **Create table components** following the pattern in `src/_components/admin/`
-3. **Add routes** to `src/app/admin/[feature]/page.tsx`
-4. **Use the `useAdminTable` hook** for consistent pagination/sorting
-
-Example: Adding a new admin table for managing categories:
-
-```typescript
-// In admin.ts router
-getCategories: adminProcedure
-  .input(/* pagination schema */)
-  .query(/* fetch categories */),
-
-// New component
-<DataTable<Category, CategorySortField>
-  data={categories}
-  // ...standard table props
-/>
-```
+1. Add new API procedures in `src/server/api/routers/admin.ts`
+2. Create table components in `src/_components/admin/`
+3. Add routes in `src/app/admin/[feature]/page.tsx`
+4. Use `useAdminTable` for pagination/sorting
 
 ## Development
 
-The admin dashboard is accessible at `/admin` and requires proper authentication with admin privileges.
+The admin dashboard is at `/admin` and requires admin authentication.
