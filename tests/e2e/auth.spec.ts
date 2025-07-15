@@ -41,7 +41,7 @@ test.describe("Authentication Tests", () => {
     try {
       await page.waitForURL(
         (url) =>
-          url.toString().includes("signin") ?? url.toString().includes("auth"),
+          url.toString().includes("signin") || url.toString().includes("auth"),
         { timeout: 10000 },
       );
     } catch {
