@@ -8,14 +8,14 @@ Navigate to your project root and run:
 
 ```bash
 # Run all workflows (entire pipeline)
-act
+pnpm act:full
 
-# Run specific workflow job
-act -j jest-tests
+# Run code-quality workflow
+pnpm act:lint
 
-# Run specific workflow file
-act -W .github/workflows/jest-test.yml
+# Run jest-test workflow
+pnpm act:jest
 
-# View workflow execution graph and available jobs
-act -l
+# Run e2e-test workflow
+pnpm act:e2e
 ```
