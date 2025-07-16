@@ -35,12 +35,6 @@ const publicLinks: NavbarLinks[] = [
     icon: Mail,
     description: "Get in touch with us",
   },
-  {
-    title: "All Posts",
-    href: "/public-post",
-    icon: Files,
-    description: "Browse all posts",
-  },
 ];
 
 const privateLinks: NavbarLinks[] = [
