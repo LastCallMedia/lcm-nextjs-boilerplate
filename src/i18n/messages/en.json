@@ -1,0 +1,63 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "submit": "Submit"
+  },
+  "navigation": {
+    "home": "Home",
+    "posts": "Posts",
+    "allPosts": "All Posts",
+    "post": "Post",
+    "menu": "Menu",
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
+  },
+  "home": {
+    "title": "Hello, {name}ers!!",
+    "greeting": "Hello from tRPC",
+    "seeAllPosts": "See all posts"
+  },
+  "posts": {
+    "title": "Latest Posts",
+    "allPostsTitle": "All Posts",
+    "createPost": "Create Post",
+    "noPostsFound": "No posts found",
+    "noPostsAvailable": "No posts available",
+    "postTitle": "Post Title",
+    "postContent": "Post Content",
+    "createdAt": "Created at",
+    "loading": "Loading posts...",
+    "createSuccess": "Post created successfully!",
+    "deleteSuccess": "Post deleted successfully!",
+    "placeholder": "What's on your mind?",
+    "submitting": "Submitting...",
+    "titleRequired": "Title is required"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "signInWith": "Sign in with {provider}",
+    "welcomeBack": "Welcome back!",
+    "googleNotConfigured": "Google authentication is not configured.",
+    "googleConfigMessage": "Please set AUTH_GOOGLE_ID and AUTH_GOOGLE_SECRET environment variables."
+  },
+  "example": {
+    "title": "i18n Example",
+    "welcome": "Welcome to our application!",
+    "counter": "You have clicked {count} times",
+    "today": "Today is:",
+    "time": "Current time:",
+    "clicked": "Button clicked!",
+    "clickMe": "Click me!",
+    "richText": "This is <strong>bold text</strong> and this is <em>italic text</em>."
+  },
+  "footer": {
+    "text": "Built with Next.js, tRPC, and Prisma"
+  }
+}

@@ -1,60 +1,43 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
-import { auth } from "~/server/auth";
-import { isGoogleAuthConfigured } from "~/lib/auth-utils";
+import { useSession } from "next-auth/react";
+import { FormattedMessage } from "react-intl";
 import { Button } from "../ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
 
-const SignIn = async () => {
-  const session = await auth();
-  const isGoogleConfigured = isGoogleAuthConfigured();
+const SignIn = () => {
+  const { data: session, status } = useSession();
+
+  // Show loading state while session is being fetched
+  if (status === "loading") {
+    return (
+      <Button disabled>
+        <FormattedMessage id="common.loading" />
+      </Button>
+    );
+  }
 
   // If user is signed in, show sign out button
   if (session) {
     return (
       <Button>
-        <Link href="/api/auth/signout">Sign out</Link>
+        <Link href="/api/auth/signout">
+          <FormattedMessage id="auth.signOut" />
+        </Link>
       </Button>
     );
   }
 
-  // If Google auth is not configured, show disabled button with tooltip
-  if (!isGoogleConfigured) {
-    return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              disabled
-              variant="outline"
-              className="cursor-not-allowed opacity-50"
-            >
-              Sign in with Google
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <div className="text-center">
-              <div>Google authentication is not configured.</div>
-              <div>
-                Please set AUTH_GOOGLE_ID and AUTH_GOOGLE_SECRET environment
-                variables.
-              </div>
-            </div>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    );
-  }
-
-  // Google auth is configured, show normal sign in button
+  // Show sign in button (Google auth configuration is handled server-side)
   return (
     <Button>
-      <Link href="/api/auth/signin">Sign in with Google</Link>
+      <Link href="/api/auth/signin">
+        <FormattedMessage
+          id="auth.signInWith"
+          values={{ provider: "Google" }}
+        />
+      </Link>
     </Button>
   );
 };

@@ -1,9 +1,14 @@
+"use client";
+
 import { File, Files, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
+import { FormattedMessage } from "react-intl";
 
 import Image from "next/image";
 import { ThemeModeToggle } from "~/_components/theme";
+import { LanguageSwitcher } from "~/_components/i18n";
+import { SignIn } from "~/_components/auth";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,25 +18,30 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/_components/ui";
-import { SignIn } from "~/_components/auth";
+import { type Locale } from "~/i18n";
 
 interface NavbarLinks {
-  title: string;
+  titleKey: string;
   href: string;
   icon: LucideIcon;
 }
 
-const NavbarLinks: NavbarLinks[] = [
-  { title: "Post", href: "/post", icon: File },
-  { title: "All Posts", href: "/posts", icon: Files },
+const navbarLinks: NavbarLinks[] = [
+  { titleKey: "navigation.post", href: "/post", icon: File },
+  { titleKey: "navigation.allPosts", href: "/posts", icon: Files },
 ];
-const Navbar = () => {
+
+interface NavbarProps {
+  currentLocale: Locale;
+}
+
+const Navbar = ({ currentLocale }: NavbarProps) => {
   return (
     <NavigationMenu viewport={false} className="m-5 block max-w-full">
       <NavigationMenuList className="w-full justify-between">
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/">
+            <Link href={`/${currentLocale}`}>
               <Image
                 src={"/lcm-logo-teal.svg"}
                 width={40}
@@ -45,19 +55,24 @@ const Navbar = () => {
         </NavigationMenuItem>
         <div className="flex items-center gap-4">
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
+            <NavigationMenuTrigger>
+              <FormattedMessage id="navigation.menu" />
+            </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-4">
-                {NavbarLinks?.map((link) => (
-                  <ListItem
-                    key={link.title}
-                    title={link.title}
-                    href={link.href}
+                {navbarLinks?.map((link) => (
+                  <NavItem
+                    key={link.titleKey}
+                    titleKey={link.titleKey}
+                    href={`/${currentLocale}${link.href}`}
                     icon={link.icon}
                   />
                 ))}
               </ul>
             </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <LanguageSwitcher currentLocale={currentLocale} />
           </NavigationMenuItem>
           <NavigationMenuItem>
             <SignIn />
@@ -71,13 +86,13 @@ const Navbar = () => {
   );
 };
 
-function ListItem({
-  title,
-  children,
+function NavItem({
+  titleKey,
   href,
   icon: Icon,
   ...props
 }: React.ComponentPropsWithoutRef<"li"> & {
+  titleKey: string;
   href: string;
   icon: LucideIcon;
 }) {
@@ -87,11 +102,8 @@ function ListItem({
         <Link href={href}>
           <div className="flex gap-2 text-sm leading-none font-medium">
             <Icon />
-            {title}
+            <FormattedMessage id={titleKey} />
           </div>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-            {children}
-          </p>
         </Link>
       </NavigationMenuLink>
     </li>

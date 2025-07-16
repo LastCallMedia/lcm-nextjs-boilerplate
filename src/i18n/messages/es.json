@@ -1,0 +1,63 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "create": "Crear",
+    "submit": "Enviar"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "posts": "Publicaciones",
+    "allPosts": "Todas las Publicaciones",
+    "post": "Publicación",
+    "menu": "Menú",
+    "signIn": "Iniciar Sesión",
+    "signOut": "Cerrar Sesión"
+  },
+  "home": {
+    "title": "¡Hola, {name}s!!",
+    "greeting": "Hola desde tRPC",
+    "seeAllPosts": "Ver todas las publicaciones"
+  },
+  "posts": {
+    "title": "Últimas Publicaciones",
+    "allPostsTitle": "Todas las Publicaciones",
+    "createPost": "Crear Publicación",
+    "noPostsFound": "No se encontraron publicaciones",
+    "noPostsAvailable": "No hay publicaciones disponibles",
+    "postTitle": "Título de la Publicación",
+    "postContent": "Contenido de la Publicación",
+    "createdAt": "Creado el",
+    "loading": "Cargando publicaciones...",
+    "createSuccess": "¡Publicación creada exitosamente!",
+    "deleteSuccess": "¡Publicación eliminada exitosamente!",
+    "placeholder": "¿Qué estás pensando?",
+    "submitting": "Enviando...",
+    "titleRequired": "El título es obligatorio"
+  },
+  "auth": {
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión",
+    "signInWith": "Iniciar sesión con {provider}",
+    "welcomeBack": "¡Bienvenido de nuevo!",
+    "googleNotConfigured": "La autenticación de Google no está configurada.",
+    "googleConfigMessage": "Por favor configura las variables de entorno AUTH_GOOGLE_ID y AUTH_GOOGLE_SECRET."
+  },
+  "example": {
+    "title": "Ejemplo de i18n",
+    "welcome": "¡Bienvenido a nuestra aplicación!",
+    "counter": "Has hecho clic {count} veces",
+    "today": "Hoy es:",
+    "time": "Hora actual:",
+    "clicked": "¡Botón presionado!",
+    "clickMe": "¡Haz clic aquí!",
+    "richText": "Este es <strong>texto en negrita</strong> y este es <em>texto en cursiva</em>."
+  },
+  "footer": {
+    "text": "Construido con Next.js, tRPC y Prisma"
+  }
+}

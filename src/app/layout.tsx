@@ -1,41 +1,25 @@
-import "~/styles/globals.css";
-
-import { type Metadata } from "next";
 import { Geist } from "next/font/google";
-import { TRPCReactProvider } from "~/trpc/react";
-import { Navbar, Footer } from "~/_components/layout";
-import { ThemeProvider } from "~/_components/ui/theme-provider";
-
-export const metadata: Metadata = {
-  title: "Create LCM App",
-  description: "LCM Next.js Boilerplate",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
-};
 
 const geist = Geist({
   subsets: ["latin"],
   variable: "--font-geist-sans",
 });
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export const metadata = {
+  title: "Create LCM App",
+  description: "LCM Next.js Boilerplate",
+  icons: [{ rel: "icon", url: "/favicon.ico" }],
+};
+
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
+// Root layout must include html and body tags
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
-      <body>
-        <TRPCReactProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Navbar />
-            {children}
-            <Footer />
-          </ThemeProvider>
-        </TRPCReactProvider>
-      </body>
+    <html className={geist.variable}>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
