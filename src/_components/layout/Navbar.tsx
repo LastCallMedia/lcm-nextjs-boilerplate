@@ -7,7 +7,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
-
 import Image from "next/image";
 import { auth } from "~/server/auth";
 import { ThemeModeToggle } from "~/_components/theme";
@@ -26,13 +25,38 @@ interface NavbarLinks {
   title: string;
   href: string;
   icon: LucideIcon;
+  description?: string;
 }
+
+const publicLinks: NavbarLinks[] = [
+  {
+    title: "About",
+    href: "/about",
+    icon: Info,
+    description: "Learn about this boilerplate",
+  },
+  {
+    title: "Contact",
+    href: "/contact",
+    icon: Mail,
+    description: "Get in touch with us",
+  },
+];
+
+const privateLinks: NavbarLinks[] = [
+  { title: "All Posts", href: "/posts", icon: Files },
+];
+
+const adminLink: NavbarLinks = {
+  title: "Admin",
+  href: "/admin",
+  icon: ShieldIcon,
+};
 
 const Navbar = async () => {
   const session = await auth();
 
   const baseNavbarLinks: NavbarLinks[] = [
-    { title: "Post", href: "/post", icon: File },
     { title: "All Posts", href: "/posts", icon: Files },
     { title: "Infinite Posts", href: "/infinite-posts", icon: Infinity },
   ];
@@ -65,20 +89,51 @@ const Navbar = async () => {
         </NavigationMenuItem>
         <div className="flex items-center gap-4">
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
+            <NavigationMenuTrigger>Discover</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-4">
-                {navbarLinks?.map((link) => (
+                {publicLinks.map((link) => (
                   <ListItem
                     key={link.title}
                     title={link.title}
                     href={link.href}
                     icon={link.icon}
-                  />
+                  >
+                    {link.description}
+                  </ListItem>
                 ))}
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
+          {showPrivate && (
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Dashboard</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[200px] gap-4">
+                  {privateLinks.map((link) => (
+                    <ListItem
+                      key={link.title}
+                      title={link.title}
+                      href={link.href}
+                      icon={link.icon}
+                    >
+                      {link.description}
+                    </ListItem>
+                  ))}
+                  {isAdmin && (
+                    <ListItem
+                      key={adminLink.title}
+                      title={adminLink.title}
+                      href={adminLink.href}
+                      icon={adminLink.icon}
+                    >
+                      {adminLink.description}
+                    </ListItem>
+                  )}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          )}
           <NavigationMenuItem>
             <SignIn />
           </NavigationMenuItem>

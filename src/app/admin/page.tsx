@@ -1,7 +1,7 @@
 import { AdminStats } from "~/_components/admin/admin-stats";
 import { Button } from "~/_components/ui/button";
 import Link from "next/link";
-import { UsersIcon, FileTextIcon, BarChart3Icon } from "lucide-react";
+import { UsersIcon, FileTextIcon } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
