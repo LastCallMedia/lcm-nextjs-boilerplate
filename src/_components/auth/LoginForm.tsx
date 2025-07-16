@@ -23,7 +23,7 @@ export default function LoginForm() {
       const result = await signIn("nodemailer", {
         email,
         redirect: false,
-        callbackUrl: "/dashboard",
+        callbackUrl: "/admin",
       });
 
       if (result?.error) {

@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import {
-  File,
   Files,
   LayoutDashboard,
   LogIn,
@@ -9,6 +8,8 @@ import {
   Settings,
   Shield,
   User,
+  Info,
+  Mail,
   type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -55,14 +56,31 @@ const protectedLinks: NavbarLinks[] = [
   },
 ];
 
+const publicLinks: NavbarLinks[] = [
+  {
+    title: "About",
+    href: "/about",
+    icon: Info,
+    description: "Learn about this boilerplate",
+  },
+  {
+    title: "Contact",
+    href: "/contact",
+    icon: Mail,
+    description: "Get in touch with us",
+  },
+  {
+    title: "All Posts",
+    href: "/posts",
+    icon: Files,
+    description: "Browse all posts",
+  },
+];
+
 const Navbar = () => {
   const { data: session } = useSession();
   const isGoogleConfigured =
-    process.env.NEXT_PUBLIC_AUTH_GOOGLE_ENABLED === "true";
-  const baseNavbarLinks: NavbarLinks[] = [
-    { title: "Post", href: "/post", icon: File },
-    { title: "All Posts", href: "/posts", icon: Files },
-  ];
+    process.env.NEXT_PUBLIC_AUTH_GOOGLE_ENABLED?.toLowerCase() === "true";
 
   return (
     <NavigationMenu viewport={false} className="m-5 block max-w-full">
@@ -83,16 +101,18 @@ const Navbar = () => {
         </NavigationMenuItem>
         <div className="flex items-center gap-4">
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Explore</NavigationMenuTrigger>
+            <NavigationMenuTrigger>Discover</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-4">
-                {baseNavbarLinks?.map((link) => (
+                {publicLinks.map((link) => (
                   <ListItem
                     key={link.title}
                     title={link.title}
                     href={link.href}
                     icon={link.icon}
-                  />
+                  >
+                    {link.description}
+                  </ListItem>
                 ))}
               </ul>
             </NavigationMenuContent>
