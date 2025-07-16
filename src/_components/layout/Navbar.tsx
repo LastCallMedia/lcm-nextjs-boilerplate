@@ -46,6 +46,7 @@ const publicLinks: NavbarLinks[] = [
 
 const privateLinks: NavbarLinks[] = [
   { title: "All Posts", href: "/posts", icon: Files },
+  { title: "Infinite Posts", href: "/infinite-posts", icon: Infinity },
 ];
 
 const adminLink: NavbarLinks = {
@@ -56,20 +57,8 @@ const adminLink: NavbarLinks = {
 
 const Navbar = async () => {
   const session = await auth();
-
-  const baseNavbarLinks: NavbarLinks[] = [
-    { title: "All Posts", href: "/posts", icon: Files },
-    { title: "Infinite Posts", href: "/infinite-posts", icon: Infinity },
-  ];
-
-  // Add admin link for admin users
-  const navbarLinks =
-    session?.user.role === "ADMIN"
-      ? [
-          ...baseNavbarLinks,
-          { title: "Admin", href: "/admin", icon: ShieldIcon },
-        ]
-      : baseNavbarLinks;
+  const showPrivate = !!session?.user;
+  const isAdmin = session?.user?.role === "ADMIN";
 
   return (
     <NavigationMenu viewport={false} className="m-5 block max-w-full">
