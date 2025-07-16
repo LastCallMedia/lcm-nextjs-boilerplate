@@ -1,4 +1,10 @@
-import { File, Files, ShieldIcon, type LucideIcon } from "lucide-react";
+import {
+  File,
+  Files,
+  ShieldIcon,
+  Infinity,
+  type LucideIcon,
+} from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 
@@ -28,6 +34,7 @@ const Navbar = async () => {
   const baseNavbarLinks: NavbarLinks[] = [
     { title: "Post", href: "/post", icon: File },
     { title: "All Posts", href: "/posts", icon: Files },
+    { title: "Infinite Posts", href: "/infinite-posts", icon: Infinity },
   ];
 
   // Add admin link for admin users

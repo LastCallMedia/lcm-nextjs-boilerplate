@@ -21,6 +21,33 @@ export const postRouter = createTRPCRouter({
     });
   }),
 
+  getInfinitePosts: publicProcedure
+    .input(
+      z.object({
+        cursor: z.number().nullish().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { cursor } = input;
+      const limit = Number(process.env.POSTS_LIMIT) ?? 10;
+      const posts = await ctx.db.post.findMany({
+        take: limit + 1,
+        orderBy: { createdAt: "desc" },
+        cursor: cursor ? { id: cursor } : undefined,
+      });
+
+      let nextCursor: number | null = null;
+      if (posts.length > limit) {
+        const nextItem = posts.pop();
+        nextCursor = nextItem?.id ?? null;
+      }
+
+      return {
+        posts,
+        nextCursor,
+      };
+    }),
+
   create: protectedProcedure
     .input(z.object({ name: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
