@@ -8,14 +8,12 @@ export default async function AdminLayout({
 }) {
   const session = await auth();
 
-  // Check if user is authenticated
+  // Check if user is authenticated and has admin role
   if (!session) {
-    redirect("/api/auth/signin");
+    redirect("/login");
   }
-
-  // Check if user has admin role
-  if (session.user.role !== "ADMIN") {
-    redirect("/"); // Redirect to home if not admin
+  if (session.user?.role !== "ADMIN") {
+    redirect("/dashboard");
   }
 
   return (

@@ -9,10 +9,10 @@ import { Alert, AlertDescription } from "../ui/alert";
 import { CheckCircle, Mail, AlertCircle, Loader2 } from "lucide-react";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ export default function LoginForm() {
       const result = await signIn("nodemailer", {
         email,
         redirect: false,
-        callbackUrl: "/admin",
+        callbackUrl: "/dashboard",
       });
 
       if (result?.error) {

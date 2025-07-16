@@ -38,16 +38,19 @@ interface NavbarLinks {
 const protectedLinks: NavbarLinks[] = [
   {
     title: "Dashboard",
-    href: "/admin",
+    href: "/dashboard",
     icon: LayoutDashboard,
     description: "Your dashboard overview",
   },
   {
     title: "Profile",
-    href: "/admin/profile",
+    href: "/profile",
     icon: User,
     description: "Manage your profile",
   },
+];
+
+const adminLinks: NavbarLinks[] = [
   {
     title: "Settings",
     href: "/admin/settings",
@@ -136,6 +139,17 @@ const Navbar = () => {
                       {link.description}
                     </ListItem>
                   ))}
+                  {session.user?.role === "ADMIN" &&
+                    adminLinks.map((link) => (
+                      <ListItem
+                        key={link.title}
+                        title={link.title}
+                        href={link.href}
+                        icon={link.icon}
+                      >
+                        {link.description}
+                      </ListItem>
+                    ))}
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>

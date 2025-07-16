@@ -95,7 +95,7 @@ export const authConfig = {
       }
       // Redirect to dashboard after successful login
       if (url === baseUrl || url === `${baseUrl}/login`) {
-        return `${baseUrl}/admin`;
+        return `${baseUrl}/dashboard`;
       }
       // Allow relative callback URLs
       if (url.startsWith("/")) return `${baseUrl}${url}`;
