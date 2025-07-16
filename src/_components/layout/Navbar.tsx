@@ -1,9 +1,10 @@
 import {
-  File,
   Files,
   ShieldIcon,
   Infinity,
   type LucideIcon,
+  Info,
+  Mail,
 } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
