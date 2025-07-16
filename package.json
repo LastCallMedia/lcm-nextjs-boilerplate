@@ -38,7 +38,7 @@
     "act:jest": "act -j jest-tests",
     "act:e2e": "act -j e2e-tests",
     "db:seed": "tsx prisma/seed.ts",
-    "db:seed-posts": "tsx scripts/seed-posts.ts"
+    "db:seed-posts": "tsx prisma/seed-posts.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

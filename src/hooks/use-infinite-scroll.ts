@@ -85,9 +85,7 @@ export const useInfiniteScroll = (
     }
 
     return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
+      observer.disconnect();
     };
   }, [
     fetchNextPage,
