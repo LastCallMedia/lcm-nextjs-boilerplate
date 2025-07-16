@@ -324,3 +324,17 @@ Source Code → Docker Build → Container Registry → Production Environment
 - Next.js built-in caching
 - Can add Redis for session storage
 - CDN caching for static assets
+
+### 4. Static and Public Routes
+
+The app supports two types of unauthenticated routes:
+
+- **Public Routes**: Pages like `/about` or `/terms` that do not require authentication but still share common layouts.
+- **Static Routes**: Fully static pages rendered without requiring a user session, suitable for marketing or legal content.
+
+To configure:
+
+- Define static routes in the `staticRoutes` array in `auth.ts`.
+- Define public routes in the `publicRoutes` array in `middleware.ts`.
+
+This separation improves flexibility when defining pages that don’t require user login, without impacting access control for protected routes.
