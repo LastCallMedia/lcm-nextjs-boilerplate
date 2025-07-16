@@ -30,7 +30,7 @@ export const postRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       const { cursor } = input;
-      const limit = Number(process.env.POSTS_LIMIT ?? '10');
+      const limit = Number(process.env.POSTS_LIMIT ?? "10");
       const posts = await ctx.db.post.findMany({
         take: limit + 1,
         orderBy: { createdAt: "desc" },
