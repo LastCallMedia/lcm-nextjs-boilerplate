@@ -6,29 +6,18 @@ const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
 
-  // Protect admin routes
-  if (nextUrl.pathname.startsWith("/admin")) {
-    if (!req.auth) {
-      return NextResponse.redirect(new URL("/api/auth/signin", req.url));
-    }
+  // Protect routes that start with /admin
+  const isProtectedRoute = nextUrl.pathname.startsWith("/admin");
 
-    if (req.auth.user.role !== "ADMIN") {
-      return NextResponse.redirect(new URL("/", req.url));
-    }
-  }
-
-  if (
-    nextUrl.pathname.startsWith("/post") ||
-    (req.auth && nextUrl.pathname === "/")
-  ) {
-    return NextResponse.redirect(new URL("/", req.url));
+  if (isProtectedRoute && !isLoggedIn) {
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 
   return NextResponse.next();
 });
 
-// Define the routes that should be handled by this middleware
 export const config = {
-  matcher: ["/post/:path*", "/posts/:path*", "/admin/:path*", "/"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

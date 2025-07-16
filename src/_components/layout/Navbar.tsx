@@ -1,11 +1,22 @@
-import { File, Files, ShieldIcon, type LucideIcon } from "lucide-react";
+"use client";
+import React from "react";
+import {
+  File,
+  Files,
+  LayoutDashboard,
+  LogIn,
+  LogOut,
+  Settings,
+  Shield,
+  User,
+  type LucideIcon,
+} from "lucide-react";
 import Link from "next/link";
-import * as React from "react";
-
 import Image from "next/image";
-import { auth } from "~/server/auth";
+import { useSession, signOut } from "next-auth/react";
 import { ThemeModeToggle } from "~/_components/theme";
 import {
+  Button,
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
@@ -14,30 +25,44 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/_components/ui";
-import { SignIn } from "~/_components/auth";
+import GoogleSignInButton from "../auth/GoogleSignInButton";
 
 interface NavbarLinks {
   title: string;
   href: string;
   icon: LucideIcon;
+  description?: string;
 }
 
-const Navbar = async () => {
-  const session = await auth();
+const protectedLinks: NavbarLinks[] = [
+  {
+    title: "Dashboard",
+    href: "/admin",
+    icon: LayoutDashboard,
+    description: "Your dashboard overview",
+  },
+  {
+    title: "Profile",
+    href: "/admin/profile",
+    icon: User,
+    description: "Manage your profile",
+  },
+  {
+    title: "Settings",
+    href: "/admin/settings",
+    icon: Settings,
+    description: "Application settings",
+  },
+];
 
+const Navbar = () => {
+  const { data: session } = useSession();
+  const isGoogleConfigured =
+    process.env.NEXT_PUBLIC_AUTH_GOOGLE_ENABLED === "true";
   const baseNavbarLinks: NavbarLinks[] = [
     { title: "Post", href: "/post", icon: File },
     { title: "All Posts", href: "/posts", icon: Files },
   ];
-
-  // Add admin link for admin users
-  const navbarLinks =
-    session?.user.role === "ADMIN"
-      ? [
-          ...baseNavbarLinks,
-          { title: "Admin", href: "/admin", icon: ShieldIcon },
-        ]
-      : baseNavbarLinks;
 
   return (
     <NavigationMenu viewport={false} className="m-5 block max-w-full">
@@ -58,10 +83,10 @@ const Navbar = async () => {
         </NavigationMenuItem>
         <div className="flex items-center gap-4">
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
+            <NavigationMenuTrigger>Explore</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-4">
-                {navbarLinks?.map((link) => (
+                {baseNavbarLinks?.map((link) => (
                   <ListItem
                     key={link.title}
                     title={link.title}
@@ -72,9 +97,62 @@ const Navbar = async () => {
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
-          <NavigationMenuItem>
-            <SignIn />
-          </NavigationMenuItem>
+          {/* Protected Links - Only show if authenticated */}
+          {session && (
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>
+                <Shield className="mr-1 h-4 w-4" />
+                Account
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[280px] gap-3 p-4">
+                  {protectedLinks.map((link) => (
+                    <ListItem
+                      key={link.title}
+                      title={link.title}
+                      href={link.href}
+                      icon={link.icon}
+                    >
+                      {link.description}
+                    </ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          )}
+
+          {/* Show sign-in and Google sign-in as separate menu items when not logged in */}
+          {!session && (
+            <>
+              <NavigationMenuItem>
+                <Link href="/login" className={navigationMenuTriggerStyle()}>
+                  <LogIn className="mr-2 h-4 w-4" />
+                  Sign in
+                </Link>
+              </NavigationMenuItem>
+              {isGoogleConfigured && (
+                <NavigationMenuItem>
+                  <GoogleSignInButton isGoogleConfigured={true} />
+                </NavigationMenuItem>
+              )}
+            </>
+          )}
+
+          {/* Sign out button for authenticated users */}
+          {session && (
+            <NavigationMenuItem>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="cursor-pointer"
+                onClick={() => signOut({ callbackUrl: "/" })}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Sign out
+              </Button>
+            </NavigationMenuItem>
+          )}
           <NavigationMenuItem>
             <ThemeModeToggle />
           </NavigationMenuItem>
