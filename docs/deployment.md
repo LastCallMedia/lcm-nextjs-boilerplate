@@ -575,7 +575,7 @@ pg_dump $DATABASE_URL > backup-$(date +%Y%m%d).sql
 npx prisma migrate deploy
 
 # 3. Verify migration
-npx prisma db seed # if needed
+npx prisma db pull
 
 # 4. Test application
 curl -f https://yourapp.com/api/health

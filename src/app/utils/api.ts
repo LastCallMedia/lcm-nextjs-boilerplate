@@ -1,4 +1,4 @@
-import type { Post } from "../../../prisma/generated/client";
+import type { Post } from "@prisma/client";
 // Import the correct function or client for fetching posts
 import { db } from "~/server/db";
 

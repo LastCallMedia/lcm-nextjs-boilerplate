@@ -16,6 +16,7 @@ Deep dive into the main components of the system:
 - **[Authentication](./authentication.md)** - NextAuth.js setup, providers, and session management
 - **[Database](./database.md)** - Prisma ORM, migrations, and database best practices
 - **[UI & Styling](./ui-styling.md)** - Component system, Tailwind CSS, and design patterns
+- **[Admin Dashboard](./admin-dashboard.md)** - Complete admin interface with user and post management
 
 ## 🛠️ Development
 
