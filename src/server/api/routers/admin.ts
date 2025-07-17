@@ -28,9 +28,12 @@ const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
   return next();
 });
 
+// Authenticated-only procedure (not admin-only)
+const authenticatedProcedure = protectedProcedure;
+
 export const adminRouter = createTRPCRouter({
   // Get all users with pagination, sorting, and filtering
-  getUsers: adminProcedure
+  getUsers: authenticatedProcedure
     .input(
       z.object({
         page: z.number().min(1).default(1),
@@ -91,7 +94,7 @@ export const adminRouter = createTRPCRouter({
     }),
 
   // Get all posts with user information, pagination, sorting, and filtering
-  getPosts: adminProcedure
+  getPosts: authenticatedProcedure
     .input(
       z.object({
         page: z.number().min(1).default(1),
@@ -159,7 +162,7 @@ export const adminRouter = createTRPCRouter({
     }),
 
   // Get dashboard statistics
-  getStats: adminProcedure.query(async ({ ctx }) => {
+  getStats: authenticatedProcedure.query(async ({ ctx }) => {
     const [userCount, postCount, adminCount, recentUsers] = await Promise.all([
       ctx.db.user.count(),
       ctx.db.post.count(),

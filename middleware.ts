@@ -6,29 +6,33 @@ const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
+  const userRole = req.auth?.user?.role;
 
-  // Protect admin routes
-  if (nextUrl.pathname.startsWith("/admin")) {
-    if (!req.auth) {
-      return NextResponse.redirect(new URL("/api/auth/signin", req.url));
+  // Only protect /dashboard and /profile for unauthenticated users
+  const isUserRoute = ["/dashboard", "/profile"].some((route) =>
+    nextUrl.pathname.startsWith(route),
+  );
+  if (isUserRoute && !isLoggedIn) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
+
+  // Only protect /admin for unauthenticated and non-admin users
+  const isAdminRoute =
+    nextUrl.pathname === "/admin" || nextUrl.pathname.startsWith("/admin/");
+  if (isAdminRoute) {
+    if (!isLoggedIn) {
+      return NextResponse.redirect(new URL("/login", req.url));
     }
-
-    if (req.auth.user.role !== "ADMIN") {
-      return NextResponse.redirect(new URL("/", req.url));
+    if (userRole !== "ADMIN") {
+      return NextResponse.redirect(new URL("/dashboard", req.url));
     }
   }
 
-  if (
-    nextUrl.pathname.startsWith("/post") ||
-    (req.auth && nextUrl.pathname === "/")
-  ) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-
+  // Do not redirect authenticated users from /dashboard or /profile
   return NextResponse.next();
 });
 
-// Define the routes that should be handled by this middleware
 export const config = {
-  matcher: ["/post/:path*", "/posts/:path*", "/admin/:path*", "/"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
