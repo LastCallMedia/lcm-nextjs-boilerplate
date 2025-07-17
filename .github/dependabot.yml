@@ -1,0 +1,22 @@
+# Basic `dependabot.yml` file with
+# minimum configuration for three package managers
+
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "pnpm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+
+  # Enable version updates for Docker
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
