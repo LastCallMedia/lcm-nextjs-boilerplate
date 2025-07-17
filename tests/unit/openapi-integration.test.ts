@@ -1,6 +1,6 @@
 /**
  * OpenAPI Integration Tests
- * 
+ *
  * Basic tests to verify OpenAPI document structure and endpoint configuration
  * without complex router imports that cause ESM issues in Jest.
  */
@@ -13,7 +13,7 @@ describe("OpenAPI Integration Tests", () => {
         "/posts/hello",
         "/posts",
         "/posts/latest",
-        "/posts/secret"
+        "/posts/secret",
       ];
 
       // Test that we have the expected endpoints defined
@@ -28,7 +28,7 @@ describe("OpenAPI Integration Tests", () => {
         "/posts/hello": ["GET"],
         "/posts": ["GET", "POST"],
         "/posts/latest": ["GET"],
-        "/posts/secret": ["GET"]
+        "/posts/secret": ["GET"],
       };
 
       expect(endpoints["/posts/hello"]).toContain("GET");
@@ -37,15 +37,9 @@ describe("OpenAPI Integration Tests", () => {
     });
 
     it("should identify protected endpoints", () => {
-      const protectedEndpoints = [
-        "/posts/latest",
-        "/posts/secret"
-      ];
+      const protectedEndpoints = ["/posts/latest", "/posts/secret"];
 
-      const publicEndpoints = [
-        "/posts/hello",
-        "/posts",
-      ];
+      const publicEndpoints = ["/posts/hello", "/posts"];
 
       expect(protectedEndpoints).toContain("/posts/latest");
       expect(protectedEndpoints).toContain("/posts/secret");
@@ -57,7 +51,7 @@ describe("OpenAPI Integration Tests", () => {
   describe("API Response Structure", () => {
     it("should expect proper response structure for hello endpoint", () => {
       const expectedHelloResponse = {
-        greeting: "string"
+        greeting: "string",
       };
 
       expect(typeof expectedHelloResponse.greeting).toBe("string");
@@ -66,10 +60,10 @@ describe("OpenAPI Integration Tests", () => {
     it("should expect proper response structure for posts endpoint", () => {
       const expectedPostResponse = {
         id: "number",
-        name: "string", 
+        name: "string",
         createdAt: "string",
         updatedAt: "string",
-        createdById: "string"
+        createdById: "string",
       };
 
       expect(typeof expectedPostResponse.id).toBe("string");
@@ -86,7 +80,7 @@ describe("OpenAPI Integration Tests", () => {
         tags: ["posts"],
         summary: "string",
         description: "string",
-        protect: "boolean"
+        protect: "boolean",
       };
 
       expect(typeof openApiMeta.method).toBe("string");
@@ -98,10 +92,10 @@ describe("OpenAPI Integration Tests", () => {
     it("should validate required fields for OpenAPI procedures", () => {
       const requiredFields = [
         "method",
-        "path", 
+        "path",
         "tags",
         "summary",
-        "description"
+        "description",
       ];
 
       expect(requiredFields).toContain("method");
