@@ -3,21 +3,21 @@ import { waitForPageLoad } from "./utils/page-helpers";
 
 test.describe("Basic Navigation Tests", () => {
   test("should navigate to homepage", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/en/");
     await waitForPageLoad(page);
     await expect(page).toHaveTitle(/Create LCM App/);
     await expect(page.locator("h1")).toBeVisible();
   });
 
   test("should navigate to posts page", async ({ page }) => {
-    await page.goto("/posts");
+    await page.goto("/en/posts");
     await waitForPageLoad(page);
 
     await expect(page.locator("h1")).toContainText(/posts/i);
   });
 
   test("should have working navigation menu", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/en/");
     await waitForPageLoad(page);
 
     // Check navigation structure exists
@@ -25,16 +25,16 @@ test.describe("Basic Navigation Tests", () => {
     await expect(nav).toBeVisible();
 
     // Check if posts link exists and works
-    const postsLink = page.locator('a[href="/posts"]');
+    const postsLink = page.locator('a[href="/en/posts"]');
     if ((await postsLink.count()) > 0) {
       await postsLink.click();
-      await page.waitForURL("**/posts");
-      expect(page.url()).toContain("/posts");
+      await page.waitForURL("**/en/posts");
+      expect(page.url()).toContain("/en/posts");
     }
   });
 
   test("should handle 404 pages gracefully", async ({ page }) => {
-    const response = await page.goto("/non-existent-page");
+    const response = await page.goto("/en/non-existent-page");
 
     // Should return 404 status or redirect to error page
     expect(response?.status()).toBe(404);
@@ -43,14 +43,14 @@ test.describe("Basic Navigation Tests", () => {
 
 test.describe("Post Management Tests", () => {
   test("should display posts list", async ({ page }) => {
-    await page.goto("/posts");
+    await page.goto("/en/posts");
     await waitForPageLoad(page);
 
     await expect(page.locator("h1")).toContainText(/posts/i);
   });
 
   test("should show create post button/link", async ({ page }) => {
-    await page.goto("/posts");
+    await page.goto("/en/posts");
     await waitForPageLoad(page);
 
     // Verify the page loaded correctly
@@ -66,7 +66,7 @@ test.describe("Post Management Tests", () => {
   });
 
   test("should navigate to create post page", async ({ page }) => {
-    await page.goto("/posts/create");
+    await page.goto("/en/posts/create");
     await waitForPageLoad(page, "body");
 
     // Page should load without error (may show login, create form, or 404)
@@ -77,7 +77,7 @@ test.describe("Post Management Tests", () => {
 
 test.describe("Theme and UI Tests", () => {
   test("should have theme toggle functionality", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/en/");
     await waitForPageLoad(page);
 
     // Look for theme toggle button
@@ -98,7 +98,7 @@ test.describe("Theme and UI Tests", () => {
 
   test("should be responsive on mobile devices", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto("/");
+    await page.goto("/en/");
     await waitForPageLoad(page);
 
     // Verify content is visible and responsive

@@ -17,7 +17,7 @@ test.describe("Accessibility Tests", () => {
   test("homepage should have no critical accessibility violations", async ({
     page,
   }) => {
-    await page.goto("/");
+    await page.goto("/en/");
 
     await waitForPageLoad(page);
 
@@ -37,7 +37,7 @@ test.describe("Accessibility Tests", () => {
   test("posts page should have no critical accessibility violations", async ({
     page,
   }) => {
-    await page.goto("/posts");
+    await page.goto("/en/posts");
 
     await waitForPageLoad(page);
 
@@ -55,7 +55,7 @@ test.describe("Accessibility Tests", () => {
   });
 
   test("navigation should be keyboard accessible", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/en/");
 
     await waitForPageLoad(page);
 
@@ -86,7 +86,7 @@ test.describe("Accessibility Tests", () => {
   });
 
   test("color contrast should meet WCAG standards", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/en/");
 
     await waitForPageLoad(page);
 
@@ -105,7 +105,7 @@ test.describe("Accessibility Tests", () => {
   });
 
   test("images should have alt text", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/en/");
 
     await waitForPageLoad(page);
 
