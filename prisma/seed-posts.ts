@@ -11,20 +11,19 @@ async function seedPosts() {
   // Get the first user from the database
   const user = await db.user.findFirst();
   if (!user) {
-    console.log("No users found. Please create a user first.");
+    console.error("No users found. Please create a user first.");
     return;
   }
 
   console.log(`Seeding database with ${samplePosts.length} posts...`);
 
-  for (const postContent of samplePosts) {
-    await db.post.create({
-      data: {
-        name: postContent,
-        createdBy: { connect: { id: user.id } },
-      },
-    });
-  }
+  // Create sample posts
+  await db.post.createMany({
+    data: samplePosts.map((postContent) => ({
+      name: postContent,
+      createdById: user.id,
+    })),
+  });
 
   console.log("✅ Database seeded successfully!");
 }
