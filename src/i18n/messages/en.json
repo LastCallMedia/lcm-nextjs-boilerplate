@@ -37,7 +37,8 @@
     "deleteSuccess": "Post deleted successfully!",
     "placeholder": "What's on your mind?",
     "submitting": "Submitting...",
-    "titleRequired": "Title is required"
+    "titleRequired": "Title is required",
+    "myPost": "My Posts"
   },
   "auth": {
     "signIn": "Sign in",

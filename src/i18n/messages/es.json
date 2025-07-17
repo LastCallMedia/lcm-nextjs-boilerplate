@@ -37,7 +37,8 @@
     "deleteSuccess": "¡Publicación eliminada exitosamente!",
     "placeholder": "¿Qué estás pensando?",
     "submitting": "Enviando...",
-    "titleRequired": "El título es obligatorio"
+    "titleRequired": "El título es obligatorio",
+    "myPost": "Mis publicaciones"
   },
   "auth": {
     "signIn": "Iniciar sesión",

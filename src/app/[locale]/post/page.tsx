@@ -9,7 +9,6 @@ interface PostPageProps {
 const page = async ({ params: _params }: PostPageProps) => {
   return (
     <div>
-      <h1 className="m-4 text-center text-2xl font-bold">My Posts</h1>
       <Suspense fallback={<PostSkeleton />}>
         <Post />
       </Suspense>
