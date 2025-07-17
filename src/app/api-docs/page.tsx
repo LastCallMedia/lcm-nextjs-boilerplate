@@ -38,7 +38,7 @@ export default function SwaggerPage() {
         rootRef.current.unmount();
         rootRef.current = null;
       }
-      
+
       isLoadedRef.current = false;
     };
   }, []);
