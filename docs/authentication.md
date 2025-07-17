@@ -6,6 +6,7 @@ This guide covers the authentication system built with NextAuth.js, including se
 
 The authentication system uses **NextAuth.js v5** (beta) with the following features:
 
+- **Magic Link Login**: Email-based authentication with secure magic links
 - **OAuth Integration**: Google OAuth provider configured
 - **Session Management**: Secure session handling with database persistence
 - **Type Safety**: Full TypeScript integration
@@ -22,11 +23,17 @@ The authentication configuration is located in `src/server/auth/config.ts`:
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
+import Nodemailer from "next-auth/providers/nodemailer";
 import { db } from "~/server/db";
+import { env } from "~/env";
 
 export const authConfig = {
   adapter: PrismaAdapter(db),
   providers: [
+    Nodemailer({
+      server: env.EMAIL_SERVER,
+      from: env.EMAIL_FROM,
+    }),
     Google({
       clientId: env.AUTH_GOOGLE_ID,
       clientSecret: env.AUTH_GOOGLE_SECRET,
@@ -38,6 +45,7 @@ export const authConfig = {
       user: {
         ...session.user,
         id: user.id,
+        role: user.role,
       },
     }),
   },
@@ -56,8 +64,15 @@ AUTH_SECRET=your-secret-here
 AUTH_GOOGLE_ID=your-google-client-id
 AUTH_GOOGLE_SECRET=your-google-client-secret
 
+# Email Magic Link Configuration
+EMAIL_SERVER=smtp://localhost:1025
+EMAIL_FROM=noreply@yourdomain.com
+
 # Authentication URL
 AUTH_URL=http://localhost:3000
+
+# Show Google sign-in button in UI
+NEXT_PUBLIC_AUTH_GOOGLE_ENABLED=true
 ```
 
 ## Database Schema
@@ -197,17 +212,24 @@ export const postRouter = createTRPCRouter({
 Protect routes using Next.js middleware in `middleware.ts`:
 
 ```typescript
-import { auth } from "./server/auth";
+import NextAuth from "next-auth";
+import { NextResponse } from "next/server";
+import { authConfig } from "~/server/auth/config";
+
+const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
-  const { pathname } = req.nextUrl;
+  const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
 
-  // Protect specific routes
-  if (pathname.startsWith("/dashboard")) {
-    if (!req.auth) {
-      return Response.redirect(new URL("/api/auth/signin", req.url));
-    }
+  // Protect routes that start with /admin
+  const isProtectedRoute = nextUrl.pathname.startsWith("/admin");
+
+  if (isProtectedRoute && !isLoggedIn) {
+    return NextResponse.redirect(new URL("/login", req.url));
   }
+
+  return NextResponse.next();
 });
 
 export const config = {
@@ -227,7 +249,7 @@ export default async function ProtectedPage() {
   const session = await auth();
 
   if (!session) {
-    redirect("/api/auth/signin");
+    redirect("/login");
   }
 
   return <div>Protected content</div>;
@@ -256,9 +278,7 @@ export function SignIn() {
   }
 
   return (
-    <Button onClick={() => signIn("google")}>
-      Sign in with Google
-    </Button>
+    <Button onClick={() => signIn("google")}>Sign in with Google</Button>
   );
 }
 ```

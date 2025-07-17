@@ -3,9 +3,11 @@ import "~/styles/globals.css";
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
-import { Navbar, Footer } from "~/_components/layout";
 import { ThemeProvider } from "~/_components/ui/theme-provider";
 import { Toaster } from "~/_components/ui/sonner";
+import Navbar from "~/_components/layout/Navbar";
+import { SessionProvider } from "next-auth/react";
+import { Footer } from "~/_components";
 
 export const metadata: Metadata = {
   title: "Create LCM App",
@@ -24,19 +26,21 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable}`}>
       <body>
-        <TRPCReactProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Navbar />
-            {children}
-            <Footer />
-            <Toaster />
-          </ThemeProvider>
-        </TRPCReactProvider>
+        <SessionProvider>
+          <TRPCReactProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Navbar />
+              {children}
+              <Footer />
+              <Toaster />
+            </ThemeProvider>
+          </TRPCReactProvider>
+        </SessionProvider>
       </body>
     </html>
   );

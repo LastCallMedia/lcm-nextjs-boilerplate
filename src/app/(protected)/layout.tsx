@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "~/server/auth";
 
-export default async function AdminLayout({
+export default async function ProtectedLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -10,21 +10,16 @@ export default async function AdminLayout({
 
   // Check if user is authenticated
   if (!session) {
-    redirect("/api/auth/signin");
-  }
-
-  // Check if user has admin role
-  if (session.user.role !== "ADMIN") {
-    redirect("/"); // Redirect to home if not admin
+    redirect("/login");
   }
 
   return (
     <main
       className="container mx-auto py-6"
       role="main"
-      aria-label="Admin Dashboard"
+      aria-label="Protected Content"
     >
-      <section aria-label="Admin content">{children}</section>
+      <section aria-label="Protected content">{children}</section>
     </main>
   );
 }
