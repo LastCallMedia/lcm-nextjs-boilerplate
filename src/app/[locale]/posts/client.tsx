@@ -12,9 +12,6 @@ interface AllPostsClientProps {
 const AllPostsClient = ({ posts }: AllPostsClientProps) => {
   return (
     <div>
-      <h1 className="m-4 text-center text-2xl font-bold">
-        <FormattedMessage id="posts.allPostsTitle" />
-      </h1>
       <div className="m-auto w-2/3">
         <PostForm className="m-auto w-1/3" />
         {posts.length < 1 ? (
