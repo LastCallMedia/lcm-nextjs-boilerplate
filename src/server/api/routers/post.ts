@@ -7,23 +7,67 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
+// Define Zod schemas for Post model
+const PostSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  createdById: z.string(),
+});
+
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
-    .input(z.object({ text: z.string() }))
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/posts/hello",
+        tags: ["posts"],
+        summary: "Get personalized greetings",
+        description: "Returns text greeting the user",
+      },
+    })
+    .input(z.object({ name: z.string() }))
+    .output(z.object({ greeting: z.string() }))
     .query(({ input }) => {
       return {
-        greeting: `Hello ${input.text}`,
+        greeting: `Hello ${input.name}`,
       };
     }),
 
-  getAll: protectedProcedure.query(async ({ ctx }) => {
-    return ctx.db.post.findMany({
-      orderBy: { createdAt: "desc" },
-    });
-  }),
+  getAll: publicProcedure
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/posts",
+        tags: ["posts"],
+        summary: "Get all posts",
+        description:
+          "Returns all posts ordered by creation date (newest first)",
+        protect: false,
+      },
+    })
+    .input(z.void())
+    .output(z.array(PostSchema))
+    .query(async ({ ctx }) => {
+      return await ctx.db.post.findMany({
+        orderBy: { createdAt: "desc" },
+      });
+    }),
 
   create: protectedProcedure
+    .meta({
+      openapi: {
+        method: "POST",
+        path: "/posts",
+        tags: ["posts"],
+        summary: "Create a new post",
+        description: "Creates a new post with the provided name",
+        protect: true,
+      },
+    })
     .input(z.object({ name: z.string().min(1) }))
+    .output(PostSchema)
     .mutation(async ({ ctx, input }) => {
       return ctx.db.post.create({
         data: {
@@ -33,16 +77,43 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
-  getLatest: protectedProcedure.query(async ({ ctx }) => {
-    const post = await ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
-      where: { createdBy: { id: ctx.session.user.id } },
-    });
+  getLatest: protectedProcedure
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/posts/latest",
+        tags: ["posts"],
+        summary: "Get latest post",
+        description:
+          "Returns the latest post created by the authenticated user",
+        protect: true,
+      },
+    })
+    .input(z.void())
+    .output(PostSchema.nullable())
+    .query(async ({ ctx }) => {
+      const post = await ctx.db.post.findFirst({
+        orderBy: { createdAt: "desc" },
+        where: { createdBy: { id: ctx.session.user.id } },
+      });
 
-    return post ?? null;
-  }),
+      return post ?? null;
+    }),
 
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
+  getSecretMessage: protectedProcedure
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/posts/secret",
+        tags: ["posts"],
+        summary: "Get secret message",
+        description: "Returns a secret message for authenticated users",
+        protect: true,
+      },
+    })
+    .input(z.void())
+    .output(z.string())
+    .query(() => {
+      return "you can now see this secret message!";
+    }),
 });
