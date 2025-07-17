@@ -1,61 +1,32 @@
-import Link from "next/link";
 import React from "react";
-import { auth } from "~/server/auth";
+import LoginForm from "./LoginForm";
+import GoogleSignInButton from "./GoogleSignInButton";
 import { isGoogleAuthConfigured } from "~/lib/auth-utils";
-import { Button } from "../ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
 
 const SignIn = async () => {
-  const session = await auth();
   const isGoogleConfigured = isGoogleAuthConfigured();
 
-  // If user is signed in, show sign out button
-  if (session) {
-    return (
-      <Button asChild>
-        <Link href="/api/auth/signout">Sign out</Link>
-      </Button>
-    );
-  }
-
-  // If Google auth is not configured, show disabled button with tooltip
-  if (!isGoogleConfigured) {
-    return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              disabled
-              variant="outline"
-              className="cursor-not-allowed opacity-50"
-            >
-              Sign in with Google
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <div className="text-center">
-              <div>Google authentication is not configured.</div>
-              <div>
-                Please set AUTH_GOOGLE_ID and AUTH_GOOGLE_SECRET environment
-                variables.
-              </div>
-            </div>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    );
-  }
-
-  // Google auth is configured, show normal sign in button
+  // Show login form with email magic link and Google option
   return (
-    <Button asChild>
-      <Link href="/api/auth/signin">Sign in with Google</Link>
-    </Button>
+    <div className="grid gap-4">
+      {/* Magic Link Email Form */}
+      <LoginForm />
+
+      {/* Divider */}
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background text-muted-foreground px-2">
+            Or continue with
+          </span>
+        </div>
+      </div>
+
+      {/* Google Sign In */}
+      <GoogleSignInButton isGoogleConfigured={isGoogleConfigured} />
+    </div>
   );
 };
 

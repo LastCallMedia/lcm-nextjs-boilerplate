@@ -1,6 +1,6 @@
 # Admin Dashboard Guide
 
-Admin dashboard lets you manage users, posts, and roles. Only admins can access it.
+The admin dashboard is protected and only accessible to users with the `ADMIN` role. It provides management tools for users, posts, and system settings.
 
 ## Quick Start
 
@@ -22,6 +22,17 @@ Admin dashboard lets you manage users, posts, and roles. Only admins can access 
 
 - **User Management**: View, search, and change user roles at `/admin/users`
 - **Post Management**: Moderate posts at `/admin/posts`
+- **System settings**
+
+## Access
+
+- Only authenticated users with the `ADMIN` role can access `/admin` and its subpages.
+- Non-admin users are redirected to the home page.
+
+## Setup
+
+- Place admin dashboard pages in `(protected)/admin`.
+- Ensure your admin users have the `ADMIN` role in the database.
 
 ## User Roles
 
