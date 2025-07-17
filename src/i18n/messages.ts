@@ -2,20 +2,34 @@ import { type Locale } from "./config";
 import enMessages from "./messages/en.json";
 import esMessages from "./messages/es.json";
 
-// Define the shape of our messages
-export type Messages = typeof enMessages;
+// Flatten nested messages utility
+function flattenMessages(
+  nestedMessages: Record<string, unknown>,
+  prefix = "",
+): Record<string, string> {
+  return Object.keys(nestedMessages).reduce(
+    (messages, key) => {
+      const value = nestedMessages[key];
+      const prefixedKey = prefix ? `${prefix}.${key}` : key;
+      if (typeof value === "string") {
+        messages[prefixedKey] = value;
+      } else if (typeof value === "object" && value !== null) {
+        Object.assign(
+          messages,
+          flattenMessages(value as Record<string, unknown>, prefixedKey),
+        );
+      }
+      return messages;
+    },
+    {} as Record<string, string>,
+  );
+}
 
-const messagesMap: Record<Locale, Messages> = {
-  en: enMessages,
-  es: esMessages,
+const messagesMap = {
+  en: flattenMessages(enMessages),
+  es: flattenMessages(esMessages),
 };
 
-export async function getMessages(locale: Locale): Promise<Messages> {
-  try {
-    return messagesMap[locale] ?? messagesMap.en;
-  } catch (error) {
-    console.error(`Failed to load messages for locale ${locale}:`, error);
-    // Fallback to English if locale messages fail to load
-    return messagesMap.en;
-  }
+export function getMessages(locale: Locale): Record<string, string> {
+  return messagesMap[locale] ?? messagesMap.en;
 }

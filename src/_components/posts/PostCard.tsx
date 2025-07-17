@@ -1,6 +1,6 @@
 "use client";
 
-import type { Post } from "../../../prisma/generated/client";
+import type { Post } from "@prisma/client";
 import { FormattedDate, FormattedTime } from "react-intl";
 import { Card, CardContent, CardFooter } from "../ui/card";
 

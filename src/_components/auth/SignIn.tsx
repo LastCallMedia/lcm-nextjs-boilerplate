@@ -1,44 +1,35 @@
 "use client";
 
-import Link from "next/link";
 import React from "react";
-import { useSession } from "next-auth/react";
+import LoginForm from "./LoginForm";
+import GoogleSignInButton from "./GoogleSignInButton";
 import { FormattedMessage } from "react-intl";
-import { Button } from "../ui/button";
+
+const isGoogleConfigured =
+  String(process.env.NEXT_PUBLIC_AUTH_GOOGLE_ENABLED).toLowerCase() === "true";
 
 const SignIn = () => {
-  const { data: session, status } = useSession();
-
-  // Show loading state while session is being fetched
-  if (status === "loading") {
-    return (
-      <Button disabled>
-        <FormattedMessage id="common.loading" />
-      </Button>
-    );
-  }
-
-  // If user is signed in, show sign out button
-  if (session) {
-    return (
-      <Button>
-        <Link href="/api/auth/signout">
-          <FormattedMessage id="auth.signOut" />
-        </Link>
-      </Button>
-    );
-  }
-
-  // Show sign in button (Google auth configuration is handled server-side)
+  // Show login form with email magic link and Google option
   return (
-    <Button>
-      <Link href="/api/auth/signin">
-        <FormattedMessage
-          id="auth.signInWith"
-          values={{ provider: "Google" }}
-        />
-      </Link>
-    </Button>
+    <div className="grid gap-4">
+      {/* Magic Link Email Form */}
+      <LoginForm />
+
+      {/* Divider */}
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background text-muted-foreground px-2">
+            <FormattedMessage id="auth.orContinueWith" />
+          </span>
+        </div>
+      </div>
+
+      {/* Google Sign In */}
+      <GoogleSignInButton isGoogleConfigured={isGoogleConfigured} />
+    </div>
   );
 };
 

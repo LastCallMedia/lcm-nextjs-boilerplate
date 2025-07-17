@@ -1,12 +1,11 @@
 "use client";
 
 import { IntlProvider as ReactIntlProvider } from "react-intl";
-import { type Messages } from "./messages";
 import { type Locale } from "./config";
 
 interface IntlProviderProps {
   locale: Locale;
-  messages: Messages;
+  messages: Record<string, unknown>;
   children: React.ReactNode;
 }
 
@@ -39,9 +38,7 @@ export function IntlProvider({
   messages,
   children,
 }: IntlProviderProps) {
-  const flattenedMessages = flattenMessages(
-    messages as Record<string, unknown>,
-  );
+  const flattenedMessages = flattenMessages(messages);
 
   return (
     <ReactIntlProvider locale={locale} messages={flattenedMessages}>

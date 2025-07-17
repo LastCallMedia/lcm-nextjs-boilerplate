@@ -88,6 +88,7 @@ Comprehensive documentation is available in the [`docs/`](./docs/) directory:
 - **[🗄️ Database](./docs/database.md)** - Prisma setup, migrations, and best practices
 - **[🎨 UI & Styling](./docs/ui-styling.md)** - Component library and styling guide
 - **[🧪 Testing](./docs/testing.md)** - Testing strategies and tools
+- **[🎭 Local GitHub Actions Testing](./docs/local-github-action-testing.md)** - Run GitHub Actions locally with act
 - **[🐳 Docker](./docs/docker.md)** - Containerization and deployment
 - **[🔧 Development](./docs/development.md)** - Development workflow and tools
 - **[🚀 Deployment](./docs/deployment.md)** - Production deployment guide
@@ -167,6 +168,7 @@ Comprehensive documentation is available in the [`docs/`](./docs/) directory:
 - **Prisma** - Type-safe database ORM
 - **PostgreSQL** - Primary database
 - **Zod** - Schema validation
+- **In-memory Event System** – Lightweight pub/sub for features like typing indicators built on tRPC subscriptions, learn more - **[💬 Typing Indicator](./docs/sse-typing-indicator.md)**
 
 ### Development & Testing
 

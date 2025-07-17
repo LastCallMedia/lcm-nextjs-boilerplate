@@ -16,6 +16,7 @@ Deep dive into the main components of the system:
 - **[Authentication](./authentication.md)** - NextAuth.js setup, providers, and session management
 - **[Database](./database.md)** - Prisma ORM, migrations, and database best practices
 - **[UI & Styling](./ui-styling.md)** - Component system, Tailwind CSS, and design patterns
+- **[Admin Dashboard](./admin-dashboard.md)** - Complete admin interface with user and post management
 
 ## 🛠️ Development
 
@@ -23,6 +24,7 @@ Guides for active development:
 
 - **[Development Guide](./development.md)** - Workflow, patterns, and best practices
 - **[Testing](./testing.md)** - Unit, integration, and E2E testing strategies
+- **[Local GitHub Actions Testing](./local-github-action-testing.md)** - Run GitHub Actions locally with act
 
 ## 🚀 Deployment & Infrastructure
 

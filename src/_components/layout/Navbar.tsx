@@ -1,15 +1,26 @@
 "use client";
 
-import { File, Files, type LucideIcon } from "lucide-react";
+import React from "react";
+import {
+  Files,
+  File,
+  LayoutDashboard,
+  LogIn,
+  LogOut,
+  Settings,
+  Shield,
+  User,
+  type LucideIcon,
+} from "lucide-react";
 import Link from "next/link";
-import * as React from "react";
-import { FormattedMessage } from "react-intl";
-
 import Image from "next/image";
+import { useSession, signOut } from "next-auth/react";
 import { ThemeModeToggle } from "~/_components/theme";
 import { LanguageSwitcher } from "~/_components/i18n";
-import { SignIn } from "~/_components/auth";
+import { FormattedMessage } from "react-intl";
+import GoogleSignInButton from "../auth/GoogleSignInButton";
 import {
+  Button,
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
@@ -24,11 +35,46 @@ interface NavbarLinks {
   titleKey: string;
   href: string;
   icon: LucideIcon;
+  description?: string;
 }
 
-const navbarLinks: NavbarLinks[] = [
-  { titleKey: "navigation.post", href: "/post", icon: File },
-  { titleKey: "navigation.allPosts", href: "/posts", icon: Files },
+const protectedLinks: NavbarLinks[] = [
+  {
+    titleKey: "navigation.home",
+    href: "/dashboard",
+    icon: LayoutDashboard,
+    description: "Your dashboard overview",
+  },
+  {
+    titleKey: "navigation.profile",
+    href: "/profile",
+    icon: User,
+    description: "Manage your profile",
+  },
+];
+
+const adminLinks: NavbarLinks[] = [
+  {
+    titleKey: "navigation.settings",
+    href: "/admin/settings",
+    icon: Settings,
+    description: "Application settings",
+  },
+];
+
+const publicLinks: NavbarLinks[] = [
+  {
+    titleKey: "navigation.post",
+    href: "/post",
+    icon: File,
+    description: "Create a post",
+  },
+  {
+    titleKey: "navigation.allPosts",
+    href: "/posts",
+    icon: Files,
+    description: "Browse all posts",
+  },
 ];
 
 interface NavbarProps {
@@ -36,6 +82,10 @@ interface NavbarProps {
 }
 
 const Navbar = ({ currentLocale }: NavbarProps) => {
+  const { data: session } = useSession();
+  const isGoogleConfigured =
+    process.env.NEXT_PUBLIC_AUTH_GOOGLE_ENABLED?.toLowerCase() === "true";
+
   return (
     <NavigationMenu viewport={false} className="m-5 block max-w-full">
       <NavigationMenuList className="w-full justify-between">
@@ -60,22 +110,88 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-4">
-                {navbarLinks?.map((link) => (
+                {publicLinks.map((link) => (
                   <NavItem
                     key={link.titleKey}
                     titleKey={link.titleKey}
                     href={`/${currentLocale}${link.href}`}
                     icon={link.icon}
-                  />
+                  >
+                    {link.description}
+                  </NavItem>
                 ))}
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
+
+          {/* Protected Links - Only show if authenticated */}
+          {session && (
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>
+                <Shield className="mr-1 h-4 w-4" />
+                <FormattedMessage id="navigation.account" />
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[280px] gap-3 p-4">
+                  {protectedLinks.map((link) => (
+                    <NavItem
+                      key={link.titleKey}
+                      titleKey={link.titleKey}
+                      href={`/${currentLocale}${link.href}`}
+                      icon={link.icon}
+                    >
+                      {link.description}
+                    </NavItem>
+                  ))}
+                  {session.user?.role === "ADMIN" &&
+                    adminLinks.map((link) => (
+                      <NavItem
+                        key={link.titleKey}
+                        titleKey={link.titleKey}
+                        href={`/${currentLocale}${link.href}`}
+                        icon={link.icon}
+                      >
+                        {link.description}
+                      </NavItem>
+                    ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          )}
+          {/* Show sign-in and Google sign-in as separate menu items when not logged in */}
+          {!session && (
+            <NavigationMenuItem>
+              <Link
+                href={`/${currentLocale}/login`}
+                className={navigationMenuTriggerStyle()}
+              >
+                <LogIn className="mr-2 h-4 w-4" />
+                <FormattedMessage id="navigation.signIn" />
+              </Link>
+            </NavigationMenuItem>
+          )}
+          {!session && isGoogleConfigured && (
+            <NavigationMenuItem>
+              <GoogleSignInButton isGoogleConfigured={true} />
+            </NavigationMenuItem>
+          )}
+          {/* Sign out button for authenticated users */}
+          {session && (
+            <NavigationMenuItem>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="cursor-pointer"
+                onClick={() => signOut({ callbackUrl: `/${currentLocale}` })}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                <FormattedMessage id="navigation.signOut" />
+              </Button>
+            </NavigationMenuItem>
+          )}
           <NavigationMenuItem>
             <LanguageSwitcher currentLocale={currentLocale} />
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <SignIn />
           </NavigationMenuItem>
           <NavigationMenuItem>
             <ThemeModeToggle />

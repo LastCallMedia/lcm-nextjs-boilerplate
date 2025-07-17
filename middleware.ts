@@ -38,6 +38,8 @@ function getLocaleFromHeaders(request: Request) {
 export default auth((req) => {
   const { nextUrl } = req;
   const pathname = nextUrl.pathname;
+  const isLoggedIn = !!req.auth;
+  const userRole = req.auth?.user?.role;
 
   // Skip middleware for API routes, static files, and internal Next.js routes
   if (
@@ -66,6 +68,32 @@ export default auth((req) => {
     return NextResponse.redirect(newUrl);
   }
 
+  // Role-based route protection
+  // Only protect /<locale>/dashboard and /<locale>/profile for unauthenticated users
+  const isUserRoute = ["/dashboard", "/profile"].some((route) =>
+    pathname.startsWith(`/${pathnameLocale}${route}`),
+  );
+  if (isUserRoute && !isLoggedIn) {
+    return NextResponse.redirect(new URL(`/${pathnameLocale}/login`, req.url));
+  }
+
+  // Only protect /<locale>/admin for unauthenticated and non-admin users
+  const isAdminRoute =
+    pathname === `/${pathnameLocale}/admin` ||
+    pathname.startsWith(`/${pathnameLocale}/admin/`);
+  if (isAdminRoute) {
+    if (!isLoggedIn) {
+      return NextResponse.redirect(
+        new URL(`/${pathnameLocale}/login`, req.url),
+      );
+    }
+    if (userRole !== "ADMIN") {
+      return NextResponse.redirect(
+        new URL(`/${pathnameLocale}/dashboard`, req.url),
+      );
+    }
+  }
+
   // Add the pathname to headers so we can access it in server components
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set("x-pathname", pathname);
@@ -77,10 +105,9 @@ export default auth((req) => {
   });
 });
 
-// Define the routes that should be handled by this middleware
 export const config = {
   matcher: [
-    // Skip all internal paths (_next)
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    // Skip all internal paths (_next), static files, and API routes
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

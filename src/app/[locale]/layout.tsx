@@ -1,11 +1,20 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
+import { Geist } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
-import { Navbar, Footer } from "~/_components/layout";
+import { Footer } from "~/_components/layout";
 import { AuthProvider } from "~/_components/auth";
 import { ThemeProvider } from "~/_components/ui/theme-provider";
+import { Toaster } from "~/_components/ui/sonner";
+import Navbar from "~/_components/layout/Navbar";
+import { SessionProvider } from "next-auth/react";
 import { IntlProvider, getMessages, getValidLocale, locales } from "~/i18n";
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+});
 
 export const metadata: Metadata = {
   title: "Create LCM App",
@@ -28,26 +37,33 @@ export default async function LocaleLayout({
 }: RootLayoutProps) {
   const { locale: localeParam } = await params;
   const locale = getValidLocale(localeParam);
-  const messages = await getMessages(locale);
+  const messages = getMessages(locale);
 
   return (
-    <TRPCReactProvider>
-      <AuthProvider>
-        <IntlProvider locale={locale} messages={messages}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
-              <Navbar currentLocale={locale} />
-              <div>{children}</div>
-              <Footer />
-            </div>
-          </ThemeProvider>
-        </IntlProvider>
-      </AuthProvider>
-    </TRPCReactProvider>
+    <html lang={locale} className={`${geist.variable}`}>
+      <body>
+        <SessionProvider>
+          <TRPCReactProvider>
+            <AuthProvider>
+              <IntlProvider locale={locale} messages={messages}>
+                <ThemeProvider
+                  attribute="class"
+                  defaultTheme="system"
+                  enableSystem
+                  disableTransitionOnChange
+                >
+                  <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
+                    <Navbar currentLocale={locale} />
+                    <div>{children}</div>
+                    <Footer />
+                  </div>
+                  <Toaster />
+                </ThemeProvider>
+              </IntlProvider>
+            </AuthProvider>
+          </TRPCReactProvider>
+        </SessionProvider>
+      </body>
+    </html>
   );
 }

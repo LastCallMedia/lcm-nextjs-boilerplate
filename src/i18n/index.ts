@@ -6,5 +6,5 @@ export {
   getValidLocale,
   type Locale,
 } from "./config";
-export { getMessages, type Messages } from "./messages";
+export { getMessages } from "./messages";
 export { IntlProvider } from "./provider";
