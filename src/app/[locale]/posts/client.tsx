@@ -1,6 +1,6 @@
 "use client";
 
-import type { Post } from "../../../../prisma/generated/client";
+import type { Post } from "@prisma/client";
 import React from "react";
 import { PostForm, PostCardDefault as PostCard } from "~/_components/posts";
 import { FormattedMessage } from "react-intl";
