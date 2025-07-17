@@ -10,13 +10,13 @@ export const metadata: Metadata = {
   description: "View and manage all user accounts in the system",
 };
 
-export default function AdminUsersPage({
+export default async function AdminUsersPage({
   params,
 }: {
-  params?: { locale?: string };
+  params: Promise<{ locale?: string }>;
 }) {
-  const locale = params?.locale ?? "en";
-  const messages = getMessages(locale as "en" | "es");
+  const { locale } = await params;
+  const messages = getMessages((locale ?? "en") as "en" | "es");
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">

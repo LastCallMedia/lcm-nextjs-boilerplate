@@ -3,17 +3,21 @@ import { auth } from "~/server/auth";
 
 export default async function AdminLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ locale?: string }>;
 }) {
+  const { locale } = await params;
+  const safeLocale = locale ?? "en";
   const session = await auth();
 
   // Check if user is authenticated and has admin role
   if (!session) {
-    redirect("/login");
+    redirect(`/${safeLocale}/login`);
   }
   if (session.user?.role !== "ADMIN") {
-    redirect("/dashboard");
+    redirect(`/${safeLocale}/dashboard`);
   }
 
   return (

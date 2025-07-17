@@ -9,12 +9,18 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { FormattedMessage } from "react-intl";
+import { useParams } from "next/navigation";
 
 const GoogleSignInButton = ({
   isGoogleConfigured,
 }: {
   isGoogleConfigured: boolean;
 }) => {
+  const { locale } = useParams();
+  const safeLocale = Array.isArray(locale)
+    ? (locale[0] ?? "en")
+    : (locale ?? "en");
+
   if (!isGoogleConfigured) {
     return (
       <TooltipProvider>
@@ -51,7 +57,9 @@ const GoogleSignInButton = ({
       type="button"
       variant="outline"
       className="w-full cursor-pointer"
-      onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+      onClick={() =>
+        signIn("google", { callbackUrl: `/${safeLocale}/dashboard` })
+      }
     >
       <FormattedMessage id="auth.signInWith" values={{ provider: "Google" }} />
     </Button>

@@ -22,17 +22,17 @@ export const metadata: Metadata = {
 export default async function SettingsPage({
   params,
 }: {
-  params?: { locale?: string };
+  params: Promise<{ locale?: string }>;
 }) {
+  const { locale } = await params;
   const session = await auth();
 
   // Redirect if not authenticated
   if (!session) {
-    redirect("/login");
+    redirect(`/${locale ?? "en"}/login`);
   }
 
-  const locale = params?.locale ?? "en";
-  const messages = getMessages(locale as "en" | "es");
+  const messages = getMessages((locale ?? "en") as "en" | "es");
 
   return (
     <div className="container mx-auto py-8">

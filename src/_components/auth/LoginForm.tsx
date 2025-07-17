@@ -8,12 +8,17 @@ import { Label } from "../ui/label";
 import { Alert, AlertDescription } from "../ui/alert";
 import { CheckCircle, Mail, AlertCircle, Loader2 } from "lucide-react";
 import { FormattedMessage } from "react-intl";
+import { useParams } from "next/navigation";
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [message, setMessage] = useState<string>("");
+  const { locale } = useParams();
+  const safeLocale = Array.isArray(locale)
+    ? (locale[0] ?? "en")
+    : (locale ?? "en");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +29,7 @@ export default function LoginForm() {
       const result = await signIn("nodemailer", {
         email,
         redirect: false,
-        callbackUrl: "/dashboard",
+        callbackUrl: `/${safeLocale}/dashboard`,
       });
 
       if (result?.error) {
