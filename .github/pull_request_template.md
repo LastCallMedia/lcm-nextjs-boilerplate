@@ -18,6 +18,6 @@ https://lastcall.atlassian.net/browse/{TICKET_ID}
 
 - [ ] I have performed a self-review of my code.
 - [ ] The changes are documented.
-- [ ] It's covered with Unit tests.
+- [ ] It's covered with unit tests.
 - [ ] All the env vars and feature flags are registered in `.env.tpl`
 - [ ] All tests are passing locally.
