@@ -4,6 +4,7 @@ import React from "react";
 import {
   Files,
   File,
+  Infinity,
   LayoutDashboard,
   LogIn,
   LogOut,
@@ -74,6 +75,12 @@ const publicLinks: NavbarLinks[] = [
     href: "/posts",
     icon: Files,
     description: "Browse all posts",
+  },
+  {
+    titleKey: "navigation.infinitePosts",
+    href: "/infinite-posts",
+    icon: Infinity,
+    description: "Explore posts with infinite scroll",
   },
 ];
 

@@ -1,11 +1,10 @@
 "use client";
-
+import { formatDistanceToNow } from "date-fns";
+import { Badge } from "~/_components/ui/badge";
+import { useAdminTable, type PostSortField } from "~/hooks/use-admin-table";
 import { api } from "~/trpc/react";
 import { DataTable, type DataTableColumn } from "./data-table";
 import { SearchInput } from "./search-input";
-import { useAdminTable, type PostSortField } from "~/hooks/use-admin-table";
-import { Badge } from "~/_components/ui/badge";
-import { formatDistanceToNow } from "date-fns";
 import { useIntl } from "react-intl";
 
 type Post = {
@@ -62,7 +61,7 @@ export function PostsTable() {
     {
       accessorKey: "createdBy",
       header: intl.formatMessage({ id: "postsTable.author" }),
-      cell: (value, row) => (
+      cell: (_, row) => (
         <div className="flex items-center space-x-2">
           <div>
             <div className="font-medium">

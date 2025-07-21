@@ -41,7 +41,8 @@
     "placeholder": "What's on your mind?",
     "submitting": "Submitting...",
     "titleRequired": "Title is required",
-    "myPost": "My Posts"
+    "myPost": "My Posts",
+    "infinitePosts": "Infinite Posts"
   },
   "auth": {
     "signIn": "Sign in",
