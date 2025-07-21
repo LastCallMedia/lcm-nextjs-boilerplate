@@ -10,6 +10,7 @@ import {
 } from "../ui/tooltip";
 import { FormattedMessage } from "react-intl";
 import { useParams } from "next/navigation";
+import { getSafeLocale } from "~/lib/utils";
 
 const GoogleSignInButton = ({
   isGoogleConfigured,
@@ -17,9 +18,7 @@ const GoogleSignInButton = ({
   isGoogleConfigured: boolean;
 }) => {
   const { locale } = useParams();
-  const safeLocale = Array.isArray(locale)
-    ? (locale[0] ?? "en")
-    : (locale ?? "en");
+  const safeLocale = getSafeLocale(locale);
 
   if (!isGoogleConfigured) {
     return (

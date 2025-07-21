@@ -59,12 +59,16 @@
   "dashboard": {
     "title": "Dashboard",
     "description": "Manage users, posts, and system settings",
-    "users.ariaLabel": "Navigate to user management",
-    "users.title": "Manage Users",
-    "users.description": "View and edit user accounts",
-    "posts.ariaLabel": "Navigate to post management",
-    "posts.title": "Manage Posts",
-    "posts.description": "View and moderate posts"
+    "users": {
+      "ariaLabel": "Navigate to user management",
+      "title": "Manage Users",
+      "description": "View and edit user accounts"
+    },
+    "posts": {
+      "ariaLabel": "Navigate to post management",
+      "title": "Manage Posts",
+      "description": "View and moderate posts"
+    }
   },
   "example": {
     "title": "i18n Example",

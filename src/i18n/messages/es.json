@@ -59,12 +59,16 @@
   "dashboard": {
     "title": "Panel",
     "description": "Gestiona usuarios, publicaciones y configuración del sistema",
-    "users.ariaLabel": "Ir a la gestión de usuarios",
-    "users.title": "Gestionar Usuarios",
-    "users.description": "Ver y editar cuentas de usuario",
-    "posts.ariaLabel": "Ir a la gestión de publicaciones",
-    "posts.title": "Gestionar Publicaciones",
-    "posts.description": "Ver y moderar publicaciones"
+    "users": {
+      "ariaLabel": "Ir a la gestión de usuarios",
+      "title": "Gestionar Usuarios",
+      "description": "Ver y editar cuentas de usuario"
+    },
+    "posts": {
+      "ariaLabel": "Ir a la gestión de publicaciones",
+      "title": "Gestionar Publicaciones",
+      "description": "Ver y moderar publicaciones"
+    }
   },
   "example": {
     "title": "Ejemplo de i18n",

@@ -9,6 +9,7 @@ import { Alert, AlertDescription } from "../ui/alert";
 import { CheckCircle, Mail, AlertCircle, Loader2 } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 import { useParams } from "next/navigation";
+import { getSafeLocale } from "~/lib/utils";
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>("");
@@ -16,9 +17,7 @@ export default function LoginForm() {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [message, setMessage] = useState<string>("");
   const { locale } = useParams();
-  const safeLocale = Array.isArray(locale)
-    ? (locale[0] ?? "en")
-    : (locale ?? "en");
+  const safeLocale = getSafeLocale(locale);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

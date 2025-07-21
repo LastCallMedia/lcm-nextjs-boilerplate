@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { getSafeLocale } from "~/lib/utils";
 import { auth } from "~/server/auth";
 
 export default async function AdminLayout({
@@ -9,7 +10,7 @@ export default async function AdminLayout({
   params: Promise<{ locale?: string }>;
 }) {
   const { locale } = await params;
-  const safeLocale = locale ?? "en";
+  const safeLocale = getSafeLocale(locale);
   const session = await auth();
 
   // Check if user is authenticated and has admin role

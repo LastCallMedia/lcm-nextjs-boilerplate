@@ -2,112 +2,116 @@ import { test, expect } from "@playwright/test";
 import { waitForPageLoad } from "./utils/page-helpers";
 
 test.describe("Basic Navigation Tests", () => {
-  test("should navigate to homepage", async ({ page }) => {
-    await page.goto("/en/");
-    await waitForPageLoad(page);
-    await expect(page).toHaveTitle(/Create LCM App/);
-    await expect(page.locator("h1")).toBeVisible();
-  });
+  const locales = ["en", "es"];
+  const postsTitles = { en: "Posts", es: "Todas las Publicaciones" };
+  for (const locale of locales) {
+    test(`should navigate to homepage (${locale})`, async ({ page }) => {
+      await page.goto(`/${locale}/`);
+      await waitForPageLoad(page);
+      await expect(page).toHaveTitle(/Create LCM App/);
+      await expect(page.locator("h1")).toBeVisible();
+    });
 
-  test("should navigate to posts page", async ({ page }) => {
-    await page.goto("/en/posts");
-    await waitForPageLoad(page);
+    test(`should navigate to posts page (${locale})`, async ({ page }) => {
+      await page.goto(`/${locale}/posts`);
+      await waitForPageLoad(page);
+      await expect(page.locator("h1")).toContainText(
+        postsTitles[locale as "en" | "es"],
+      );
+    });
 
-    await expect(page.locator("h1")).toContainText(/posts/i);
-  });
+    test(`should have working navigation menu (${locale})`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/`);
+      await waitForPageLoad(page);
+      const nav = page.locator("nav");
+      await expect(nav).toBeVisible();
+      const postsLink = page.locator(`a[href="/${locale}/posts"]`);
+      if ((await postsLink.count()) > 0) {
+        await postsLink.click();
+        await page.waitForURL(`**/${locale}/posts`);
+        expect(page.url()).toContain(`/${locale}/posts`);
+      }
+    });
 
-  test("should have working navigation menu", async ({ page }) => {
-    await page.goto("/en/");
-    await waitForPageLoad(page);
-
-    // Check navigation structure exists
-    const nav = page.locator("nav");
-    await expect(nav).toBeVisible();
-
-    // Check if posts link exists and works
-    const postsLink = page.locator('a[href="/en/posts"]');
-    if ((await postsLink.count()) > 0) {
-      await postsLink.click();
-      await page.waitForURL("**/en/posts");
-      expect(page.url()).toContain("/en/posts");
-    }
-  });
-
-  test("should handle 404 pages gracefully", async ({ page }) => {
-    const response = await page.goto("/en/non-existent-page");
-
-    // Should return 404 status or redirect to error page
-    expect(response?.status()).toBe(404);
-  });
+    test(`should handle 404 pages gracefully (${locale})`, async ({ page }) => {
+      const response = await page.goto(`/${locale}/non-existent-page`);
+      expect(response?.status()).toBe(404);
+    });
+  }
 });
 
 test.describe("Post Management Tests", () => {
-  test("should display posts list", async ({ page }) => {
-    await page.goto("/en/posts");
-    await waitForPageLoad(page);
+  const locales = ["en", "es"];
+  const postsTitles = { en: "Posts", es: "Todas las Publicaciones" };
+  for (const locale of locales) {
+    test(`should display posts list (${locale})`, async ({ page }) => {
+      await page.goto(`/${locale}/posts`);
+      await waitForPageLoad(page);
+      await expect(page.locator("h1")).toContainText(
+        postsTitles[locale as "en" | "es"],
+      );
+    });
 
-    await expect(page.locator("h1")).toContainText(/posts/i);
-  });
+    test(`should show create post button/link (${locale})`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/posts`);
+      await waitForPageLoad(page);
+      await expect(page.locator("h1")).toContainText(
+        postsTitles[locale as "en" | "es"],
+      );
+      const createButton = page.locator(
+        'a[href*="create"], button:has-text("Create")',
+      );
+      if ((await createButton.count()) > 0) {
+        await expect(createButton.first()).toBeVisible();
+      }
+    });
 
-  test("should show create post button/link", async ({ page }) => {
-    await page.goto("/en/posts");
-    await waitForPageLoad(page);
-
-    // Verify the page loaded correctly
-    await expect(page.locator("h1")).toContainText(/posts/i);
-
-    // Look for create post button - this is optional, test passes if not found
-    const createButton = page.locator(
-      'a[href*="create"], button:has-text("Create")',
-    );
-    if ((await createButton.count()) > 0) {
-      await expect(createButton.first()).toBeVisible();
-    }
-  });
-
-  test("should navigate to create post page", async ({ page }) => {
-    await page.goto("/en/posts/create");
-    await waitForPageLoad(page, "body");
-
-    // Page should load without error (may show login, create form, or 404)
-    // Just verify that we got a response and the page has content
-    await expect(page.locator("body")).toBeVisible();
-  });
+    test(`should navigate to create post page (${locale})`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/posts/create`);
+      await waitForPageLoad(page, "body");
+      await expect(page.locator("body")).toBeVisible();
+    });
+  }
 });
 
 test.describe("Theme and UI Tests", () => {
-  test("should have theme toggle functionality", async ({ page }) => {
-    await page.goto("/en/");
-    await waitForPageLoad(page);
+  const locales = ["en", "es"];
+  for (const locale of locales) {
+    test(`should have theme toggle functionality (${locale})`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/`);
+      await waitForPageLoad(page);
+      const themeToggle = page.locator('[data-testid="theme-toggle"]');
+      if ((await themeToggle.count()) > 0) {
+        await expect(themeToggle).toBeVisible();
+        await themeToggle.click();
+        const html = page.locator("html");
+        const hasThemeClass = await html.evaluate(
+          (el) =>
+            el.classList.contains("dark") || el.classList.contains("light"),
+        );
+        expect(hasThemeClass).toBeTruthy();
+      }
+    });
 
-    // Look for theme toggle button
-    const themeToggle = page.locator('[data-testid="theme-toggle"]');
-
-    if ((await themeToggle.count()) > 0) {
-      await expect(themeToggle).toBeVisible();
-      await themeToggle.click();
-
-      // Verify theme system is working (check for dark/light class)
-      const html = page.locator("html");
-      const hasThemeClass = await html.evaluate(
-        (el) => el.classList.contains("dark") || el.classList.contains("light"),
-      );
-      expect(hasThemeClass).toBeTruthy();
-    }
-  });
-
-  test("should be responsive on mobile devices", async ({ page }) => {
-    await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto("/en/");
-    await waitForPageLoad(page);
-
-    // Verify content is visible and responsive
-    await expect(page.locator("body")).toBeVisible();
-
-    // Check if mobile menu exists (optional)
-    const mobileMenu = page.locator('[data-testid="mobile-menu"]');
-    if ((await mobileMenu.count()) > 0) {
-      await expect(mobileMenu).toBeVisible();
-    }
-  });
+    test(`should be responsive on mobile devices (${locale})`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 375, height: 667 });
+      await page.goto(`/${locale}/`);
+      await waitForPageLoad(page);
+      await expect(page.locator("body")).toBeVisible();
+      const mobileMenu = page.locator('[data-testid="mobile-menu"]');
+      if ((await mobileMenu.count()) > 0) {
+        await expect(mobileMenu).toBeVisible();
+      }
+    });
+  }
 });

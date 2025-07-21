@@ -24,7 +24,9 @@ function flattenMessages(
     {} as Record<string, string>,
   );
 }
-
+// To support additional languages, import the new JSON and add it to messagesMap below.
+// Keeping all language messages in this file is recommended for static, known values.
+// Separate files are only needed for dynamic or large-scale localization.
 const messagesMap = {
   en: flattenMessages(enMessages),
   es: flattenMessages(esMessages),
