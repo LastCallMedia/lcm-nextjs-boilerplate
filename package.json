@@ -37,7 +37,8 @@
     "act:lint": "act -j code-quality",
     "act:jest": "act -j jest-tests",
     "act:e2e": "act -j e2e-tests",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "db:seed-posts": "tsx prisma/seed-posts.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -46,6 +47,7 @@
     "@auth/prisma-adapter": "^2.10.0",
     "@hookform/resolvers": "^5.1.1",
     "@prisma/client": "^6.11.1",
+    "@prisma/extension-accelerate": "^2.0.2",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-aspect-ratio": "^1.1.7",

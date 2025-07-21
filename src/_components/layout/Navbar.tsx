@@ -1,7 +1,9 @@
 "use client";
+
 import React from "react";
 import {
   Files,
+  Infinity,
   LayoutDashboard,
   LogIn,
   LogOut,
@@ -77,6 +79,12 @@ const publicLinks: NavbarLinks[] = [
     href: "/posts",
     icon: Files,
     description: "Browse all posts",
+  },
+  {
+    title: "Infinite Posts",
+    href: "/infinite-posts",
+    icon: Infinity,
+    description: "Explore posts with infinite scroll",
   },
 ];
 
