@@ -49,3 +49,6 @@ yarn-error.log*
 # playwright
 /playwright-report/
 /prisma/generated/
+
+# vscode
+.vscode

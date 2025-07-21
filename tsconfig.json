@@ -1,27 +1,20 @@
 {
   "compilerOptions": {
-    /* Base Options: */
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "target": "es2022",
+    "target": "esnext",
     "allowJs": true,
     "resolveJsonModule": true,
     "moduleDetection": "force",
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-    /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "checkJs": true,
-    /* Bundled projects */
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "ES2022"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "noEmit": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "jsx": "preserve",
     "plugins": [
       {
@@ -29,15 +22,22 @@
       }
     ],
     "incremental": true,
-    /* Path Aliases */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "exactOptionalPropertyTypes": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "./src/*"
-      ],
-      "@/*": [
-        "./*"
-      ],
+      "~/*": ["./src/*"],
+      "@/*": ["./*"]
     }
   },
   "include": [
@@ -48,10 +48,5 @@
     "**/*.js",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "jest.setup.js",
-    "jest.config.cjs",
-    "coverage"
-  ]
+  "exclude": ["node_modules", "jest.setup.js", "jest.config.cjs", "coverage"]
 }
