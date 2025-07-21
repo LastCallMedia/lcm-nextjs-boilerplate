@@ -1,13 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { MoreHorizontalIcon, TrashIcon, UserCheckIcon } from "lucide-react";
 import Image from "next/image";
-import { api } from "~/trpc/react";
-import { DataTable, type DataTableColumn } from "./data-table";
-import { SearchInput } from "./search-input";
-import { useAdminTable, type UserSortField } from "~/hooks/use-admin-table";
-import { Badge } from "~/_components/ui/badge";
-import { Button } from "~/_components/ui/button";
+import { useState } from "react";
+import { toast } from "sonner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,6 +15,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "~/_components/ui/alert-dialog";
+import { Badge } from "~/_components/ui/badge";
+import { Button } from "~/_components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,8 +25,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/_components/ui/dropdown-menu";
-import { MoreHorizontalIcon, TrashIcon, UserCheckIcon } from "lucide-react";
-import { toast } from "sonner";
+import { useAdminTable, type UserSortField } from "~/hooks/use-admin-table";
+import { api } from "~/trpc/react";
+import { DataTable, type DataTableColumn } from "./data-table";
+import { SearchInput } from "./search-input";
 
 type User = {
   id: string;
@@ -119,7 +119,7 @@ export function UsersTable() {
   });
 
   const updateUserRoleMutation = api.admin.updateUserRole.useMutation({
-    onSuccess: (data, variables) => {
+    onSuccess: (_, variables) => {
       void utils.admin.getUsers.invalidate();
       toast.success(
         `User role updated to ${variables.role.toLowerCase()} successfully`,
@@ -216,7 +216,7 @@ export function UsersTable() {
     {
       accessorKey: "_count.posts",
       header: "Posts",
-      cell: (value, row) => {
+      cell: (_, row) => {
         const count = row._count;
         return count?.posts ?? 0;
       },
@@ -224,7 +224,7 @@ export function UsersTable() {
     {
       accessorKey: "_count.sessions",
       header: "Sessions",
-      cell: (value, row) => {
+      cell: (_, row) => {
         const count = row._count;
         return count?.sessions ?? 0;
       },
