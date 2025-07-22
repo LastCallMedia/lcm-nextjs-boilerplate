@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b">
+      <main className="flex flex-col items-center justify-center bg-gradient-to-b">
         <Image
           src="/lcm-logo-teal.png"
           alt="LCM logo"
