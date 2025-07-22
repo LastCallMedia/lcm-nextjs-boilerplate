@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <HydrateClient>
-      <main className="flex flex-col items-center justify-center bg-gradient-to-b">
+      <div className="flex flex-col items-center justify-center bg-gradient-to-b">
         <Image
           src="/lcm-logo-teal.png"
           alt="LCM logo"
@@ -43,7 +43,7 @@ export default async function Home() {
             <span>See all posts</span> <ArrowUpRight aria-hidden="true" />
           </Link>
         </Button>
-      </main>
+      </div>
     </HydrateClient>
   );
 }
