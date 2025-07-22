@@ -1,7 +1,7 @@
 "use client";
 
+import PostForm from "~/_components/posts/PostForm";
 import { api } from "~/trpc/react";
-import PostForm from "./PostForm";
 
 export function LatestPost() {
   const [latestPost] = api.post.getLatest.useSuspenseQuery();

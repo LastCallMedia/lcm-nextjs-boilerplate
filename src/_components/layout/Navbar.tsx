@@ -1,22 +1,23 @@
 "use client";
 
-import React from "react";
 import {
   Files,
   Infinity,
+  Info,
   LayoutDashboard,
   LogIn,
   LogOut,
+  Mail,
   Settings,
   Shield,
   User,
-  Info,
-  Mail,
   type LucideIcon,
 } from "lucide-react";
-import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useSession, signOut } from "next-auth/react";
+import Link from "next/link";
+import React from "react";
+import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
 import { ThemeModeToggle } from "~/_components/theme";
 import {
   Button,
@@ -28,7 +29,6 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/_components/ui";
-import GoogleSignInButton from "../auth/GoogleSignInButton";
 
 interface NavbarLinks {
   title: string;

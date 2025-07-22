@@ -1,11 +1,14 @@
 "use client";
 
 import { formatDistanceToNow } from "date-fns";
+import {
+  DataTable,
+  type DataTableColumn,
+} from "~/_components/admin/data-table";
+import { SearchInput } from "~/_components/admin/search-input";
 import { Badge } from "~/_components/ui/badge";
 import { useAdminTable, type PostSortField } from "~/hooks/use-admin-table";
 import { api } from "~/trpc/react";
-import { DataTable, type DataTableColumn } from "./data-table";
-import { SearchInput } from "./search-input";
 
 type Post = {
   id: number;

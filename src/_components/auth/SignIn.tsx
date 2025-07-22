@@ -1,6 +1,5 @@
-import React from "react";
-import LoginForm from "./LoginForm";
-import GoogleSignInButton from "./GoogleSignInButton";
+import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
+import LoginForm from "~/_components/auth/LoginForm";
 import { isGoogleAuthConfigured } from "~/lib/auth-utils";
 
 const SignIn = async () => {

@@ -1,5 +1,5 @@
 import type { Post } from "@prisma/client";
-import { Card, CardContent, CardFooter } from "../ui/card";
+import { Card, CardContent, CardFooter } from "~/_components/ui/card";
 
 interface PostCardProps {
   post: Post;

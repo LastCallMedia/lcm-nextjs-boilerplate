@@ -1,7 +1,7 @@
-import React, { Suspense } from "react";
-import AllPostsClient from "./client";
-import { getAllPosts } from "../utils/api";
+import { Suspense } from "react";
 import { TypingIndicator } from "~/_components/posts/TypingIndicator";
+import AllPostsClient from "~/app/posts/client";
+import { getAllPosts } from "~/app/utils/api";
 
 const page = () => {
   return (

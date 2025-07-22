@@ -1,2 +1,2 @@
-export { default as SignIn } from "./SignIn";
-export { default as LoginForm } from "./LoginForm";
+export { default as LoginForm } from "~/_components/auth/LoginForm";
+export { default as SignIn } from "~/_components/auth/SignIn";

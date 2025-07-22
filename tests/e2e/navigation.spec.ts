@@ -1,5 +1,5 @@
-import { test, expect } from "@playwright/test";
-import { waitForPageLoad } from "./utils/page-helpers";
+import { waitForPageLoad } from "@/tests/e2e/utils/page-helpers";
+import { expect, test } from "@playwright/test";
 
 test.describe("Basic Navigation Tests", () => {
   test("should navigate to homepage", async ({ page }) => {

@@ -5,6 +5,11 @@ import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
 import {
+  DataTable,
+  type DataTableColumn,
+} from "~/_components/admin/data-table";
+import { SearchInput } from "~/_components/admin/search-input";
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -27,8 +32,6 @@ import {
 } from "~/_components/ui/dropdown-menu";
 import { useAdminTable, type UserSortField } from "~/hooks/use-admin-table";
 import { api } from "~/trpc/react";
-import { DataTable, type DataTableColumn } from "./data-table";
-import { SearchInput } from "./search-input";
 
 type User = {
   id: string;

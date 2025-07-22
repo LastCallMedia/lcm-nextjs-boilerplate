@@ -1,6 +1,6 @@
-import { test, expect } from "@playwright/test";
+import { waitForPageLoad } from "@/tests/e2e/utils/page-helpers";
 import AxeBuilder from "@axe-core/playwright";
-import { waitForPageLoad } from "./utils/page-helpers";
+import { expect, test } from "@playwright/test";
 
 test.describe("Accessibility Tests", () => {
   // Common exclusions for all tests
