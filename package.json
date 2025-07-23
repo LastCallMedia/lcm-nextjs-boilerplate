@@ -10,6 +10,8 @@
     "db:migrate": "prisma migrate deploy",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
+    "db:seed": "tsx --env-file=.env prisma/seed.ts",
+    "db:seed-posts": "tsx --env-file=.env prisma/seed-posts.ts",
     "dev": "pnpm docker:dev && next dev --turbo",
     "dev:only": "next dev --turbo",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
@@ -36,9 +38,7 @@
     "act:full": "act",
     "act:lint": "act -j code-quality",
     "act:jest": "act -j jest-tests",
-    "act:e2e": "act -j e2e-tests",
-    "db:seed": "tsx --env-file=.env prisma/seed.ts",
-    "db:seed-posts": "tsx --env-file=.env prisma/seed-posts.ts"
+    "act:e2e": "act -j e2e-tests"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
