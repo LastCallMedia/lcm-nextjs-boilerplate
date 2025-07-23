@@ -1,3 +1,4 @@
+import { FormattedDate, FormattedTime } from "react-intl";
 import { Card, CardContent, CardFooter } from "~/_components/ui/card";
 import type { PostModel } from "~/generated/prisma/models/Post";
 
@@ -14,8 +15,8 @@ export function PostCard({ post, className }: PostCardProps) {
       </CardContent>
       <CardFooter>
         <p className="text-muted-foreground text-xs">
-          {post.createdAt.toLocaleDateString()}{" "}
-          {post.createdAt.toLocaleTimeString()}
+          <FormattedDate value={post.createdAt} />{" "}
+          <FormattedTime value={post.createdAt} />
         </p>
       </CardFooter>
     </Card>
