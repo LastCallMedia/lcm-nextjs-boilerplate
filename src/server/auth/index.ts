@@ -11,6 +11,8 @@ const {
   signOut,
 } = NextAuth({
   ...authConfig,
+  // @ts-expect-error - Compatibility issue between new ESM Prisma client and auth adapter
+  // @todo: Fix this when the Prisma adapter is updated to support ESM
   adapter: PrismaAdapter(db),
 });
 
