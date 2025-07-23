@@ -1,6 +1,6 @@
 "use client";
-
 import { formatDistanceToNow } from "date-fns";
+import { useIntl } from "react-intl";
 import {
   DataTable,
   type DataTableColumn,
@@ -24,6 +24,7 @@ type Post = {
 };
 
 export function PostsTable() {
+  const intl = useIntl();
   const {
     search,
     setSearch,
@@ -50,22 +51,25 @@ export function PostsTable() {
   const columns: DataTableColumn<Post>[] = [
     {
       accessorKey: "name",
-      header: "Post Title",
+      header: intl.formatMessage({ id: "postsTable.title" }),
       sortable: true,
       cell: (value) => (
         <div className="max-w-md truncate font-medium">
-          {typeof value === "string" ? value : "Untitled"}
+          {typeof value === "string"
+            ? value
+            : intl.formatMessage({ id: "postsTable.untitled" })}
         </div>
       ),
     },
     {
       accessorKey: "createdBy",
-      header: "Author",
+      header: intl.formatMessage({ id: "postsTable.author" }),
       cell: (_, row) => (
         <div className="flex items-center space-x-2">
           <div>
             <div className="font-medium">
-              {row.createdBy.name ?? "Unknown User"}
+              {row.createdBy.name ??
+                intl.formatMessage({ id: "postsTable.unknownUser" })}
             </div>
             <div className="text-muted-foreground text-sm">
               {row.createdBy.email}
@@ -81,7 +85,7 @@ export function PostsTable() {
     },
     {
       accessorKey: "createdAt",
-      header: "Created",
+      header: intl.formatMessage({ id: "postsTable.created" }),
       sortable: true,
       cell: (value) => {
         const date = value as Date;
@@ -99,7 +103,7 @@ export function PostsTable() {
     },
     {
       accessorKey: "updatedAt",
-      header: "Updated",
+      header: intl.formatMessage({ id: "postsTable.updated" }),
       sortable: true,
       cell: (value) => {
         const date = value as Date;

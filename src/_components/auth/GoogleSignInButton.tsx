@@ -1,5 +1,7 @@
 "use client";
 import { signIn } from "next-auth/react";
+import { useParams } from "next/navigation";
+import { FormattedMessage } from "react-intl";
 import { Button } from "~/_components/ui/button";
 import {
   Tooltip,
@@ -7,12 +9,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/_components/ui/tooltip";
+import { getSafeLocale } from "~/lib/utils";
 
 const GoogleSignInButton = ({
   isGoogleConfigured,
 }: {
   isGoogleConfigured: boolean;
 }) => {
+  const { locale } = useParams();
+  const safeLocale = getSafeLocale(locale);
+
   if (!isGoogleConfigured) {
     return (
       <TooltipProvider>
@@ -23,15 +29,19 @@ const GoogleSignInButton = ({
               variant="outline"
               className="w-full cursor-not-allowed opacity-50"
             >
-              Sign in with Google
+              <FormattedMessage
+                id="auth.signInWith"
+                values={{ provider: "Google" }}
+              />
             </Button>
           </TooltipTrigger>
           <TooltipContent>
             <div className="text-center">
-              <div>Google authentication is not configured.</div>
               <div>
-                Please set AUTH_GOOGLE_ID and AUTH_GOOGLE_SECRET environment
-                variables.
+                <FormattedMessage id="auth.googleNotConfigured" />
+              </div>
+              <div>
+                <FormattedMessage id="auth.googleConfigMessage" />
               </div>
             </div>
           </TooltipContent>
@@ -45,9 +55,11 @@ const GoogleSignInButton = ({
       type="button"
       variant="outline"
       className="w-full cursor-pointer"
-      onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+      onClick={() =>
+        signIn("google", { callbackUrl: `/${safeLocale}/dashboard` })
+      }
     >
-      Sign in with Google
+      <FormattedMessage id="auth.signInWith" values={{ provider: "Google" }} />
     </Button>
   );
 };

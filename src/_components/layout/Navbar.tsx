@@ -1,13 +1,12 @@
 "use client";
 
 import {
+  File,
   Files,
   Infinity,
-  Info,
   LayoutDashboard,
   LogIn,
   LogOut,
-  Mail,
   Settings,
   Shield,
   User,
@@ -17,7 +16,9 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
+import { LanguageSwitcher } from "~/_components/i18n";
 import { ThemeModeToggle } from "~/_components/theme";
 import {
   Button,
@@ -29,9 +30,10 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/_components/ui";
+import { type Locale } from "~/i18n";
 
 interface NavbarLinks {
-  title: string;
+  titleKey: string;
   href: string;
   icon: LucideIcon;
   description?: string;
@@ -39,13 +41,13 @@ interface NavbarLinks {
 
 const protectedLinks: NavbarLinks[] = [
   {
-    title: "Dashboard",
+    titleKey: "navigation.home",
     href: "/dashboard",
     icon: LayoutDashboard,
     description: "Your dashboard overview",
   },
   {
-    title: "Profile",
+    titleKey: "navigation.profile",
     href: "/profile",
     icon: User,
     description: "Manage your profile",
@@ -54,7 +56,7 @@ const protectedLinks: NavbarLinks[] = [
 
 const adminLinks: NavbarLinks[] = [
   {
-    title: "Settings",
+    titleKey: "navigation.settings",
     href: "/admin/settings",
     icon: Settings,
     description: "Application settings",
@@ -63,32 +65,30 @@ const adminLinks: NavbarLinks[] = [
 
 const publicLinks: NavbarLinks[] = [
   {
-    title: "About",
-    href: "/about",
-    icon: Info,
-    description: "Learn about this boilerplate",
+    titleKey: "navigation.post",
+    href: "/post",
+    icon: File,
+    description: "Create a post",
   },
   {
-    title: "Contact",
-    href: "/contact",
-    icon: Mail,
-    description: "Get in touch with us",
-  },
-  {
-    title: "All Posts",
+    titleKey: "navigation.allPosts",
     href: "/posts",
     icon: Files,
     description: "Browse all posts",
   },
   {
-    title: "Infinite Posts",
+    titleKey: "navigation.infinitePosts",
     href: "/infinite-posts",
     icon: Infinity,
     description: "Explore posts with infinite scroll",
   },
 ];
 
-const Navbar = () => {
+interface NavbarProps {
+  currentLocale: Locale;
+}
+
+const Navbar = ({ currentLocale }: NavbarProps) => {
   const { data: session } = useSession();
   const isGoogleConfigured =
     process.env.NEXT_PUBLIC_AUTH_GOOGLE_ENABLED?.toLowerCase() === "true";
@@ -98,7 +98,7 @@ const Navbar = () => {
       <NavigationMenuList className="w-full justify-between">
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/">
+            <Link href={`/${currentLocale}`}>
               <Image
                 src={"/lcm-logo-teal.svg"}
                 width={40}
@@ -112,74 +112,76 @@ const Navbar = () => {
         </NavigationMenuItem>
         <div className="flex items-center gap-4">
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Discover</NavigationMenuTrigger>
+            <NavigationMenuTrigger>
+              <FormattedMessage id="navigation.menu" />
+            </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-4">
                 {publicLinks.map((link) => (
-                  <ListItem
-                    key={link.title}
-                    title={link.title}
-                    href={link.href}
+                  <NavItem
+                    key={link.titleKey}
+                    titleKey={link.titleKey}
+                    href={`/${currentLocale}${link.href}`}
                     icon={link.icon}
                   >
                     {link.description}
-                  </ListItem>
+                  </NavItem>
                 ))}
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
+
           {/* Protected Links - Only show if authenticated */}
           {session && (
             <NavigationMenuItem>
               <NavigationMenuTrigger>
                 <Shield className="mr-1 h-4 w-4" />
-                Account
+                <FormattedMessage id="navigation.account" />
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[280px] gap-3 p-4">
                   {protectedLinks.map((link) => (
-                    <ListItem
-                      key={link.title}
-                      title={link.title}
-                      href={link.href}
+                    <NavItem
+                      key={link.titleKey}
+                      titleKey={link.titleKey}
+                      href={`/${currentLocale}${link.href}`}
                       icon={link.icon}
                     >
                       {link.description}
-                    </ListItem>
+                    </NavItem>
                   ))}
                   {session.user?.role === "ADMIN" &&
                     adminLinks.map((link) => (
-                      <ListItem
-                        key={link.title}
-                        title={link.title}
-                        href={link.href}
+                      <NavItem
+                        key={link.titleKey}
+                        titleKey={link.titleKey}
+                        href={`/${currentLocale}${link.href}`}
                         icon={link.icon}
                       >
                         {link.description}
-                      </ListItem>
+                      </NavItem>
                     ))}
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
           )}
-
           {/* Show sign-in and Google sign-in as separate menu items when not logged in */}
           {!session && (
-            <>
-              <NavigationMenuItem>
-                <Link href="/login" className={navigationMenuTriggerStyle()}>
-                  <LogIn className="mr-2 h-4 w-4" />
-                  Sign in
-                </Link>
-              </NavigationMenuItem>
-              {isGoogleConfigured && (
-                <NavigationMenuItem>
-                  <GoogleSignInButton isGoogleConfigured={true} />
-                </NavigationMenuItem>
-              )}
-            </>
+            <NavigationMenuItem>
+              <Link
+                href={`/${currentLocale}/login`}
+                className={navigationMenuTriggerStyle()}
+              >
+                <LogIn className="mr-2 h-4 w-4" />
+                <FormattedMessage id="navigation.signIn" />
+              </Link>
+            </NavigationMenuItem>
           )}
-
+          {!session && isGoogleConfigured && (
+            <NavigationMenuItem>
+              <GoogleSignInButton isGoogleConfigured={true} />
+            </NavigationMenuItem>
+          )}
           {/* Sign out button for authenticated users */}
           {session && (
             <NavigationMenuItem>
@@ -188,13 +190,16 @@ const Navbar = () => {
                 variant="ghost"
                 size="sm"
                 className="cursor-pointer"
-                onClick={() => signOut({ callbackUrl: "/" })}
+                onClick={() => signOut({ callbackUrl: `/${currentLocale}` })}
               >
                 <LogOut className="mr-2 h-4 w-4" />
-                Sign out
+                <FormattedMessage id="navigation.signOut" />
               </Button>
             </NavigationMenuItem>
           )}
+          <NavigationMenuItem>
+            <LanguageSwitcher currentLocale={currentLocale} />
+          </NavigationMenuItem>
           <NavigationMenuItem>
             <ThemeModeToggle />
           </NavigationMenuItem>
@@ -204,13 +209,13 @@ const Navbar = () => {
   );
 };
 
-function ListItem({
-  title,
-  children,
+function NavItem({
+  titleKey,
   href,
   icon: Icon,
   ...props
 }: React.ComponentPropsWithoutRef<"li"> & {
+  titleKey: string;
   href: string;
   icon: LucideIcon;
 }) {
@@ -220,11 +225,8 @@ function ListItem({
         <Link href={href}>
           <div className="flex gap-2 text-sm leading-none font-medium">
             <Icon />
-            {title}
+            <FormattedMessage id={titleKey} />
           </div>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-            {children}
-          </p>
         </Link>
       </NavigationMenuLink>
     </li>

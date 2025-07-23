@@ -10,18 +10,25 @@ import {
   CardTitle,
 } from "~/_components/ui/card";
 import { auth } from "~/server/auth";
+import { getMessages } from "~/i18n/messages";
 
 export const metadata: Metadata = {
   title: "Login | LCM Next.js Boilerplate",
   description: "Sign in to your account to access protected features.",
 };
 
-export default async function LoginPage() {
+export default async function LoginPage({
+  params,
+}: {
+  params: Promise<{ locale?: string }>;
+}) {
   const session = await auth();
+  const { locale } = await params;
+  const messages = getMessages((locale ?? "en") as "en" | "es");
 
   // Redirect if already logged in
   if (session) {
-    redirect("/dashboard");
+    redirect(`/${locale}/dashboard`);
   }
 
   return (
@@ -29,9 +36,11 @@ export default async function LoginPage() {
       <div className="flex w-full max-w-sm flex-col justify-center space-y-6">
         <Card>
           <CardHeader className="space-y-1">
-            <CardTitle className="text-center text-2xl">Sign in</CardTitle>
+            <CardTitle className="text-center text-2xl">
+              {messages["login.title"]}
+            </CardTitle>
             <CardDescription className="text-center">
-              Enter your email to receive a magic link or use Google to sign in
+              {messages["login.description"]}
             </CardDescription>
           </CardHeader>
           <CardContent>

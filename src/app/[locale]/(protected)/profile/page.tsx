@@ -13,28 +13,37 @@ import { Input } from "~/_components/ui/input";
 import { Label } from "~/_components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "~/_components/ui/avatar";
 import { auth } from "~/server/auth";
+import { getMessages } from "~/i18n/messages";
 
 export const metadata: Metadata = {
   title: "Profile | LCM Next.js Boilerplate",
   description: "Manage your profile settings and personal information.",
 };
 
-export default async function ProfilePage() {
+export default async function ProfilePage({
+  params,
+}: {
+  params: Promise<{ locale?: string }>;
+}) {
+  const { locale } = await params;
   const session = await auth();
 
   // Redirect if not authenticated
   if (!session) {
-    redirect("/login");
+    redirect(`/${locale ?? "en"}/login`);
   }
 
   const user = session.user;
+  const messages = getMessages((locale ?? "en") as "en" | "es");
 
   return (
     <div className="container mx-auto py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Profile</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          {messages["profile.title"]}
+        </h1>
         <p className="text-muted-foreground">
-          Manage your account settings and preferences
+          {messages["profile.description"]}
         </p>
       </div>
 
@@ -43,10 +52,12 @@ export default async function ProfilePage() {
         <Card className="lg:col-span-1">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              Profile Overview
-              <Badge variant="secondary">Protected</Badge>
+              {messages["profile.overview"]}
+              <Badge variant="secondary">{messages["profile.protected"]}</Badge>
             </CardTitle>
-            <CardDescription>Your current profile information</CardDescription>
+            <CardDescription>
+              {messages["profile.overviewDescription"]}
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex flex-col items-center space-y-4">
@@ -69,7 +80,9 @@ export default async function ProfilePage() {
 
             <div className="space-y-2">
               <div>
-                <Label className="text-muted-foreground text-xs">User ID</Label>
+                <Label className="text-muted-foreground text-xs">
+                  {messages["profile.userId"]}
+                </Label>
                 <p className="font-mono text-sm">{user?.id}</p>
               </div>
             </div>
@@ -79,29 +92,28 @@ export default async function ProfilePage() {
         {/* Profile Settings */}
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Profile Settings</CardTitle>
+            <CardTitle>{messages["profile.settings"]}</CardTitle>
             <CardDescription>
-              Update your profile information (Note: This is a demo - changes
-              won&apos;t be saved)
+              {messages["profile.settingsDescription"]}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name">{messages["profile.fullName"]}</Label>
                 <Input
                   id="name"
-                  placeholder="Enter your full name"
+                  placeholder={messages["profile.fullName"]}
                   defaultValue={user?.name ?? ""}
                   disabled
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{messages["profile.email"]}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={messages["profile.email"]}
                   defaultValue={user?.email ?? ""}
                   disabled
                 />
@@ -109,7 +121,7 @@ export default async function ProfilePage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="bio">Bio</Label>
+              <Label htmlFor="bio">{messages["profile.bio"]}</Label>
               <textarea
                 id="bio"
                 className={[
@@ -119,13 +131,13 @@ export default async function ProfilePage() {
                   "text-sm focus-visible:ring-2 focus-visible:ring-offset-2",
                   "focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
                 ].join(" ")}
-                placeholder="Tell us about yourself..."
+                placeholder={messages["profile.bioPlaceholder"]}
                 disabled
               />
             </div>
 
             <div className="space-y-2">
-              <Label>Profile Picture</Label>
+              <Label>{messages["profile.picture"]}</Label>
               <div className="flex items-center space-x-4">
                 <Avatar className="h-12 w-12">
                   <AvatarImage
@@ -138,10 +150,10 @@ export default async function ProfilePage() {
                 </Avatar>
                 <div>
                   <Button variant="outline" size="sm" disabled>
-                    Change Picture
+                    {messages["profile.changePicture"]}
                   </Button>
                   <p className="text-muted-foreground mt-1 text-xs">
-                    Profile picture is managed by your OAuth provider
+                    {messages["profile.pictureNote"]}
                   </p>
                 </div>
               </div>
@@ -149,17 +161,17 @@ export default async function ProfilePage() {
 
             <div className="flex justify-end space-x-2">
               <Button variant="outline" disabled>
-                Cancel
+                {messages["profile.cancel"]}
               </Button>
-              <Button disabled>Save Changes</Button>
+              <Button disabled>{messages["profile.save"]}</Button>
             </div>
 
             <div className="bg-muted/50 rounded-lg border p-4">
-              <h4 className="mb-2 font-medium">Demo Note</h4>
+              <h4 className="mb-2 font-medium">
+                {messages["profile.demoNoteTitle"]}
+              </h4>
               <p className="text-muted-foreground text-sm">
-                This profile page demonstrates a protected route with user data
-                display. In a real application, you would implement form
-                handling, validation, and database updates for profile changes.
+                {messages["profile.demoNoteDescription"]}
               </p>
             </div>
           </CardContent>

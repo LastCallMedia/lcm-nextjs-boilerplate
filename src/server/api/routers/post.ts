@@ -6,13 +6,14 @@ import {
 } from "~/server/api/trpc";
 
 // Define Zod schemas for Post model
-const PostSchema = z.object({
+export const PostSchema = z.object({
   id: z.number(),
   name: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
   createdById: z.string(),
 });
+export type Post = z.infer<typeof PostSchema>;
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure

@@ -92,9 +92,12 @@ export const authConfig = {
       if (url.startsWith(`${baseUrl}/api/auth/signout`)) {
         return baseUrl; // Redirect to homepage after signout
       }
-      // Redirect to dashboard after successful login
+      // Extract locale from url if present
+      const localeMatch = /\/([a-zA-Z-]+)(?:\/|$)/.exec(url);
+      const locale = localeMatch ? localeMatch[1] : "en";
+      // Redirect to dashboard after successful login, preserving locale
       if (url === baseUrl || url === `${baseUrl}/login`) {
-        return `${baseUrl}/dashboard`;
+        return `${baseUrl}/${locale}/dashboard`;
       }
       // Allow relative callback URLs
       if (url.startsWith("/")) return `${baseUrl}${url}`;
