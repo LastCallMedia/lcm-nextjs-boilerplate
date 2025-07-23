@@ -1,0 +1,31 @@
+html[style*="color-scheme: dark"] .swagger-ui .scheme-container,
+html[style*="color-scheme: dark"] .opblock-section-header,
+html[style*="color-scheme: dark"] .swagger-ui {
+  background: var(--color-background);
+  color: var(--color-primary);
+}
+
+html[style*="color-scheme: dark"] .swagger-ui .information-container h2,
+html[style*="color-scheme: dark"] .swagger-ui .opblock-summary *,
+html[style*="color-scheme: dark"]
+  .swagger-ui
+  .opblock-body
+  *:not(select, .parameters-col_description input),
+html[style*="color-scheme: dark"]
+  .swagger-ui
+  .information-container
+  .description
+  p {
+  color: var(--color-primary);
+}
+
+html[style*="color-scheme: dark"] .opblock-section-header,
+html[style*="color-scheme: dark"] .opblock-tag {
+  background: var(--color-background) !important;
+  color: var(--color-primary);
+}
+
+html[style*="color-scheme: dark"] .swagger-ui .info {
+  background: var(--color-background);
+  color: var(--color-primary);
+}

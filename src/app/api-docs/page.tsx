@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import type { Root } from "react-dom/client";
 import "swagger-ui-react/swagger-ui.css";
+import "./theme.css";
 
 export default function SwaggerPage() {
   const containerRef = useRef<HTMLDivElement>(null);
