@@ -65,16 +65,17 @@ A production-ready Next.js boilerplate for Last Call Media, designed to accelera
    pnpm docker:dev
    ```
 
-4. **Initialize the database**:
+4. **Start development server**:
+   ```bash
+   pnpm dev
+   ```
+
+5. **Initialize the database**:
 
    ```bash
    pnpm db:generate
    ```
 
-5. **Start development server**:
-   ```bash
-   pnpm dev
-   ```
 
 Visit [http://localhost:3000](http://localhost:3000) to see your application.
 
