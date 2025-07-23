@@ -75,27 +75,34 @@ const PostForm = ({ className }: PostFormProps) => {
   };
 
   return (
-    <form
-      onSubmit={form.handleSubmit(onSubmit)}
-      className={`flex flex-col gap-2 ${className}`}
-    >
-      <Input
-        type="text"
-        placeholder="What's on your mind?"
-        {...form.register("name")}
-        value={form.watch("name")}
-        onChange={handleInputChange}
-        className="w-full"
-      />
-      {form.formState.errors.name && (
-        <p className="text-destructive text-sm">
-          {form.formState.errors.name.message}
-        </p>
-      )}
-      <Button type="submit" disabled={createPost.isPending} className="w-full">
-        {createPost.isPending ? "Submitting..." : "Submit"}
-      </Button>
-    </form>
+    <div className="flex flex-col gap-4">
+      <h2 className="text-2xl font-bold">Add a post</h2>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={`flex flex-col gap-2 ${className}`}
+      >
+        <Input
+          type="text"
+          placeholder="What's on your mind?"
+          {...form.register("name")}
+          value={form.watch("name")}
+          onChange={handleInputChange}
+          className="w-full"
+        />
+        {form.formState.errors.name && (
+          <p className="text-destructive text-sm">
+            {form.formState.errors.name.message}
+          </p>
+        )}
+        <Button
+          type="submit"
+          disabled={createPost.isPending}
+          className="w-full"
+        >
+          {createPost.isPending ? "Submitting..." : "Submit"}
+        </Button>
+      </form>
+    </div>
   );
 };
 

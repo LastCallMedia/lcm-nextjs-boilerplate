@@ -1,23 +1,29 @@
-import React, { Suspense } from "react";
-import AllPostsClient from "./client";
-import { getAllPosts } from "../utils/api";
-import { TypingIndicator } from "~/_components/posts/TypingIndicator";
+"use client";
 
-const page = () => {
+import { Button } from "../../_components/ui/button";
+import Link from "next/link";
+
+export default function Page() {
   return (
-    <div>
-      <h1 className="m-4 text-center text-2xl font-bold">All Posts</h1>
-      <Suspense fallback>
-        <AllPosts />
-        <TypingIndicator channelId="landing" />
-      </Suspense>
+    <div className="m-auto flex min-h-[60vh] max-w-2xl flex-col items-center justify-center gap-6">
+      <h1 className="text-2xl font-bold">Posts Examples</h1>
+      <p>
+        To help illustrate server-side versus client-side data fetching and
+        rendering, 2 versions of the Posts page have been created. You can view
+        and use each one with the links below.
+      </p>
+      <p>
+        Remember that components themselves (not just pages) can be server or
+        client rendered, and you can mix/match them to achieve the best results.
+      </p>
+      <div className="flex w-full flex-row gap-4">
+        <Button asChild className="grow">
+          <Link href="/posts/example-ssr">SSR Example</Link>
+        </Button>
+        <Button asChild className="grow">
+          <Link href="/posts/example-csr">CSR Example</Link>
+        </Button>
+      </div>
     </div>
   );
-};
-
-export default page;
-
-const AllPosts = async () => {
-  const posts = await getAllPosts();
-  return <AllPostsClient posts={posts} />;
-};
+}

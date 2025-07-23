@@ -8,7 +8,7 @@ export function TypingIndicator({ channelId }: { channelId: string }) {
   });
 
   return (
-    <p className="text-muted-foreground text-sm">
+    <p className="text-muted-foreground mb-8 text-center text-sm">
       {typers.length > 0
         ? `${typers.length} ${typers.length === 1 ? "person" : "people"} typing...`
         : "No one typing"}

@@ -8,7 +8,7 @@ interface PostCardProps {
 
 export function PostCard({ post, className }: PostCardProps) {
   return (
-    <Card className={`m-4 w-full max-w-lg ${className}`}>
+    <Card className={`w-full ${className}`}>
       <CardContent>
         <p>{post.name}</p>
       </CardContent>
