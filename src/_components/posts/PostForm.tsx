@@ -7,6 +7,7 @@ import { z } from "zod";
 
 import { api } from "~/trpc/react";
 import { Input, Button } from "~/_components/ui";
+import { toast } from "sonner";
 
 const createPostSchema = z.object({
   name: z.string().min(1, "Title is required"),
@@ -55,6 +56,17 @@ const PostForm = ({ className }: PostFormProps) => {
     onSuccess: async () => {
       await utils.post.invalidate();
       form.reset();
+    },
+    onError: (error) => {
+      console.error("Error creating post:", error);
+      toast.error("Failed to create post", {
+        description:
+          error.message === "UNAUTHORIZED"
+            ? "You must be signed in to create posts"
+            : error.message
+              ? error.message
+              : "An unexpected error occurred.",
+      });
     },
   });
 
