@@ -1,7 +1,11 @@
+/* Swagger UI React doesn't have a real good way to override the default "light" theme, so we're just using some CSS to get us most of the way there */
+
+html[style*="color-scheme: dark"] .swagger-ui,
 html[style*="color-scheme: dark"] .swagger-ui .scheme-container,
 html[style*="color-scheme: dark"] .opblock-section-header,
-html[style*="color-scheme: dark"] .swagger-ui {
-  background: var(--color-background);
+html[style*="color-scheme: dark"] .opblock-tag,
+html[style*="color-scheme: dark"] .swagger-ui .info {
+  background: var(--color-background) !important;
   color: var(--color-primary);
 }
 
@@ -15,17 +19,11 @@ html[style*="color-scheme: dark"]
   .swagger-ui
   .information-container
   .description
-  p {
+  p,
+html[style*="color-scheme: dark"] .swagger-ui .models h4 {
   color: var(--color-primary);
 }
 
-html[style*="color-scheme: dark"] .opblock-section-header,
-html[style*="color-scheme: dark"] .opblock-tag {
-  background: var(--color-background) !important;
-  color: var(--color-primary);
-}
-
-html[style*="color-scheme: dark"] .swagger-ui .info {
-  background: var(--color-background);
-  color: var(--color-primary);
+html[style*="color-scheme: dark"] .swagger-ui span.model-box {
+  background-color: var(--color-foreground);
 }
