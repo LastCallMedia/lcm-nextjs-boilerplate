@@ -137,16 +137,10 @@ export function UsersTable() {
       } else if (error.message.includes("Cannot demote your own account")) {
         toast.error(
           "You cannot change your own role. Ask another admin to modify your permissions.",
-          {
-            duration: 5000,
-          },
         );
       } else {
         toast.error(
           error.message || "Failed to update user role. Please try again.",
-          {
-            duration: 4000,
-          },
         );
       }
     },
@@ -158,9 +152,8 @@ export function UsersTable() {
       toast.success("User deleted successfully");
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to delete user. Please try again.", {
-        duration: 4000,
-      });
+      console.error("Error deleting user", error);
+      toast.error(error.message || "Failed to delete user. Please try again.");
     },
   });
 

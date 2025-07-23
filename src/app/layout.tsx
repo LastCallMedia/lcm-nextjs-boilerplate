@@ -37,7 +37,7 @@ export default function RootLayout({
               <Navbar />
               {children}
               <Footer />
-              <Toaster />
+              <Toaster duration={4000} />
             </ThemeProvider>
           </TRPCReactProvider>
         </SessionProvider>
