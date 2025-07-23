@@ -7,12 +7,17 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Alert, AlertDescription } from "../ui/alert";
 import { CheckCircle, Mail, AlertCircle, Loader2 } from "lucide-react";
+import { FormattedMessage } from "react-intl";
+import { useParams } from "next/navigation";
+import { getSafeLocale } from "~/lib/utils";
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [message, setMessage] = useState<string>("");
+  const { locale } = useParams();
+  const safeLocale = getSafeLocale(locale);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +28,7 @@ export default function LoginForm() {
       const result = await signIn("nodemailer", {
         email,
         redirect: false,
-        callbackUrl: "/dashboard",
+        callbackUrl: `/${safeLocale}/dashboard`,
       });
 
       if (result?.error) {
@@ -50,7 +55,9 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="grid gap-4">
       <div className="grid gap-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">
+          <FormattedMessage id="auth.email" />
+        </Label>
         <Input
           id="email"
           name="email"
@@ -74,12 +81,12 @@ export default function LoginForm() {
         {isLoading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Sending...
+            <FormattedMessage id="auth.sending" />
           </>
         ) : (
           <>
             <Mail className="mr-2 h-4 w-4" />
-            Send Magic Link
+            <FormattedMessage id="auth.sendMagicLink" />
           </>
         )}
       </Button>
@@ -99,7 +106,7 @@ export default function LoginForm() {
       )}
 
       <p className="text-muted-foreground text-center text-xs">
-        We&apos;ll send you a magic link to sign in instantly
+        <FormattedMessage id="auth.magicLinkInfo" />
       </p>
     </form>
   );
