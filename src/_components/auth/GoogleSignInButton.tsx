@@ -6,7 +6,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../ui/tooltip";
+} from "~/_components/ui/tooltip";
 
 const GoogleSignInButton = ({
   isGoogleConfigured,

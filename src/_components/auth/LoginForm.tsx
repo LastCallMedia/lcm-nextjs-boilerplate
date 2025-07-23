@@ -3,10 +3,10 @@
 import { AlertCircle, CheckCircle, Loader2, Mail } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { Alert, AlertDescription } from "~/_components/ui/alert";
 import { Button } from "~/_components/ui/button";
 import { Input } from "~/_components/ui/input";
 import { Label } from "~/_components/ui/label";
-import { Alert, AlertDescription } from "../ui/alert";
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>("");
