@@ -1,4 +1,5 @@
 import type { Post } from "@prisma/client";
+import { FormattedMessage } from "react-intl";
 import { PostForm, PostCardDefault as PostCard } from "~/_components/posts";
 
 interface AllPostsClientProps {
@@ -10,7 +11,9 @@ const AllPostsClient = ({ posts }: AllPostsClientProps) => {
     <div className="m-auto flex w-full flex-col gap-4">
       <PostForm className="m-auto w-full" />
       {posts.length < 1 ? (
-        <p className="m-4 text-center">No posts available</p>
+        <p className="m-4 text-center">
+          <FormattedMessage id="posts.noPostsAvailable" />
+        </p>
       ) : (
         <div className="grid grid-cols-1 justify-items-center gap-4">
           {posts.map((post) => (
