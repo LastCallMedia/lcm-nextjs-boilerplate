@@ -12,26 +12,36 @@ import { Switch } from "~/_components/ui/switch";
 import { Label } from "~/_components/ui/label";
 import { Separator } from "~/_components/ui/separator";
 import { auth } from "~/server/auth";
+import { getMessages } from "~/i18n/messages";
 
 export const metadata: Metadata = {
   title: "Settings | LCM Next.js Boilerplate",
   description: "Manage your account settings and preferences.",
 };
 
-export default async function SettingsPage() {
+export default async function SettingsPage({
+  params,
+}: {
+  params: Promise<{ locale?: string }>;
+}) {
+  const { locale } = await params;
   const session = await auth();
 
   // Redirect if not authenticated
   if (!session) {
-    redirect("/login");
+    redirect(`/${locale ?? "en"}/login`);
   }
+
+  const messages = getMessages((locale ?? "en") as "en" | "es");
 
   return (
     <div className="container mx-auto py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          {messages["settings.title"]}
+        </h1>
         <p className="text-muted-foreground">
-          Manage your account settings and preferences
+          {messages["settings.description"]}
         </p>
       </div>
 
@@ -39,17 +49,19 @@ export default async function SettingsPage() {
         {/* Account Settings */}
         <Card>
           <CardHeader>
-            <CardTitle>Account Settings</CardTitle>
+            <CardTitle>{messages["settings.account.title"]}</CardTitle>
             <CardDescription>
-              Manage your account security and preferences
+              {messages["settings.account.description"]}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label className="text-base">Email Notifications</Label>
+                <Label className="text-base">
+                  {messages["settings.account.emailNotifications"]}
+                </Label>
                 <div className="text-muted-foreground text-sm">
-                  Receive email notifications for important updates
+                  {messages["settings.account.emailNotificationsDesc"]}
                 </div>
               </div>
               <Switch defaultChecked disabled />
@@ -59,13 +71,15 @@ export default async function SettingsPage() {
 
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label className="text-base">Two-Factor Authentication</Label>
+                <Label className="text-base">
+                  {messages["settings.account.twoFactor"]}
+                </Label>
                 <div className="text-muted-foreground text-sm">
-                  Add an extra layer of security to your account
+                  {messages["settings.account.twoFactorDesc"]}
                 </div>
               </div>
               <Button variant="outline" size="sm" disabled>
-                Enable 2FA
+                {messages["settings.account.enable2fa"]}
               </Button>
             </div>
           </CardContent>
@@ -74,17 +88,19 @@ export default async function SettingsPage() {
         {/* Privacy Settings */}
         <Card>
           <CardHeader>
-            <CardTitle>Privacy Settings</CardTitle>
+            <CardTitle>{messages["settings.privacy.title"]}</CardTitle>
             <CardDescription>
-              Control your privacy and data sharing preferences
+              {messages["settings.privacy.description"]}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label className="text-base">Public Profile</Label>
+                <Label className="text-base">
+                  {messages["settings.privacy.publicProfile"]}
+                </Label>
                 <div className="text-muted-foreground text-sm">
-                  Make your profile visible to other users
+                  {messages["settings.privacy.publicProfileDesc"]}
                 </div>
               </div>
               <Switch disabled />
@@ -94,13 +110,15 @@ export default async function SettingsPage() {
 
             <div className="space-y-4">
               <div>
-                <Label className="text-base">Export Data</Label>
+                <Label className="text-base">
+                  {messages["settings.privacy.exportData"]}
+                </Label>
                 <div className="text-muted-foreground text-sm">
-                  Download a copy of your account data
+                  {messages["settings.privacy.exportDataDesc"]}
                 </div>
               </div>
               <Button variant="outline" disabled>
-                Export Data
+                {messages["settings.privacy.exportDataButton"]}
               </Button>
             </div>
           </CardContent>
@@ -109,21 +127,24 @@ export default async function SettingsPage() {
         {/* Danger Zone */}
         <Card className="border-destructive">
           <CardHeader>
-            <CardTitle className="text-destructive">Danger Zone</CardTitle>
+            <CardTitle className="text-destructive">
+              {messages["settings.danger.title"]}
+            </CardTitle>
             <CardDescription>
-              Irreversible and destructive actions
+              {messages["settings.danger.description"]}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label className="text-base">Delete Account</Label>
+              <Label className="text-base">
+                {messages["settings.danger.deleteAccount"]}
+              </Label>
               <div className="text-muted-foreground text-sm">
-                Permanently delete your account and all associated data. This
-                action cannot be undone.
+                {messages["settings.danger.deleteAccountDesc"]}
               </div>
             </div>
             <Button variant="destructive" disabled>
-              Delete Account
+              {messages["settings.danger.deleteAccountButton"]}
             </Button>
           </CardContent>
         </Card>
@@ -131,14 +152,11 @@ export default async function SettingsPage() {
         {/* Demo Notice */}
         <Card className="bg-muted/50">
           <CardHeader>
-            <CardTitle>Demo Note</CardTitle>
+            <CardTitle>{messages["settings.demo.title"]}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground text-sm">
-              This settings page demonstrates a protected route with user
-              settings management. In a real application, you would implement
-              form handling, validation, and database updates for these
-              settings. (Note: This is a demo - changes won&apos;t be saved)
+              {messages["settings.demo.description"]}
             </p>
           </CardContent>
         </Card>

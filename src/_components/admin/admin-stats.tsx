@@ -15,18 +15,27 @@ import {
   ShieldCheckIcon,
   UserCheckIcon,
 } from "lucide-react";
+import { FormattedMessage } from "react-intl";
 
 // RecentUser defines the type for users in the recentUsers array from getStats.
-interface RecentUser {
+type RecentUser = {
   id: string;
   name: string | null;
   email: string | null;
-  role: string;
+  role: "USER" | "ADMIN";
   emailVerified: Date | null;
+};
+
+interface AdminStatsData {
+  userCount: number;
+  postCount: number;
+  adminCount: number;
+  recentUsers: RecentUser[];
 }
 
 export function AdminStats() {
-  const { data: stats, isLoading } = api.admin.getStats.useQuery();
+  const { data: stats, isLoading } =
+    api.admin.getStats.useQuery<AdminStatsData>();
 
   if (isLoading) {
     return (
@@ -55,39 +64,15 @@ export function AdminStats() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              <FormattedMessage id="adminStats.totalUsers" />
+            </CardTitle>
             <UsersIcon className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.userCount}</div>
             <p className="text-muted-foreground text-xs">
-              Registered users in the system
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Posts</CardTitle>
-            <FileTextIcon className="text-muted-foreground h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.postCount}</div>
-            <p className="text-muted-foreground text-xs">
-              Posts created by users
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Admin Users</CardTitle>
-            <ShieldCheckIcon className="text-muted-foreground h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.adminCount}</div>
-            <p className="text-muted-foreground text-xs">
-              Users with admin privileges
+              <FormattedMessage id="adminStats.totalUsersDesc" />
             </p>
           </CardContent>
         </Card>
@@ -95,7 +80,37 @@ export function AdminStats() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Posts per User
+              <FormattedMessage id="adminStats.totalPosts" />
+            </CardTitle>
+            <FileTextIcon className="text-muted-foreground h-4 w-4" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats.postCount}</div>
+            <p className="text-muted-foreground text-xs">
+              <FormattedMessage id="adminStats.totalPostsDesc" />
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              <FormattedMessage id="adminStats.adminUsers" />
+            </CardTitle>
+            <ShieldCheckIcon className="text-muted-foreground h-4 w-4" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats.adminCount}</div>
+            <p className="text-muted-foreground text-xs">
+              <FormattedMessage id="adminStats.adminUsersDesc" />
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              <FormattedMessage id="adminStats.postsPerUser" />
             </CardTitle>
             <FileTextIcon className="text-muted-foreground h-4 w-4" />
           </CardHeader>
@@ -106,7 +121,7 @@ export function AdminStats() {
                 : "0"}
             </div>
             <p className="text-muted-foreground text-xs">
-              Average posts per user
+              <FormattedMessage id="adminStats.postsPerUserDesc" />
             </p>
           </CardContent>
         </Card>
@@ -117,16 +132,18 @@ export function AdminStats() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <UserCheckIcon className="h-5 w-5" />
-            <span>Recently Verified Users</span>
+            <span>
+              <FormattedMessage id="adminStats.recentVerified" />
+            </span>
           </CardTitle>
           <CardDescription>
-            Users who have recently verified their email addresses
+            <FormattedMessage id="adminStats.recentVerifiedDesc" />
           </CardDescription>
         </CardHeader>
         <CardContent>
           {stats.recentUsers.length === 0 ? (
             <p className="text-muted-foreground text-sm">
-              No recently verified users
+              <FormattedMessage id="adminStats.noRecentVerified" />
             </p>
           ) : (
             <div className="space-y-3">
@@ -154,7 +171,11 @@ export function AdminStats() {
                     <Badge
                       variant={user.emailVerified ? "default" : "destructive"}
                     >
-                      {user.emailVerified ? "Verified" : "Unverified"}
+                      {user.emailVerified ? (
+                        <FormattedMessage id="adminStats.verified" />
+                      ) : (
+                        <FormattedMessage id="adminStats.unverified" />
+                      )}
                     </Badge>
                   </div>
                 </div>

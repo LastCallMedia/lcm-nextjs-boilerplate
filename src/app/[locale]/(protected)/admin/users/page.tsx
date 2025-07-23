@@ -3,26 +3,33 @@ import { Button } from "~/_components/ui/button";
 import Link from "next/link";
 import { ArrowLeftIcon } from "lucide-react";
 import type { Metadata } from "next";
+import { getMessages } from "~/i18n/messages";
 
 export const metadata: Metadata = {
   title: "User Management | Admin Dashboard",
   description: "View and manage all user accounts in the system",
 };
 
-export default function AdminUsersPage() {
+export default async function AdminUsersPage({
+  params,
+}: {
+  params: Promise<{ locale?: string }>;
+}) {
+  const { locale } = await params;
+  const messages = getMessages((locale ?? "en") as "en" | "es");
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">User Management</h2>
+          <h2 className="text-2xl font-bold">{messages["adminUsers.title"]}</h2>
           <p className="text-muted-foreground">
-            View and manage all user accounts in the system
+            {messages["adminUsers.description"]}
           </p>
         </div>
-        <Link href="/admin">
+        <Link href={`/${locale}/dashboard`}>
           <Button variant="outline" className="cursor-pointer">
             <ArrowLeftIcon className="mr-2 h-4 w-4" />
-            Back to Dashboard
+            {messages["adminUsers.backToDashboard"]}
           </Button>
         </Link>
       </div>
