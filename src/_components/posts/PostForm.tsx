@@ -8,6 +8,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { api } from "~/trpc/react";
 import { Input, Button } from "~/_components/ui";
+import { toast } from "sonner";
 
 interface PostFormProps {
   className?: string;
@@ -57,6 +58,17 @@ const PostForm = ({ className }: PostFormProps) => {
     onSuccess: async () => {
       await utils.post.invalidate();
       form.reset();
+    },
+    onError: (error) => {
+      console.error("Error creating post:", error);
+      toast.error("Failed to create post", {
+        description:
+          error.message === "UNAUTHORIZED"
+            ? "You must be signed in to create posts"
+            : error.message
+              ? error.message
+              : "An unexpected error occurred.",
+      });
     },
   });
 

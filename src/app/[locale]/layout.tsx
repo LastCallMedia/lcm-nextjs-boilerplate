@@ -57,7 +57,7 @@ export default async function LocaleLayout({
                     <div>{children}</div>
                     <Footer />
                   </div>
-                  <Toaster />
+                  <Toaster duration={4000} />
                 </ThemeProvider>
               </IntlProvider>
             </AuthProvider>
