@@ -1,9 +1,9 @@
-import React, { Suspense } from "react";
-import AllPostsClient from "./client";
-import { api } from "~/trpc/server";
+import { Suspense } from "react";
 import { TypingIndicator } from "~/_components/posts/TypingIndicator";
+import AllPostsClient from "~/app/[locale]/posts/client";
 import { getMessages } from "~/i18n/messages";
 import type { Post } from "~/server/api/routers/post";
+import { api } from "~/trpc/server";
 
 interface PostsPageProps {
   params: Promise<{ locale: string }>;
