@@ -1,44 +1,35 @@
 import { Facebook, Github, Instagram, Youtube } from "lucide-react";
-import React from "react";
 import { useIntl } from "react-intl";
-
-const navigation = [
-  {
-    name: "Facebook",
-    href: "#",
-    icon: Facebook,
-  },
-  {
-    name: "Instagram",
-    href: "#",
-    icon: Instagram,
-  },
-  {
-    name: "X",
-    href: "#",
-    icon: (props: React.SVGProps<SVGSVGElement>) => (
-      <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
-        <path d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z" />
-      </svg>
-    ),
-  },
-  {
-    name: "GitHub",
-    href: "#",
-    icon: Github,
-  },
-  {
-    name: "YouTube",
-    href: "#",
-    icon: Youtube,
-  },
-];
 
 export default function SimpleWithSocialLinks() {
   const intl = useIntl();
+
+  const navigation = [
+    {
+      name: intl.formatMessage({ id: "footer.social.facebook" }),
+      href: "#",
+      icon: Facebook,
+    },
+    {
+      name: intl.formatMessage({ id: "footer.social.instagram" }),
+      href: "#",
+      icon: Instagram,
+    },
+    {
+      name: intl.formatMessage({ id: "footer.social.github" }),
+      href: "#",
+      icon: Github,
+    },
+    {
+      name: intl.formatMessage({ id: "footer.social.youtube" }),
+      href: "#",
+      icon: Youtube,
+    },
+  ];
+
   return (
-    <footer className="text-muted-foreground bg-card w-full border-t py-4 text-center text-sm">
-      <div className="mx-auto max-w-7xl px-6 py-6 md:flex md:items-center md:justify-between lg:px-8">
+    <footer className="text-muted-foreground bg-card w-full border-t py-2 text-center text-sm">
+      <div className="mx-auto max-w-7xl px-6 py-4 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center gap-x-6 md:order-2">
           {navigation.map((item) => (
             <a
