@@ -202,5 +202,11 @@
   "login": {
     "title": "Sign In",
     "description": "Sign in to your account to access protected features."
+  },
+  "notFound": {
+    "title": "404",
+    "description": "This page or resource doesn't seem to exist.",
+    "instruction": "Double-check your URL or use the button below to return home.",
+    "action": "Return Home"
   }
 }

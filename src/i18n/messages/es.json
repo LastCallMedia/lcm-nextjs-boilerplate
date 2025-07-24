@@ -202,5 +202,11 @@
   "login": {
     "title": "Iniciar sesión",
     "description": "Inicia sesión en tu cuenta para acceder a funciones protegidas."
+  },
+  "notFound": {
+    "title": "404",
+    "description": "Esta página o recurso no parece existir.",
+    "instruction": "Verifica la URL o usa el botón de abajo para volver al inicio.",
+    "action": "Volver al inicio"
   }
 }
