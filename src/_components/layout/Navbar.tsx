@@ -138,6 +138,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                 {publicLinks.map((item) => {
                   const IconComponent = item.icon;
+                  const testId = item.titleKey === "navigation.allPosts" ? "nav-all-posts" : undefined;
                   return (
                     <Link
                       key={item.titleKey}
@@ -147,6 +148,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                           ? "border-indigo-500 text-gray-900 dark:text-white"
                           : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200"
                       }`}
+                      {...(testId ? { 'data-testid': testId } : {})}
                     >
                       <IconComponent className="mr-2 h-4 w-4" />
                       <FormattedMessage id={item.titleKey} />

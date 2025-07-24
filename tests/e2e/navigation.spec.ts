@@ -27,7 +27,7 @@ test.describe("Basic Navigation Tests", () => {
       await waitForPageLoad(page);
       const nav = page.locator("nav");
       await expect(nav).toBeVisible();
-      const postsLink = page.locator(`a[href="/${locale}/posts"]`);
+      const postsLink = page.locator('[data-testid="nav-all-posts"]');
       if ((await postsLink.count()) > 0) {
         await postsLink.click();
         await page.waitForURL(`**/${locale}/posts`);
