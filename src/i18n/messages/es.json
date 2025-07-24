@@ -102,7 +102,54 @@
     "richText": "Este es <strong>texto en negrita</strong> y este es <em>texto en cursiva</em>."
   },
   "footer": {
-    "text": "Construido con Next.js, tRPC y Prisma"
+    "text": "Construido con Next.js, tRPC y Prisma",
+    "companyInfo": {
+      "name": "Nombre de la empresa",
+      "mission": "Haciendo del mundo un lugar mejor a través de la construcción de jerarquías elegantes."
+    },
+    "navigation": {
+      "about": "Acerca de",
+      "blog": "Blog",
+      "jobs": "Empleos",
+      "press": "Prensa",
+      "accessibility": "Accesibilidad",
+      "partners": "Socios"
+    },
+    "sections": {
+      "solutions": "Soluciones",
+      "support": "Soporte",
+      "company": "Empresa",
+      "legal": "Legal"
+    },
+    "solutions": {
+      "marketing": "Marketing",
+      "analytics": "Analíticas",
+      "automation": "Automatización",
+      "commerce": "Comercio",
+      "insights": "Perspectivas"
+    },
+    "support": {
+      "submitTicket": "Enviar ticket",
+      "documentation": "Documentación",
+      "guides": "Guías"
+    },
+    "companyLinks": {
+      "about": "Acerca de",
+      "blog": "Blog",
+      "jobs": "Empleos",
+      "press": "Prensa"
+    },
+    "legal": {
+      "terms": "Términos de servicio",
+      "privacy": "Política de privacidad",
+      "license": "Licencia"
+    },
+    "social": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "github": "GitHub",
+      "youtube": "YouTube"
+    }
   },
   "profile": {
     "title": "Perfil",
