@@ -1,3 +1,5 @@
+"use client";
+
 import { FormattedMessage } from "react-intl";
 import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
 import LoginForm from "~/_components/auth/LoginForm";
