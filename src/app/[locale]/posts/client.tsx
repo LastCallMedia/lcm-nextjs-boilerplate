@@ -1,9 +1,9 @@
-import type { Post } from "@prisma/client";
 import { FormattedMessage } from "react-intl";
 import { PostForm, PostCardDefault as PostCard } from "~/_components/posts";
+import type { PostModel } from "~/generated/prisma/models";
 
 interface AllPostsClientProps {
-  posts: Post[];
+  posts: PostModel[];
 }
 
 const AllPostsClient = ({ posts }: AllPostsClientProps) => {

@@ -1,6 +1,5 @@
-import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-
+import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 // Add enum for user sort fields

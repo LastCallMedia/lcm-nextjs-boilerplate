@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { isValidLocale, defaultLocale } from "../i18n/config";
+import { defaultLocale, isValidLocale } from "~/i18n/config";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
