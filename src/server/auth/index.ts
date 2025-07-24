@@ -1,8 +1,8 @@
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import { cache } from "react";
-import { PrismaAdapter } from "@auth/prisma-adapter";
+import { authConfig } from "~/server/auth/config";
 import { db } from "~/server/db";
-import { authConfig } from "./config";
 
 const {
   auth: uncachedAuth,

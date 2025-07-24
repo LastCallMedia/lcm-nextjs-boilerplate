@@ -1,15 +1,14 @@
 "use client";
-import React from "react";
 import { signIn } from "next-auth/react";
-import { Button } from "../ui/button";
+import { useParams } from "next/navigation";
+import { FormattedMessage } from "react-intl";
+import { Button } from "~/_components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../ui/tooltip";
-import { FormattedMessage } from "react-intl";
-import { useParams } from "next/navigation";
+} from "~/_components/ui/tooltip";
 import { getSafeLocale } from "~/lib/utils";
 
 const GoogleSignInButton = ({

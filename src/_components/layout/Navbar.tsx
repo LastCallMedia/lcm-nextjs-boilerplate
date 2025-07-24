@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
 import {
-  Files,
   File,
+  Files,
   Infinity,
   LayoutDashboard,
   LogIn,
@@ -13,13 +12,14 @@ import {
   User,
   type LucideIcon,
 } from "lucide-react";
-import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useSession, signOut } from "next-auth/react";
-import { ThemeModeToggle } from "~/_components/theme";
-import { LanguageSwitcher } from "~/_components/i18n";
+import Link from "next/link";
+import React from "react";
 import { FormattedMessage } from "react-intl";
-import GoogleSignInButton from "../auth/GoogleSignInButton";
+import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
+import { LanguageSwitcher } from "~/_components/i18n";
+import { ThemeModeToggle } from "~/_components/theme";
 import {
   Button,
   NavigationMenu,
