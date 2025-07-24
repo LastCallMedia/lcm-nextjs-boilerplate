@@ -1,5 +1,6 @@
 import { Facebook, Github, Instagram, Youtube } from "lucide-react";
 import React from "react";
+import { useIntl } from "react-intl";
 
 const navigation = {
   main: [
@@ -44,8 +45,9 @@ const navigation = {
 };
 
 export default function SimpleCentered() {
+  const intl = useIntl();
   return (
-    <footer className="sticky top-[100vh] bg-white">
+    <footer className="text-muted-foreground bg-card w-full border-t py-4 text-center text-sm">
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
         <nav
           aria-label="Footer"
@@ -73,9 +75,9 @@ export default function SimpleCentered() {
             </a>
           ))}
         </div>
-        <p className="mt-10 text-center text-sm/6 text-gray-600">
-          &copy; {new Date().getFullYear()} Last Call Media, Inc. All rights
-          reserved.
+        <p className="mt-10 text-center text-gray-600">
+          &copy; {new Date().getFullYear()}{" "}
+          {intl.formatMessage({ id: "footer.text" })}
         </p>
       </div>
     </footer>

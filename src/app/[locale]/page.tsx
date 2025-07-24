@@ -1,8 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { LatestPost } from "~/_components/posts";
 import { HomeContent, SeeAllPostsButton } from "~/_components/home";
+import { LatestPost } from "~/_components/posts";
 import { Button } from "~/_components/ui/button";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
@@ -21,7 +21,7 @@ export default async function Home({ params }: HomeProps) {
 
   return (
     <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b">
+      <div className="flex flex-col items-center justify-center bg-gradient-to-b">
         <Image
           src={"/lcm-logo-teal.png"}
           alt="LCM logo"
@@ -39,7 +39,7 @@ export default async function Home({ params }: HomeProps) {
           </Link>
           <ArrowUpRight />
         </Button>
-      </main>
+      </div>
     </HydrateClient>
   );
 }

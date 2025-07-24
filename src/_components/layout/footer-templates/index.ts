@@ -20,6 +20,6 @@
  *
  */
 
-export { default as FourColumnWithMission } from "./FourColumnWithMission";
-export { default as SimpleCentered } from "./SimpleCentered";
-export { default as SimpleWithSocialLinks } from "./SimpleWithSocialLinks";
+export { default as FourColumnWithMission } from "~/_components/layout/footer-templates/FourColumnWithMission";
+export { default as SimpleCentered } from "~/_components/layout/footer-templates/SimpleCentered";
+export { default as SimpleWithSocialLinks } from "~/_components/layout/footer-templates/SimpleWithSocialLinks";
