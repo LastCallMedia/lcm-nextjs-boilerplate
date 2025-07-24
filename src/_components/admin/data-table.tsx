@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from "~/_components/ui/select";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { FormattedMessage } from "react-intl";
 
 function renderCellValue(value: unknown): React.ReactNode {
   if (value === null || value === undefined) return "";
@@ -146,7 +147,7 @@ export function DataTable<T, TSortField extends string = string>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Loading...
+                  <FormattedMessage id="dataTable.loading" />
                 </TableCell>
               </TableRow>
             ) : isSearching ? (
@@ -155,7 +156,7 @@ export function DataTable<T, TSortField extends string = string>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Searching...
+                  <FormattedMessage id="dataTable.searching" />
                 </TableCell>
               </TableRow>
             ) : data.length ? (
@@ -198,7 +199,7 @@ export function DataTable<T, TSortField extends string = string>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  <FormattedMessage id="dataTable.noResults" />
                 </TableCell>
               </TableRow>
             )}
@@ -215,19 +216,24 @@ export function DataTable<T, TSortField extends string = string>({
       >
         <div className="flex items-center space-x-2">
           <p className="text-muted-foreground text-sm" aria-live="polite">
-            Showing {(pagination.page - 1) * pagination.pageSize + 1} to{" "}
-            {Math.min(
-              pagination.page * pagination.pageSize,
-              pagination.totalCount,
-            )}{" "}
-            of {pagination.totalCount} results
+            <FormattedMessage
+              id="dataTable.showingResults"
+              values={{
+                from: (pagination.page - 1) * pagination.pageSize + 1,
+                to: Math.min(
+                  pagination.page * pagination.pageSize,
+                  pagination.totalCount,
+                ),
+                total: pagination.totalCount,
+              }}
+            />
           </p>
         </div>
 
         <div className="flex items-center space-x-2">
           <div className="flex items-center space-x-2">
             <label htmlFor="page-size-select" className="text-sm font-medium">
-              Rows per page
+              <FormattedMessage id="dataTable.rowsPerPage" />
             </label>
             <Select
               value={pagination.pageSize.toString()}
@@ -256,7 +262,13 @@ export function DataTable<T, TSortField extends string = string>({
 
           <div className="flex items-center space-x-2">
             <p className="text-sm font-medium">
-              Page {pagination.page} of {pagination.totalPages}
+              <FormattedMessage
+                id="dataTable.pageOf"
+                values={{
+                  page: pagination.page,
+                  totalPages: pagination.totalPages,
+                }}
+              />
             </p>
             <div className="flex items-center space-x-1">
               <Button
@@ -270,6 +282,9 @@ export function DataTable<T, TSortField extends string = string>({
                 aria-label="Go to previous page"
               >
                 <ChevronLeftIcon className="h-4 w-4" />
+                <span className="sr-only">
+                  <FormattedMessage id="dataTable.goToPrevPage" />
+                </span>
               </Button>
               <Button
                 variant="outline"
@@ -282,6 +297,9 @@ export function DataTable<T, TSortField extends string = string>({
                 aria-label="Go to next page"
               >
                 <ChevronRightIcon className="h-4 w-4" />
+                <span className="sr-only">
+                  <FormattedMessage id="dataTable.goToNextPage" />
+                </span>
               </Button>
             </div>
           </div>

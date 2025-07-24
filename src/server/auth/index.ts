@@ -1,8 +1,8 @@
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import { cache } from "react";
-import { PrismaAdapter } from "@auth/prisma-adapter";
+import { authConfig } from "~/server/auth/config";
 import { db } from "~/server/db";
-import { authConfig } from "./config";
 
 const {
   auth: uncachedAuth,
@@ -11,7 +11,8 @@ const {
   signOut,
 } = NextAuth({
   ...authConfig,
-  adapter: PrismaAdapter(db),
+  // Temporary workaround for ESM Prisma client compatibility
+  adapter: PrismaAdapter(db as Parameters<typeof PrismaAdapter>[0]),
 });
 
 const auth = cache(uncachedAuth);

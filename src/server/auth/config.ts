@@ -2,7 +2,6 @@ import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import Nodemailer from "next-auth/providers/nodemailer";
 import { isGoogleAuthConfigured } from "~/lib/auth-utils";
-import { env } from "~/env";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -31,11 +30,11 @@ const buildProviders = () => {
   const providers = [];
 
   // Include Nodemailer provider for magic links
-  if (env.EMAIL_SERVER && env.EMAIL_FROM) {
+  if (process.env.EMAIL_SERVER && process.env.EMAIL_FROM) {
     providers.push(
       Nodemailer({
-        server: env.EMAIL_SERVER,
-        from: env.EMAIL_FROM,
+        server: process.env.EMAIL_SERVER,
+        from: process.env.EMAIL_FROM,
       }),
     );
   }
@@ -44,8 +43,8 @@ const buildProviders = () => {
   if (isGoogleAuthConfigured()) {
     providers.push(
       GoogleProvider({
-        clientId: env.AUTH_GOOGLE_ID!,
-        clientSecret: env.AUTH_GOOGLE_SECRET!,
+        clientId: process.env.AUTH_GOOGLE_ID!,
+        clientSecret: process.env.AUTH_GOOGLE_SECRET!,
         allowDangerousEmailAccountLinking: true,
       }),
     );
@@ -93,9 +92,12 @@ export const authConfig = {
       if (url.startsWith(`${baseUrl}/api/auth/signout`)) {
         return baseUrl; // Redirect to homepage after signout
       }
-      // Redirect to dashboard after successful login
+      // Extract locale from url if present
+      const localeMatch = /\/([a-zA-Z-]+)(?:\/|$)/.exec(url);
+      const locale = localeMatch ? localeMatch[1] : "en";
+      // Redirect to dashboard after successful login, preserving locale
       if (url === baseUrl || url === `${baseUrl}/login`) {
-        return `${baseUrl}/dashboard`;
+        return `${baseUrl}/${locale}/dashboard`;
       }
       // Allow relative callback URLs
       if (url.startsWith("/")) return `${baseUrl}${url}`;
