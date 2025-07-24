@@ -96,7 +96,7 @@ Comprehensive documentation is available in the [`docs/`](./docs/) directory:
 ### 🤖 AI Development Assistant
 
 - **[📝 Copilot Instructions](./.github/copilot-instructions.md)** - Template for configuring AI coding assistants with project-specific context and guidelines
-- **[🔎 Custom Instructions](./.github/instructions/documentation-instructions.md)** - Example for writing custom markdown instructions with AI
+- **[🔎 Custom Instructions](./.github/instructions/markdown.instructions.md)** - Example for writing custom markdown instructions with AI
 
 ## 📦 Available Scripts
 
