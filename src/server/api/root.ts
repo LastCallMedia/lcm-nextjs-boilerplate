@@ -1,6 +1,6 @@
-import { postRouter } from "~/server/api/routers/post";
 import { adminRouter } from "~/server/api/routers/admin";
-import { typingRouter } from "./routers/typing";
+import { postRouter } from "~/server/api/routers/post";
+import { typingRouter } from "~/server/api/routers/typing";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
 /**

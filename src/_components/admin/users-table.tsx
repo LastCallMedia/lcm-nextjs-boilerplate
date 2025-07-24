@@ -1,9 +1,13 @@
 "use client";
-
 import { MoreHorizontalIcon, TrashIcon, UserCheckIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
+import {
+  DataTable,
+  type DataTableColumn,
+} from "~/_components/admin/data-table";
+import { SearchInput } from "~/_components/admin/search-input";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,10 +29,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/_components/ui/dropdown-menu";
+import { useIntl } from "react-intl";
 import { useAdminTable, type UserSortField } from "~/hooks/use-admin-table";
 import { api } from "~/trpc/react";
-import { DataTable, type DataTableColumn } from "./data-table";
-import { SearchInput } from "./search-input";
 
 type User = {
   id: string;
@@ -93,6 +96,7 @@ function UserAvatar({
 }
 
 export function UsersTable() {
+  const intl = useIntl();
   const {
     search,
     setSearch,
@@ -137,16 +141,10 @@ export function UsersTable() {
       } else if (error.message.includes("Cannot demote your own account")) {
         toast.error(
           "You cannot change your own role. Ask another admin to modify your permissions.",
-          {
-            duration: 5000,
-          },
         );
       } else {
         toast.error(
           error.message || "Failed to update user role. Please try again.",
-          {
-            duration: 4000,
-          },
         );
       }
     },
@@ -158,9 +156,8 @@ export function UsersTable() {
       toast.success("User deleted successfully");
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to delete user. Please try again.", {
-        duration: 4000,
-      });
+      console.error("Error deleting user", error);
+      toast.error(error.message || "Failed to delete user. Please try again.");
     },
   });
 
@@ -175,7 +172,7 @@ export function UsersTable() {
   const columns: DataTableColumn<User>[] = [
     {
       accessorKey: "name",
-      header: "Name",
+      header: intl.formatMessage({ id: "usersTable.name" }),
       sortable: true,
       cell: (value, row) => (
         <div className="flex items-center space-x-2">
@@ -186,7 +183,9 @@ export function UsersTable() {
           />
           <div>
             <div className="font-medium">
-              {typeof value === "string" && value ? value : "No name"}
+              {typeof value === "string" && value
+                ? value
+                : intl.formatMessage({ id: "usersTable.noName" })}
             </div>
             <div className="text-muted-foreground text-sm">{row.email}</div>
           </div>
@@ -195,7 +194,7 @@ export function UsersTable() {
     },
     {
       accessorKey: "role",
-      header: "Role",
+      header: intl.formatMessage({ id: "usersTable.role" }),
       sortable: true,
       cell: (value) => (
         <Badge variant={value === "ADMIN" ? "default" : "secondary"}>
@@ -205,17 +204,19 @@ export function UsersTable() {
     },
     {
       accessorKey: "emailVerified",
-      header: "Email Verified",
+      header: intl.formatMessage({ id: "usersTable.emailVerified" }),
       sortable: true,
       cell: (value) => (
         <Badge variant={value ? "default" : "destructive"}>
-          {value ? "Verified" : "Unverified"}
+          {value
+            ? intl.formatMessage({ id: "usersTable.verified" })
+            : intl.formatMessage({ id: "usersTable.unverified" })}
         </Badge>
       ),
     },
     {
       accessorKey: "_count.posts",
-      header: "Posts",
+      header: intl.formatMessage({ id: "usersTable.posts" }),
       cell: (_, row) => {
         const count = row._count;
         return count?.posts ?? 0;
@@ -223,7 +224,7 @@ export function UsersTable() {
     },
     {
       accessorKey: "_count.sessions",
-      header: "Sessions",
+      header: intl.formatMessage({ id: "usersTable.sessions" }),
       cell: (_, row) => {
         const count = row._count;
         return count?.sessions ?? 0;
@@ -231,7 +232,7 @@ export function UsersTable() {
     },
     {
       accessorKey: "actions",
-      header: "Actions",
+      header: intl.formatMessage({ id: "usersTable.actions" }),
       cell: (_, row) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -245,7 +246,9 @@ export function UsersTable() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>
+              {intl.formatMessage({ id: "usersTable.actions" })}
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() =>
@@ -258,7 +261,9 @@ export function UsersTable() {
               className="cursor-pointer disabled:cursor-not-allowed"
             >
               <UserCheckIcon className="mr-2 h-4 w-4" />
-              {row.role === "ADMIN" ? "Make User" : "Make Admin"}
+              {row.role === "ADMIN"
+                ? intl.formatMessage({ id: "usersTable.makeUser" })
+                : intl.formatMessage({ id: "usersTable.makeAdmin" })}
             </DropdownMenuItem>
             <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -267,26 +272,29 @@ export function UsersTable() {
                   className="cursor-pointer text-red-600 focus:text-red-600"
                 >
                   <TrashIcon className="mr-2 h-4 w-4" />
-                  Delete User
+                  {intl.formatMessage({ id: "usersTable.deleteUser" })}
                 </DropdownMenuItem>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogTitle>
+                    {intl.formatMessage({ id: "usersTable.confirmTitle" })}
+                  </AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    the user account and remove all associated data.
+                    {intl.formatMessage({
+                      id: "usersTable.confirmDescription",
+                    })}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel className="cursor-pointer">
-                    Cancel
+                    {intl.formatMessage({ id: "usersTable.cancel" })}
                   </AlertDialogCancel>
                   <AlertDialogAction
                     onClick={() => handleUserDelete(row.id)}
                     className="cursor-pointer bg-red-600 hover:bg-red-700"
                   >
-                    Delete
+                    {intl.formatMessage({ id: "usersTable.delete" })}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

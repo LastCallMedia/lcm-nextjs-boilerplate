@@ -2,7 +2,7 @@
  * Simple, consolidated hook for admin table state management
  * Handles search, pagination, and sorting in one place for clarity
  */
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type UserSortField =
   | "id"
