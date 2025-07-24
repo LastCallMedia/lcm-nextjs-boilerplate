@@ -1,20 +1,20 @@
 // Layout components
-export * from "./layout";
+export * from "~/_components/layout";
 
 // Authentication components
-export * from "./auth";
+export * from "~/_components/auth";
 
 // Post-related components
-export * from "./posts";
+export * from "~/_components/posts";
 
 // Home components
-export * from "./home";
+export * from "~/_components/home";
 
 // Theme components
-export * from "./theme";
+export * from "~/_components/theme";
 
 // Internationalization components
-export * from "./i18n";
+export * from "~/_components/i18n";
 
 // UI components
-export * from "./ui";
+export * from "~/_components/ui";

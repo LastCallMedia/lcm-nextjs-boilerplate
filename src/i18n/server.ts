@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { defaultLocale, isValidLocale, type Locale } from "./config";
+import { defaultLocale, isValidLocale, type Locale } from "~/i18n/config";
 
 export async function getCurrentLocale(): Promise<Locale> {
   const headersList = await headers();

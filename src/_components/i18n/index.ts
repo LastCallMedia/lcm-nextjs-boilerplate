@@ -1,1 +1,1 @@
-export { LanguageSwitcher } from "./LanguageSwitcher";
+export { LanguageSwitcher } from "~/_components/i18n/LanguageSwitcher";

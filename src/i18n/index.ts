@@ -1,10 +1,10 @@
 export {
   defaultLocale,
-  locales,
-  localeNames,
-  isValidLocale,
   getValidLocale,
+  isValidLocale,
+  localeNames,
+  locales,
   type Locale,
-} from "./config";
-export { getMessages } from "./messages";
-export { IntlProvider } from "./provider";
+} from "~/i18n/config";
+export { getMessages } from "~/i18n/messages";
+export { IntlProvider } from "~/i18n/provider";

@@ -1,7 +1,7 @@
 "use client";
 
 import { IntlProvider as ReactIntlProvider } from "react-intl";
-import { type Locale } from "./config";
+import { type Locale } from "~/i18n/config";
 
 interface IntlProviderProps {
   locale: Locale;
