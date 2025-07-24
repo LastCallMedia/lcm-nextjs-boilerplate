@@ -39,7 +39,11 @@ export function LanguageSwitcher({ currentLocale }: LanguageSwitcherProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="text-gray-400 hover:text-gray-500 dark:text-gray-300 dark:hover:text-gray-200"
+        >
           <Languages className="h-[1.2rem] w-[1.2rem]" />
           <span className="sr-only">Toggle language</span>
         </Button>
