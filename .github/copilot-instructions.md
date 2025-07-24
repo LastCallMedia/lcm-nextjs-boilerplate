@@ -49,7 +49,7 @@ This project is built on the **T3 Stack** with the following core technologies:
 ### Project Structure
 ```
 src/
-├── _components/          # Reusable React components
+├── _components/         # Reusable React components
 │   ├── auth/            # Authentication components
 │   ├── layout/          # Layout components
 │   ├── ui/              # shadcn/ui components
@@ -83,6 +83,7 @@ src/
 - Always define return types for functions
 - Use proper generic constraints
 - Avoid `any` - use `unknown` if truly needed
+- Use the linting practices from './eslint.config.js' when generating code
 
 ```typescript
 // Good
