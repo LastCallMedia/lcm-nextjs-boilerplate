@@ -83,7 +83,54 @@
     "richText": "This is <strong>bold text</strong> and this is <em>italic text</em>."
   },
   "footer": {
-    "text": "Built with Next.js, tRPC, and Prisma"
+    "text": "Built with Next.js, tRPC, and Prisma",
+    "companyInfo": {
+      "name": "Company name",
+      "mission": "Making the world a better place through constructing elegant hierarchies."
+    },
+    "navigation": {
+      "about": "About",
+      "blog": "Blog",
+      "jobs": "Jobs",
+      "press": "Press",
+      "accessibility": "Accessibility",
+      "partners": "Partners"
+    },
+    "sections": {
+      "solutions": "Solutions",
+      "support": "Support",
+      "company": "Company",
+      "legal": "Legal"
+    },
+    "solutions": {
+      "marketing": "Marketing",
+      "analytics": "Analytics",
+      "automation": "Automation",
+      "commerce": "Commerce",
+      "insights": "Insights"
+    },
+    "support": {
+      "submitTicket": "Submit ticket",
+      "documentation": "Documentation",
+      "guides": "Guides"
+    },
+    "companyLinks": {
+      "about": "About",
+      "blog": "Blog",
+      "jobs": "Jobs",
+      "press": "Press"
+    },
+    "legal": {
+      "terms": "Terms of service",
+      "privacy": "Privacy policy",
+      "license": "License"
+    },
+    "social": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "github": "GitHub",
+      "youtube": "YouTube"
+    }
   },
   "profile": {
     "title": "Profile",

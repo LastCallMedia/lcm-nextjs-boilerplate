@@ -1,6 +1,6 @@
-import React, { Suspense } from "react";
-import PostClient from "./client";
+import { Suspense } from "react";
 import { PostSkeleton } from "~/_components/posts";
+import PostClient from "~/app/[locale]/post/client";
 
 interface PostPageProps {
   params: Promise<{ locale: string }>;

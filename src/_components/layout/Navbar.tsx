@@ -24,11 +24,12 @@ import {
   LogIn,
   LogOut,
 } from "lucide-react";
-import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useSession, signOut } from "next-auth/react";
-import { LanguageSwitcher } from "~/_components/i18n";
+import Link from "next/link";
+import React from "react";
 import { FormattedMessage } from "react-intl";
+import { LanguageSwitcher } from "~/_components/i18n";
 import { type Locale } from "~/i18n";
 import { type LucideIcon } from "lucide-react";
 

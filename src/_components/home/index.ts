@@ -1,1 +1,1 @@
-export { HomeContent, SeeAllPostsButton } from "./HomeContent";
+export { HomeContent, SeeAllPostsButton } from "~/_components/home/HomeContent";

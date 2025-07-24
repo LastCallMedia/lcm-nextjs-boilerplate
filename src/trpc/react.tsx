@@ -4,16 +4,15 @@ import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 import {
   httpBatchLink,
   httpSubscriptionLink,
-  splitLink,
   loggerLink,
+  splitLink,
 } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import { useState } from "react";
 import SuperJSON from "superjson";
-
 import { type AppRouter } from "~/server/api/root";
-import { createQueryClient } from "./query-client";
+import { createQueryClient } from "~/trpc/query-client";
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined;
 const getQueryClient = () => {

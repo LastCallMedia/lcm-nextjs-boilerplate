@@ -1,6 +1,6 @@
-import { type Locale } from "./config";
-import enMessages from "./messages/en.json";
-import esMessages from "./messages/es.json";
+import { type Locale } from "~/i18n/config";
+import enMessages from "~/i18n/messages/en.json";
+import esMessages from "~/i18n/messages/es.json";
 
 // Flatten nested messages utility
 function flattenMessages(
