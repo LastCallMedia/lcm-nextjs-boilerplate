@@ -187,7 +187,7 @@ const buttonVariants = cva(
 
 - Use simple language, short sentences, and clear explanations
 
-## Guidelines
+##### Guidelines
 
 1. **Use Simple Words**  
    Avoid technical jargon. Explain terms if you must use them.
@@ -213,7 +213,7 @@ const buttonVariants = cva(
 8. **Highlight Important Notes**  
    Use "Note:" for things that need special attention.
 
-## Example
+##### Example
 
 ```typescript
 /**
@@ -230,7 +230,7 @@ function getUser(id: string): Promise<User | null> {
 }
 ```
 
-## Tone
+##### Tone
 
 - Friendly and supportive
 - Assume the reader is new to the codebase
