@@ -21,7 +21,16 @@ This file provides AI coding assistants (like GitHub Copilot, Claude, ChatGPT, e
 5. **Remove or modify** sections that don't apply to your project
 6. **Keep it updated** as your project evolves
 
----
+## Using specialized instructions
+You can add custom instructions for copilot to use with more specificity.
+
+1. **Add .instructions.md files** to the `./.github/instructions` folder to include custom, specialized instructions
+2. **Use applyTo** to tell copilot which filetypes the instructions should apply to
+3. **Avoid duplication** between instruction files so copilot knows which rules to follow
+4. **Avoid conflicting instructions** so copilot does not get confused about which instructions.md file to reference
+4. **Keep it updated** by adding or removing instructions to your files as the project evolves.
+
+For more help, read the [documentation](https://docs.github.com/en/copilot/how-tos/custom-instructions/adding-repository-custom-instructions-for-github-copilot).
 
 ## Project Context
 
@@ -74,15 +83,14 @@ src/
 4. **Performance**: Prioritize Core Web Vitals and loading performance
 5. **Accessibility**: Follow WCAG 2.1 AA guidelines
 6. **Security**: Never expose sensitive data or create security vulnerabilities
-
-### Coding Standards
+7. **Simplify Documentation**: Generated documentation should be simplified, condensed, and easily readable
 
 #### TypeScript
+##### Patterns to Follow
 - Use strict TypeScript configuration
 - Prefer `interface` for object types, `type` for unions/primitives
 - Always define return types for functions
 - Use proper generic constraints
-- Avoid `any` - use `unknown` if truly needed
 - Use the linting practices from './eslint.config.js' when generating code
 
 ```typescript
@@ -96,7 +104,15 @@ interface User {
 function getUser(id: string): Promise<User | null> {
   // implementation
 }
+```
 
+##### Patterns to Avoid
+- Avoid `any` - use `unknown` if truly needed
+- Do not commit hardcoded secrets or tokens
+- Avoid deeply nested callbacks or overly clever code
+- Avoid global state unless using scoped context providers in React.
+
+```typescript
 // Avoid
 function getUser(id: any): any {
   // implementation
@@ -161,6 +177,64 @@ const buttonVariants = cva(
   }
 );
 ```
+
+#### Code Documentation
+- Generated code documentation should be easy for developers to read and understand
+- Use JSDoc style comments for functions and components
+- Keep comments concise and focused on what the code does
+- Use Markdown for formatting in comments
+- Avoid redundant comments that restate the code
+
+- Use simple language, short sentences, and clear explanations
+
+## Guidelines
+
+1. **Use Simple Words**  
+   Avoid technical jargon. Explain terms if you must use them.
+
+2. **Keep Sentences Short**  
+   Break down complex ideas into smaller steps.
+
+3. **Explain What and Why**  
+   Describe what the code does and why it is needed.
+
+4. **Show Examples**  
+   Use code examples to help explain concepts.
+
+5. **Describe Inputs and Outputs**  
+   For functions, list the parameters and what is returned.
+
+6. **Avoid Overly Detailed Theory**  
+   Focus on practical usage and how to use the code.
+
+7. **Use Lists and Headings**  
+   Organize information with bullet points and section headings.
+
+8. **Highlight Important Notes**  
+   Use "Note:" for things that need special attention.
+
+## Example
+
+```typescript
+/**
+ * Gets a user by their ID.
+ *
+ * @param id - The user's unique ID.
+ * @returns The user object, or null if not found.
+ *
+ * Example:
+ *   const user = getUser("abc123");
+ */
+function getUser(id: string): Promise<User | null> {
+  // ...implementation...
+}
+```
+
+## Tone
+
+- Friendly and supportive
+- Assume the reader is new to the codebase
+- Avoid sarcasm or negative language
 
 ### tRPC Patterns
 
@@ -230,6 +304,7 @@ function PostsList() {
 - Use descriptive model and field names
 - Implement proper relationships and constraints
 - Add database-level validations where appropriate
+- Use third normal form when generating schemas
 
 ```prisma
 // Good
@@ -440,7 +515,7 @@ import './styles.css';
 ## Maintenance
 
 Remember to:
-- ✅ Update these instructions when project patterns change
+- ✅ Update appropriate instruction sections when project patterns change
 - ✅ Add new business rules and domain concepts
 - ✅ Review and refine based on AI assistant feedback
 - ✅ Share updates with your team
