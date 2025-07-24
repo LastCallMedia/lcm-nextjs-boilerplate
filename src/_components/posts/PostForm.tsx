@@ -78,7 +78,9 @@ const PostForm = ({ className }: PostFormProps) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-2xl font-bold">Add a post</h2>
+      <h2 className="text-2xl font-bold">
+        <FormattedMessage id="posts.createPost" />
+      </h2>
 
       <form
         onSubmit={form.handleSubmit(onSubmit)}
