@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
@@ -39,6 +37,26 @@ const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
 const authenticatedProcedure = protectedProcedure;
 
 export const adminRouter = createTRPCRouter({
+  // Get current user profile info
+  getCurrentUser: authenticatedProcedure.query(async ({ ctx }) => {
+    if (!ctx.session?.user?.id) {
+      throw new TRPCError({ code: "UNAUTHORIZED", message: "No user session" });
+    }
+    const user = await ctx.db.user.findUnique({
+      where: { id: ctx.session.user.id },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
+        role: true,
+      },
+    });
+    if (!user) {
+      throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+    }
+    return user;
+  }),
   // Get all users with pagination, sorting, and filtering
   getUsers: authenticatedProcedure
     .input(

@@ -1,0 +1,253 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "create": "Crear",
+    "submit": "Enviar"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "posts": "Publicaciones",
+    "allPosts": "Todas las Publicaciones",
+    "post": "Publicación",
+    "infinitePosts": "Publicaciones Infinitas",
+    "menu": "Menú",
+    "signIn": "Iniciar Sesión",
+    "signOut": "Cerrar Sesión",
+    "account": "Cuenta",
+    "profile": "Perfil",
+    "settings": "ajustes"
+  },
+  "home": {
+    "title": "¡Hola, {name}s!!",
+    "greeting": "Hola desde tRPC",
+    "seeAllPosts": "Ver todas las publicaciones"
+  },
+  "posts": {
+    "title": "Últimas Publicaciones",
+    "allPostsTitle": "Todas las Publicaciones",
+    "createPost": "Crear Publicación",
+    "noPostsFound": "No se encontraron publicaciones",
+    "noPostsAvailable": "No hay publicaciones disponibles",
+    "postTitle": "Título de la Publicación",
+    "postContent": "Contenido de la Publicación",
+    "createdAt": "Creado el",
+    "loading": "Cargando publicaciones...",
+    "createSuccess": "¡Publicación creada exitosamente!",
+    "deleteSuccess": "¡Publicación eliminada exitosamente!",
+    "placeholder": "¿Qué estás pensando?",
+    "submitting": "Enviando...",
+    "titleRequired": "El título es obligatorio",
+    "myPost": "Mis publicaciones"
+  },
+  "auth": {
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión",
+    "signInWith": "Iniciar sesión con {provider}",
+    "welcomeBack": "¡Bienvenido de nuevo!",
+    "googleNotConfigured": "La autenticación de Google no está configurada.",
+    "googleConfigMessage": "Por favor configura las variables de entorno AUTH_GOOGLE_ID y AUTH_GOOGLE_SECRET.",
+    "orContinueWith": "O continuar con",
+    "email": "Correo electrónico",
+    "sending": "Enviando...",
+    "sendMagicLink": "Enviar enlace mágico",
+    "magicLinkInfo": "Te enviaremos un enlace mágico para iniciar sesión al instante"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "description": "Gestiona usuarios, publicaciones y configuración del sistema",
+    "users": {
+      "ariaLabel": "Ir a la gestión de usuarios",
+      "title": "Gestionar Usuarios",
+      "description": "Ver y editar cuentas de usuario"
+    },
+    "posts": {
+      "ariaLabel": "Ir a la gestión de publicaciones",
+      "title": "Gestionar Publicaciones",
+      "description": "Ver y moderar publicaciones"
+    }
+  },
+  "example": {
+    "title": "Ejemplo de i18n",
+    "welcome": "¡Bienvenido a nuestra aplicación!",
+    "counter": "Has hecho clic {count} veces",
+    "today": "Hoy es:",
+    "time": "Hora actual:",
+    "clicked": "¡Botón presionado!",
+    "clickMe": "¡Haz clic aquí!",
+    "richText": "Este es <strong>texto en negrita</strong> y este es <em>texto en cursiva</em>."
+  },
+  "footer": {
+    "text": "Construido con Next.js, tRPC y Prisma",
+    "companyInfo": {
+      "name": "Nombre de la empresa",
+      "mission": "Haciendo del mundo un lugar mejor a través de la construcción de jerarquías elegantes."
+    },
+    "navigation": {
+      "about": "Acerca de",
+      "blog": "Blog",
+      "jobs": "Empleos",
+      "press": "Prensa",
+      "accessibility": "Accesibilidad",
+      "partners": "Socios"
+    },
+    "sections": {
+      "solutions": "Soluciones",
+      "support": "Soporte",
+      "company": "Empresa",
+      "legal": "Legal"
+    },
+    "solutions": {
+      "marketing": "Marketing",
+      "analytics": "Analíticas",
+      "automation": "Automatización",
+      "commerce": "Comercio",
+      "insights": "Perspectivas"
+    },
+    "support": {
+      "submitTicket": "Enviar ticket",
+      "documentation": "Documentación",
+      "guides": "Guías"
+    },
+    "companyLinks": {
+      "about": "Acerca de",
+      "blog": "Blog",
+      "jobs": "Empleos",
+      "press": "Prensa"
+    },
+    "legal": {
+      "terms": "Términos de servicio",
+      "privacy": "Política de privacidad",
+      "license": "Licencia"
+    },
+    "social": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "github": "GitHub",
+      "youtube": "YouTube"
+    }
+  },
+  "profile": {
+    "title": "Perfil",
+    "description": "Gestiona la configuración y preferencias de tu cuenta",
+    "overview": "Resumen del Perfil",
+    "protected": "Protegido",
+    "overviewDescription": "Tu información actual del perfil",
+    "userId": "ID de Usuario",
+    "settings": "Configuración del Perfil",
+    "settingsDescription": "Actualiza la información de tu perfil (Nota: Esto es una demo - los cambios no se guardarán)",
+    "fullName": "Nombre Completo",
+    "email": "Correo electrónico",
+    "bio": "Biografía",
+    "bioPlaceholder": "Cuéntanos sobre ti...",
+    "picture": "Foto de Perfil",
+    "changePicture": "Cambiar Foto",
+    "pictureNote": "La foto de perfil es gestionada por tu proveedor OAuth",
+    "cancel": "Cancelar",
+    "save": "Guardar Cambios",
+    "demoNoteTitle": "Nota de Demo",
+    "demoNoteDescription": "Esta página de perfil demuestra una ruta protegida con visualización de datos de usuario. En una aplicación real, implementarías manejo de formularios, validación y actualizaciones en la base de datos para los cambios de perfil."
+  },
+  "settings": {
+    "title": "Ajustes",
+    "description": "Gestiona la configuración y preferencias de tu cuenta.",
+    "account": {
+      "title": "Configuración de la Cuenta",
+      "description": "Gestiona las preferencias y opciones de seguridad de tu cuenta.",
+      "emailNotifications": "Notificaciones por correo electrónico",
+      "emailNotificationsDesc": "Recibe actualizaciones y notificaciones por correo electrónico.",
+      "twoFactor": "Autenticación en dos pasos",
+      "twoFactorDesc": "Agrega una capa extra de seguridad a tu cuenta.",
+      "enable2fa": "Activar 2FA"
+    },
+    "privacy": {
+      "title": "Configuración de Privacidad",
+      "description": "Controla la visibilidad de tu perfil y opciones de exportación de datos.",
+      "publicProfile": "Perfil Público",
+      "publicProfileDesc": "Permite que otros vean la información de tu perfil.",
+      "exportData": "Exportar Datos",
+      "exportDataDesc": "Descarga los datos de tu cuenta como un archivo.",
+      "exportDataButton": "Exportar Datos"
+    },
+    "danger": {
+      "title": "Zona de Peligro",
+      "description": "Elimina tu cuenta y todos los datos asociados.",
+      "deleteAccount": "Eliminar Cuenta",
+      "deleteAccountDesc": "Esta acción es irreversible. Todos tus datos serán eliminados permanentemente.",
+      "deleteAccountButton": "Eliminar Cuenta"
+    },
+    "demo": {
+      "title": "Aviso de Demo",
+      "description": "Esta página de ajustes es una demo. Los cambios no se guardarán."
+    }
+  },
+  "adminStats": {
+    "totalUsers": "Usuarios Totales",
+    "totalUsersDesc": "Usuarios registrados en el sistema",
+    "totalPosts": "Publicaciones Totales",
+    "totalPostsDesc": "Publicaciones creadas por usuarios",
+    "adminUsers": "Usuarios Administradores",
+    "adminUsersDesc": "Usuarios con privilegios de administrador",
+    "postsPerUser": "Publicaciones por Usuario",
+    "postsPerUserDesc": "Promedio de publicaciones por usuario",
+    "recentVerified": "Usuarios Verificados Recientemente",
+    "recentVerifiedDesc": "Usuarios que han verificado recientemente su correo electrónico",
+    "noRecentVerified": "No hay usuarios verificados recientemente",
+    "verified": "Verificado",
+    "unverified": "No verificado"
+  },
+  "dataTable": {
+    "loading": "Cargando...",
+    "searching": "Buscando...",
+    "noResults": "No se encontraron resultados",
+    "showingResults": "Mostrando {from} a {to} de {total} resultados",
+    "rowsPerPage": "Filas por página",
+    "pageOf": "Página {page} de {totalPages}",
+    "goToPrevPage": "Ir a la página anterior",
+    "goToNextPage": "Ir a la página siguiente"
+  },
+  "adminUsers": {
+    "title": "Gestión de Usuarios",
+    "description": "Ver y gestionar todas las cuentas de usuario en el sistema",
+    "backToDashboard": "Volver al Panel"
+  },
+  "adminPosts": {
+    "title": "Gestión de Publicaciones",
+    "description": "Ver y moderar todas las publicaciones en el sistema",
+    "backToDashboard": "Volver al Panel"
+  },
+  "postsTable": {
+    "title": "Título",
+    "author": "Autor",
+    "created": "Creado",
+    "updated": "Actualizado",
+    "untitled": "Sin título",
+    "unknownUser": "Usuario desconocido"
+  },
+  "usersTable": {
+    "name": "Nombre",
+    "noName": "Sin nombre",
+    "role": "Rol",
+    "emailVerified": "Correo verificado",
+    "verified": "Verificado",
+    "unverified": "No verificado",
+    "posts": "Publicaciones",
+    "sessions": "Sesiones",
+    "actions": "Acciones",
+    "makeUser": "Convertir en usuario",
+    "makeAdmin": "Convertir en administrador",
+    "deleteUser": "Eliminar usuario",
+    "confirmTitle": "Confirmar eliminación",
+    "confirmDescription": "¿Seguro que quieres eliminar este usuario? Esta acción no se puede deshacer.",
+    "cancel": "Cancelar",
+    "delete": "Eliminar"
+  },
+  "login": {
+    "title": "Iniciar sesión",
+    "description": "Inicia sesión en tu cuenta para acceder a funciones protegidas."
+  }
+}

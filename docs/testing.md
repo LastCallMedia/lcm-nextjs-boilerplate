@@ -360,7 +360,7 @@ describe("postRouter", () => {
 
 ```typescript
 // tests/integration/database.test.ts
-import { PrismaClient } from "~/prisma/generated";
+import { PrismaClient } from "~/generated/prisma/client";
 import { execSync } from "child_process";
 
 const prisma = new PrismaClient({

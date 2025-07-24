@@ -33,6 +33,18 @@ export default tseslint.config(
         "error",
         { checksVoidReturn: { attributes: false } },
       ],
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["./*", "../*"],
+              message:
+                "Relative imports from current or parent directories are not allowed. Use absolute imports with the '~/' or '@/' alias instead.",
+            },
+          ],
+        },
+      ],
     },
   },
   {
