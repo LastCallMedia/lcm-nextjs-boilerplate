@@ -1,12 +1,10 @@
 // Use the default Prisma client import for compatibility with tsx and ESM scripts
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { db } from "~/server/db";
 
 async function main() {
   // Seed admin user
   const adminEmail = "admin@example.com";
-  await prisma.user.upsert({
+  await db.user.upsert({
     where: { email: adminEmail },
     update: {},
     create: {
@@ -19,7 +17,7 @@ async function main() {
 
   // Seed normal user
   const userEmail = "user@example.com";
-  await prisma.user.upsert({
+  await db.user.upsert({
     where: { email: userEmail },
     update: {},
     create: {
@@ -39,5 +37,5 @@ main()
     process.exit(1);
   })
   .finally(() => {
-    void prisma.$disconnect();
+    void db.$disconnect();
   });

@@ -1,1 +1,1 @@
-export { ThemeModeToggle } from "./ThemeModeToggle";
+export { ThemeModeToggle } from "~/_components/theme/ThemeModeToggle";
