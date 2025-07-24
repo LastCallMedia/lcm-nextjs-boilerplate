@@ -27,3 +27,10 @@ html[style*="color-scheme: dark"] .swagger-ui .models h4 {
 html[style*="color-scheme: dark"] .swagger-ui span.model-box {
   background-color: var(--color-foreground);
 }
+
+/* Make SVG arrow icons in expand-operation buttons white in dark mode */
+
+html[style*="color-scheme: dark"] svg path {
+  fill: white !important;
+  color: white !important;
+}
