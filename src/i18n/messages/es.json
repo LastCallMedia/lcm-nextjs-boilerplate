@@ -42,7 +42,27 @@
     "placeholder": "¿Qué estás pensando?",
     "submitting": "Enviando...",
     "titleRequired": "El título es obligatorio",
-    "myPost": "Mis publicaciones"
+    "myPost": "Mis publicaciones",
+    "examples": {
+      "title": "Todas las Publicaciones",
+      "description1": "Para ayudar a ilustrar la obtención y renderización de datos del lado del servidor versus del lado del cliente, se han creado 2 versiones de la página de Publicaciones. Puedes ver y usar cada una con los enlaces a continuación.",
+      "description2": "Recuerda que los propios componentes (no solo las páginas) pueden ser renderizados en el servidor o en el cliente, y puedes combinarlos para lograr los mejores resultados.",
+      "ssrLink": "Ejemplo SSR",
+      "csrLink": "Ejemplo CSR",
+      "csrPage": {
+        "title": "Todas las Publicaciones (Ejemplo CSR)",
+        "description1": "Esta página se renderiza del lado del cliente, por lo que las publicaciones pueden obtenerse dinámicamente sin recargar la página. Esto significa que puedes ver nuevas publicaciones aparecer a medida que se agregan, sin necesidad de recargar.",
+        "description2": "CSR es bueno para contenido que cambia con frecuencia, especialmente cuando cambia por acción del usuario. Si usas consultas grandes/pesadas o quieres mover trabajo fuera del cliente, SSR puede ser una mejor opción."
+      },
+      "ssrPage": {
+        "title": "Todas las Publicaciones (Ejemplo SSR)",
+        "description1": "Esta página se renderiza del lado del servidor, por lo que las publicaciones solo pueden obtenerse al momento de renderizar la página (es decir, al cargar o refrescar la página). Esto significa que no puedes ver una publicación nueva a menos que recargues la página manualmente.",
+        "description2": "SSR es bueno para contenido estático o que cambia rara vez. Si quieres que los datos se actualicen automáticamente sin recargar la página, CSR podría ser una mejor opción."
+      }
+    },
+    "nextDocsLink": {
+      "title": "NextJS: Renderizado en Cliente vs Servidor"
+    }
   },
   "auth": {
     "signIn": "Iniciar sesión",

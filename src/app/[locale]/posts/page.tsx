@@ -1,29 +1,37 @@
-import { Suspense } from "react";
-import { TypingIndicator } from "~/_components/posts/TypingIndicator";
-import AllPostsClient from "~/app/[locale]/posts/client";
+import type { Metadata } from "next";
 import { getMessages } from "~/i18n/messages";
-import type { Post } from "~/server/api/routers/post";
-import { api } from "~/trpc/server";
+import { Button } from "~/_components";
+import Link from "next/link";
 
-interface PostsPageProps {
-  params: Promise<{ locale: string }>;
-}
-
-const Page = async ({ params }: PostsPageProps) => {
-  const { locale } = await params;
-  const messages = getMessages(locale as "en" | "es");
-  const posts: Post[] = await api.post.getAll();
-  return (
-    <div>
-      <h1 className="m-4 text-center text-2xl font-bold">
-        {messages["posts.allPostsTitle"]}
-      </h1>
-      <Suspense fallback={null}>
-        <AllPostsClient posts={posts} />
-        <TypingIndicator channelId="landing" />
-      </Suspense>
-    </div>
-  );
+export const metadata: Metadata = {
+  title: "Posts Examples | LCM Next.js Boilerplate",
+  description: "Examples of SSR and CSR posts",
 };
 
-export default Page;
+export default async function PostsExamplesPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const messages = getMessages((locale || "en") as "en" | "es");
+  return (
+    <div className="m-auto flex min-h-[60vh] max-w-2xl flex-col items-center justify-center gap-6">
+      <h1 className="text-2xl font-bold">{messages["posts.examples.title"]}</h1>
+      <p>{messages["posts.examples.description1"]}</p>
+      <p>{messages["posts.examples.description2"]}</p>
+      <div className="flex w-full flex-row gap-4">
+        <Button asChild className="grow">
+          <Link href={`/${locale}/posts/example-ssr`}>
+            {messages["posts.examples.ssrLink"]}
+          </Link>
+        </Button>
+        <Button asChild className="grow">
+          <Link href={`/${locale}/posts/example-csr`}>
+            {messages["posts.examples.csrLink"]}
+          </Link>
+        </Button>
+      </div>
+    </div>
+  );
+}
