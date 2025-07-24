@@ -11,7 +11,8 @@ const {
   signOut,
 } = NextAuth({
   ...authConfig,
-  adapter: PrismaAdapter(db),
+  // Temporary workaround for ESM Prisma client compatibility
+  adapter: PrismaAdapter(db as Parameters<typeof PrismaAdapter>[0]),
 });
 
 const auth = cache(uncachedAuth);

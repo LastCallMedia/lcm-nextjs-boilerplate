@@ -88,8 +88,12 @@ The Prisma configuration in `prisma/schema.prisma`:
 
 ```prisma
 generator client {
-  provider = "prisma-client"
-  output   = "./generated"
+  provider               = "prisma-client" // ESM-compatible generator (Prisma v7 ready)
+  output                 = "../src/generated/prisma"
+  runtime                = "nodejs"
+  moduleFormat           = "esm"
+  generatedFileExtension = "ts"
+  importFileExtension    = "ts"
 }
 
 datasource db {
@@ -98,12 +102,18 @@ datasource db {
 }
 ```
 
+**Note**: This project uses the new ESM-compatible `prisma-client` generator (without the `-js` suffix) which:
+- Generates TypeScript files directly to `src/generated/prisma`
+- Provides better ESM support and import/export compatibility
+- Will become the default in Prisma v7
+- Eliminates issues with code generation into `node_modules`
+
 ### Database Connection
 
 Database connection is configured in `src/server/db.ts`:
 
 ```typescript
-import { PrismaClient } from "~/prisma/generated";
+import { PrismaClient } from "~/generated/prisma/client";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
@@ -457,7 +467,7 @@ DATABASE_URL="postgresql://postgres:password@localhost:5432/lcm-nextjs-boilerpla
 
 ```typescript
 // test/db-utils.ts
-import { PrismaClient } from "~/prisma/generated";
+import { PrismaClient } from "~/generated/prisma/client";
 
 export function createTestDb() {
   const db = new PrismaClient({
