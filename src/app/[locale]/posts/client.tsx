@@ -1,8 +1,8 @@
 "use client";
 
 import { FormattedMessage } from "react-intl";
-import { PostForm, PostCardDefault as PostCard } from "~/_components/posts";
-import type { PostModel } from "~/generated/prisma/models";
+import { PostCardDefault as PostCard, PostForm } from "~/_components/posts";
+import type { PostModel } from "~/generated/prisma/models/Post";
 
 interface AllPostsClientProps {
   posts: PostModel[];

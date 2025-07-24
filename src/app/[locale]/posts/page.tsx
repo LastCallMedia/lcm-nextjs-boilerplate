@@ -1,7 +1,7 @@
-import { Button } from "~/_components/ui/button";
-import Link from "next/link";
 import type { Metadata } from "next";
 import { getMessages } from "~/i18n/messages";
+import { Button } from "~/_components";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Posts Examples | LCM Next.js Boilerplate",
