@@ -44,7 +44,7 @@
     "titleRequired": "El título es obligatorio",
     "myPost": "Mis publicaciones",
     "examples": {
-      "title": "Ejemplos de Publicaciones",
+      "title": "Todas las Publicaciones",
       "description1": "Para ayudar a ilustrar la obtención y renderización de datos del lado del servidor versus del lado del cliente, se han creado 2 versiones de la página de Publicaciones. Puedes ver y usar cada una con los enlaces a continuación.",
       "description2": "Recuerda que los propios componentes (no solo las páginas) pueden ser renderizados en el servidor o en el cliente, y puedes combinarlos para lograr los mejores resultados.",
       "ssrLink": "Ejemplo SSR",
