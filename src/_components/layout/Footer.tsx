@@ -1,17 +1,15 @@
 "use client";
-import React from "react";
-import { useIntl } from "react-intl";
+
+import { SimpleWithSocialLinks } from "~/_components/layout/footer-templates";
+
+/*
+ * We can use different footer templates based on the layout or page requirements.
+ * For now, we are using SimpleWithSocialLinks as the default footer.
+ * You can replace it with any other footer template like FourColumnWithMission, SimpleCentered, etc.
+ */
 
 const Footer = () => {
-  const intl = useIntl();
-  return (
-    <footer className="text-muted-foreground bg-card w-full border-t py-4 text-center text-sm">
-      <span>
-        &copy; {new Date().getFullYear()}{" "}
-        {intl.formatMessage({ id: "footer.text" })}
-      </span>
-    </footer>
-  );
+  return <SimpleWithSocialLinks />;
 };
 
 export default Footer;
