@@ -11,6 +11,7 @@ import { Input } from "~/_components/ui/input";
 import { Label } from "~/_components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "~/_components/ui/avatar";
 import type { User } from "next-auth";
+import { FormattedMessage } from "react-intl";
 import { useSession } from "next-auth/react";
 import { useState, useRef } from "react";
 import { api } from "~/trpc/react";
@@ -41,7 +42,12 @@ export default function ProfileClient({ user }: { user: User }) {
       if (avatarRef.current) {
         avatarRef.current.value = "";
       }
-      toast.success("Profile updated successfully");
+      toast.success(
+        <FormattedMessage
+          id="profile.updateSuccess"
+          defaultMessage="Profile updated successfully"
+        />,
+      );
       // Trigger NextAuth session update
       if (updateSession) {
         await updateSession();
@@ -50,7 +56,14 @@ export default function ProfileClient({ user }: { user: User }) {
     onError: (err) => {
       setError(err.message);
       setLoading(false);
-      toast.error(err.message || "Failed to update profile. Please try again.");
+      toast.error(
+        err.message ?? (
+          <FormattedMessage
+            id="profile.updateError"
+            defaultMessage="Failed to update profile. Please try again."
+          />
+        ),
+      );
     },
   });
 
@@ -84,9 +97,17 @@ export default function ProfileClient({ user }: { user: User }) {
       <Card className="lg:col-span-1">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            Profile Overview
+            <FormattedMessage
+              id="profile.overview"
+              defaultMessage="Profile Overview"
+            />
           </CardTitle>
-          <CardDescription>Your current profile information</CardDescription>
+          <CardDescription>
+            <FormattedMessage
+              id="profile.overviewDescription"
+              defaultMessage="Your current profile information"
+            />
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex flex-col items-center space-y-4">
@@ -103,14 +124,24 @@ export default function ProfileClient({ user }: { user: User }) {
             </Avatar>
             <div className="text-center">
               <h3 className="font-medium">
-                {name ?? user?.name ?? "Anonymous User"}
+                {name ?? user?.name ?? (
+                  <FormattedMessage
+                    id="profile.anonymous"
+                    defaultMessage="Anonymous User"
+                  />
+                )}
               </h3>
               <p className="text-muted-foreground text-sm">{user?.email}</p>
             </div>
           </div>
           <div className="space-y-2">
             <div>
-              <Label className="text-muted-foreground text-xs">User ID</Label>
+              <Label className="text-muted-foreground text-xs">
+                <FormattedMessage
+                  id="profile.userId"
+                  defaultMessage="User ID"
+                />
+              </Label>
               <p className="font-mono text-sm">{user?.id}</p>
             </div>
           </div>
@@ -120,16 +151,29 @@ export default function ProfileClient({ user }: { user: User }) {
       {/* Profile Settings */}
       <Card className="lg:col-span-2">
         <CardHeader>
-          <CardTitle>Profile Settings</CardTitle>
+          <CardTitle>
+            <FormattedMessage
+              id="profile.settings"
+              defaultMessage="Profile Settings"
+            />
+          </CardTitle>
           <CardDescription>
-            Update your profile information and avatar
+            <FormattedMessage
+              id="profile.settingsDescription"
+              defaultMessage="Update your profile information and avatar"
+            />
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name">
+                  <FormattedMessage
+                    id="profile.fullName"
+                    defaultMessage="Full Name"
+                  />
+                </Label>
                 <Input
                   id="name"
                   name="name"
@@ -142,7 +186,9 @@ export default function ProfileClient({ user }: { user: User }) {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">
+                  <FormattedMessage id="profile.email" defaultMessage="Email" />
+                </Label>
                 <Input
                   id="email"
                   name="email"
@@ -155,7 +201,12 @@ export default function ProfileClient({ user }: { user: User }) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="avatar">Avatar Image</Label>
+              <Label htmlFor="avatar">
+                <FormattedMessage
+                  id="profile.picture"
+                  defaultMessage="Avatar Image"
+                />
+              </Label>
               <div className="flex items-center space-x-4">
                 <Avatar className="h-12 w-12">
                   <AvatarImage
@@ -190,10 +241,17 @@ export default function ProfileClient({ user }: { user: User }) {
                         disabled={loading}
                       />
                       <span className="truncate select-none">
-                        Choose File
+                        <FormattedMessage
+                          id="profile.chooseFile"
+                          defaultMessage="Choose File"
+                        />
                         {avatarRef.current?.files?.[0]?.name
                           ? `: ${avatarRef.current.files[0].name}`
-                          : " No file chosen"}
+                          : ` `}
+                        <FormattedMessage
+                          id="profile.noFile"
+                          defaultMessage="No file chosen"
+                        />
                       </span>
                     </div>
                   </label>
@@ -203,10 +261,20 @@ export default function ProfileClient({ user }: { user: User }) {
 
             <div className="flex justify-end space-x-2">
               <Button variant="outline" type="reset" disabled={loading}>
-                Cancel
+                <FormattedMessage id="profile.cancel" defaultMessage="Cancel" />
               </Button>
               <Button type="submit" disabled={loading}>
-                {loading ? "Saving..." : "Save Changes"}
+                {loading ? (
+                  <FormattedMessage
+                    id="common.loading"
+                    defaultMessage="Saving..."
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="profile.save"
+                    defaultMessage="Save Changes"
+                  />
+                )}
               </Button>
             </div>
             {error && <p className="text-destructive mt-2 text-sm">{error}</p>}
