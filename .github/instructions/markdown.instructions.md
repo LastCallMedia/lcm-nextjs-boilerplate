@@ -6,7 +6,7 @@ applyTo: "*.md"
 
 ## Purpose
 
-Help Copilot write documentation that is easy for beginners to read. Use clear language and short sentences.
+Help Copilot write documentation that is easy for newcomers to read. Use clear language and short sentences.
 
 ## How to Write
 
