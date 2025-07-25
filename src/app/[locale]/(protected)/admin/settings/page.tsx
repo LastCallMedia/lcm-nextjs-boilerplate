@@ -11,6 +11,7 @@ import { Button } from "~/_components/ui/button";
 import { Switch } from "~/_components/ui/switch";
 import { Label } from "~/_components/ui/label";
 import { Separator } from "~/_components/ui/separator";
+import { LanguageSelectorWrapper } from "~/app/[locale]/(protected)/admin/settings/client";
 import { auth } from "~/server/auth";
 import { getMessages } from "~/i18n/messages";
 
@@ -26,12 +27,9 @@ export default async function SettingsPage({
 }) {
   const { locale } = await params;
   const session = await auth();
-
-  // Redirect if not authenticated
   if (!session) {
     redirect(`/${locale ?? "en"}/login`);
   }
-
   const messages = getMessages((locale ?? "en") as "en" | "es");
 
   return (
@@ -55,6 +53,9 @@ export default async function SettingsPage({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+            {/* Language Selector */}
+            <LanguageSelectorWrapper messages={messages} />
+            <Separator />
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label className="text-base">
@@ -66,9 +67,7 @@ export default async function SettingsPage({
               </div>
               <Switch defaultChecked disabled />
             </div>
-
             <Separator />
-
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label className="text-base">

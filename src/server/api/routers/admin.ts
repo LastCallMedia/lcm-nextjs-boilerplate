@@ -31,6 +31,47 @@ const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
 const authenticatedProcedure = protectedProcedure;
 
 export const adminRouter = createTRPCRouter({
+  // Get current user's language
+  getUserLanguage: authenticatedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
+    const user = await ctx.db.user.findUnique({
+      where: { id: userId },
+      select: { language: true },
+    });
+    let language = "en";
+    if (user && typeof user.language === "string") {
+      language = user.language;
+    }
+    return { language };
+  }),
+  // Update user language preference
+  updateUserLanguage: authenticatedProcedure
+    .input(
+      z.object({
+        language: z.string().min(2).max(5),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { language } = input;
+      const userId = ctx.session.user.id;
+      try {
+        const user = await ctx.db.user.update({
+          where: { id: userId },
+          data: { language },
+          select: {
+            id: true,
+            language: true,
+          },
+        });
+        return user;
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to update user language",
+          cause: error,
+        });
+      }
+    }),
   // Get all users with pagination, sorting, and filtering
   getUsers: authenticatedProcedure
     .input(

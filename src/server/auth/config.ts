@@ -14,6 +14,7 @@ declare module "next-auth" {
     user: {
       id: string;
       role?: "USER" | "ADMIN";
+      language?: string;
       // ...other properties
     } & DefaultSession["user"];
   }
@@ -21,6 +22,7 @@ declare module "next-auth" {
   interface User {
     id: string;
     role?: "USER" | "ADMIN";
+    language?: string;
     // ...other properties
   }
 }
@@ -69,10 +71,11 @@ export const authConfig = {
   },
   callbacks: {
     async jwt({ token, user }) {
-      // If user is available (first sign in), add user id and role to token
+      // If user is available (first sign in), add user id, role, and language to token
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.language = user.language;
       }
       return token;
     },
@@ -85,6 +88,8 @@ export const authConfig = {
           token.role === "USER" || token.role === "ADMIN"
             ? token.role
             : undefined,
+        language:
+          typeof token.language === "string" ? token.language : undefined,
       },
     }),
     async redirect({ url, baseUrl }) {
