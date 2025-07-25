@@ -155,13 +155,15 @@
   },
   "profile": {
     "title": "Profile",
+    "chooseFile": "Choose File",
+    "noFile": "No file chosen",
     "description": "Manage your account settings and preferences",
     "overview": "Profile Overview",
     "protected": "Protected",
     "overviewDescription": "Your current profile information",
     "userId": "User ID",
     "settings": "Profile Settings",
-    "settingsDescription": "Update your profile information (Note: This is a demo - changes won't be saved)",
+    "settingsDescription": "Update your profile information",
     "fullName": "Full Name",
     "email": "Email",
     "bio": "Bio",
@@ -272,5 +274,11 @@
   "login": {
     "title": "Sign In",
     "description": "Sign in to your account to access protected features."
+  },
+  "notFound": {
+    "title": "404",
+    "description": "This page or resource doesn't seem to exist.",
+    "instruction": "Double-check your URL or use the button below to return home.",
+    "action": "Return Home"
   }
 }

@@ -71,11 +71,14 @@ export const authConfig = {
   },
   callbacks: {
     async jwt({ token, user }) {
-      // If user is available (first sign in), add user id, role, and language to token
+      // If user is available (first sign in or update), sync all fields
       if (user) {
         token.id = user.id;
         token.role = user.role;
         token.language = user.language;
+        token.name = user.name;
+        token.email = user.email;
+        token.image = user.image;
       }
       return token;
     },
@@ -90,6 +93,9 @@ export const authConfig = {
             : undefined,
         language:
           typeof token.language === "string" ? token.language : undefined,
+        name: token.name,
+        email: token.email,
+        image: typeof token.image === "string" ? token.image : undefined,
       },
     }),
     async redirect({ url, baseUrl }) {
