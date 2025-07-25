@@ -11,13 +11,19 @@ import { Input } from "~/_components/ui/input";
 import { Label } from "~/_components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "~/_components/ui/avatar";
 import type { User } from "next-auth";
+
+interface ProfileClientProps {
+  user: User;
+  messages: Record<string, string>;
+}
 import { FormattedMessage } from "react-intl";
 import { useSession } from "next-auth/react";
 import { useState, useRef } from "react";
 import { api } from "~/trpc/react";
 import { toast } from "sonner";
+import { LanguageSelectorWrapper } from "~/app/[locale]/(protected)/profile/LanguageSelectorClient";
 
-export default function ProfileClient({ user }: { user: User }) {
+export default function ProfileClient({ user, messages }: ProfileClientProps) {
   const { update: updateSession } = useSession();
   const [name, setName] = useState(user?.name ?? "");
   const [serverAvatar, setServerAvatar] = useState<string | undefined>(
@@ -144,6 +150,10 @@ export default function ProfileClient({ user }: { user: User }) {
               </Label>
               <p className="font-mono text-sm">{user?.id}</p>
             </div>
+          </div>
+          <div className="space-y-2">
+            {/* Language Selector */}
+            <LanguageSelectorWrapper messages={messages} />
           </div>
         </CardContent>
       </Card>

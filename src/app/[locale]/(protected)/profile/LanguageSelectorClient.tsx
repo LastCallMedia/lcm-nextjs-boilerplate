@@ -76,7 +76,7 @@ export function LanguageSelectorClient({
   };
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="my-8 flex items-center gap-8">
       <Label htmlFor="language-select">
         {messages["settings.account.language"] ?? "Language"}
       </Label>

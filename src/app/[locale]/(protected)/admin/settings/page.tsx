@@ -11,7 +11,6 @@ import { Button } from "~/_components/ui/button";
 import { Switch } from "~/_components/ui/switch";
 import { Label } from "~/_components/ui/label";
 import { Separator } from "~/_components/ui/separator";
-import { LanguageSelectorWrapper } from "~/app/[locale]/(protected)/admin/settings/client";
 import { auth } from "~/server/auth";
 import { getMessages } from "~/i18n/messages";
 
@@ -53,9 +52,6 @@ export default async function SettingsPage({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Language Selector */}
-            <LanguageSelectorWrapper messages={messages} />
-            <Separator />
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label className="text-base">
