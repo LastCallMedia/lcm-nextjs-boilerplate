@@ -123,7 +123,7 @@
     "@types/react-dom": "^19.1.6",
     "@types/swagger-ui-react": "^5.18.0",
     "axe-core": "^4.10.3",
-    "eslint": "^9.31.0",
+    "eslint": "^9.32.0",
     "eslint-config-next": "^15.4.3",
     "eslint-config-prettier": "^10.1.8",
     "jest": "^30.0.5",
