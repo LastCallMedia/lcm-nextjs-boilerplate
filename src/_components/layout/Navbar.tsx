@@ -220,7 +220,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
       {/* Mobile Navbar */}
       <div className="sm:hidden">
         <Disclosure>
-          {({ open }) => (
+          {({ open, close }) => (
             <div className="relative flex h-16 items-center justify-between px-2">
               <div className="flex items-center">
                 <Link href={`/${currentLocale}`}>
@@ -281,6 +281,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                             key={link.titleKey}
                             href={`/${currentLocale}${link.href}`}
                             className="flex items-center gap-2 rounded-md py-3 text-base text-gray-700 hover:bg-gray-100 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                            onClick={() => close()}
                           >
                             <link.icon className="h-5 w-5" />
                             <FormattedMessage id={link.titleKey} />
@@ -293,6 +294,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                               key={link.titleKey}
                               href={`/${currentLocale}${link.href}`}
                               className="flex items-center gap-2 rounded-md py-3 text-base text-gray-700 hover:bg-gray-100 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                              onClick={() => close()}
                             >
                               <link.icon className="h-5 w-5" />
                               <FormattedMessage id={link.titleKey} />
@@ -305,6 +307,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                               key={link.titleKey}
                               href={`/${currentLocale}${link.href}`}
                               className="flex items-center gap-2 rounded-md py-3 text-base text-gray-700 hover:bg-gray-100 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                              onClick={() => close()}
                             >
                               <link.icon className="h-5 w-5" />
                               <FormattedMessage id={link.titleKey} />
@@ -315,6 +318,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                           <Link
                             href={`/${currentLocale}/login`}
                             className="flex items-center gap-2 rounded-md py-3 text-base text-gray-700 hover:bg-gray-100 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                            onClick={() => close()}
                           >
                             <LogIn className="h-5 w-5" />
                             <FormattedMessage id="navigation.signIn" />
@@ -329,9 +333,10 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                           <button
                             type="button"
                             className="flex w-full items-center gap-2 rounded-md py-3 text-base text-gray-700 hover:bg-gray-100 dark:text-zinc-200 dark:hover:bg-zinc-800"
-                            onClick={() =>
-                              signOut({ callbackUrl: `/${currentLocale}` })
-                            }
+                            onClick={() => {
+                              close();
+                              signOut({ callbackUrl: `/${currentLocale}` });
+                            }}
                           >
                             <LogOut className="h-5 w-5" />
                             <FormattedMessage id="navigation.signOut" />
