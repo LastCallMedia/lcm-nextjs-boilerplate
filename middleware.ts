@@ -1,7 +1,7 @@
-import NextAuth from "next-auth";
+import NextAuth, { type NextAuthRequest } from "next-auth";
 import { NextResponse } from "next/server";
-import { authConfig } from "~/server/auth/config";
 import { defaultLocale, isValidLocale } from "~/i18n";
+import { authConfig } from "~/server/auth/config";
 
 const { auth } = NextAuth(authConfig);
 
@@ -13,7 +13,7 @@ function getLocaleFromPathname(pathname: string) {
 }
 
 // Get locale from request headers
-function getLocaleFromHeaders(request: Request) {
+function getLocaleFromHeaders(request: NextAuthRequest) {
   const acceptLanguage = request.headers.get("accept-language");
   if (!acceptLanguage) return defaultLocale;
 

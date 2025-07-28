@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { z } from "zod";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { TRPCError } from "@trpc/server";
-import { db } from "~/server/db";
 import { mkdir, writeFile } from "fs/promises";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import { env } from "~/env";
 import path from "path";
+import { z } from "zod";
+import { env } from "~/env";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { db } from "~/server/db";
 
 // Add enum for user sort fields
 const userSortFields = z.enum([
