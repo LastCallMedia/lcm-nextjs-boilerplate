@@ -333,10 +333,9 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                           <button
                             type="button"
                             className="flex w-full items-center gap-2 rounded-md py-3 text-base text-gray-700 hover:bg-gray-100 dark:text-zinc-200 dark:hover:bg-zinc-800"
-                            onClick={() => {
-                              close();
-                              signOut({ callbackUrl: `/${currentLocale}` });
-                            }}
+                            onClick={() =>
+                              signOut({ callbackUrl: `/${currentLocale}` })
+                            }
                           >
                             <LogOut className="h-5 w-5" />
                             <FormattedMessage id="navigation.signOut" />
