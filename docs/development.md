@@ -1,5 +1,19 @@
 # Development Guide
 
+# Profile Image Upload
+
+Profile avatars are uploaded to AWS S3 in production, and to local storage (`public/uploads`) in development.
+Profile changes (name, email, avatar) are saved to the database via tRPC and Prisma. The client updates the session after profile changes so the new info is reflected immediately. The profile page fetches the latest user data from the database on reload.
+
+**AWS S3 Environment Variables (production):**
+
+- `AWS_REGION`
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `AWS_BUCKET_NAME`
+
+Add these to your `.env` file for production deployments.
+
 This guide covers the development workflow, tools, and best practices for working with the LCM Next.js Boilerplate.
 
 ## Development Environment

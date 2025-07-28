@@ -37,13 +37,35 @@
     "postContent": "Post Content",
     "createdAt": "Created at",
     "loading": "Loading posts...",
+    "error": "Error loading posts:",
     "createSuccess": "Post created successfully!",
     "deleteSuccess": "Post deleted successfully!",
     "placeholder": "What's on your mind?",
     "submitting": "Submitting...",
     "titleRequired": "Title is required",
     "myPost": "My Posts",
-    "infinitePosts": "Infinite Posts"
+    "infinitePosts": "Infinite Posts",
+    "examples": {
+      "title": "Posts Examples",
+      "description1": "To help illustrate server-side versus client-side data fetching and rendering, 2 versions of the Posts page have been created. You can view and use each one with the links below.",
+      "description2": "Remember that components themselves (not just pages) can be server or client rendered, and you can mix/match them to achieve the best results.",
+      "ssrLink": "SSR Example",
+      "csrLink": "CSR Example",
+      "csrPage": {
+        "title": "All Posts (CSR Example)",
+        "description1": "This page is client-side rendered, so posts can be fetched dynamically without a page refresh. This means you can see new posts appear as they are added, without needing to reload the page.",
+        "description2": "CSR is good for content that changes often, especially when changed by user action. If you're using large/heavy queries or want to move work off of the client, SSR may be a better option."
+      },
+      "ssrPage": {
+        "title": "All Posts (SSR Example)",
+        "description1": "This page is server-side rendered, so posts can only be fetched at time of page render (i.e. page load, refresh, etc). This means you can't see a newly added post unless we manually refresh the page.",
+        "description2": "SSR is good for static or rarely-changing content. If you want data to auto-update without a page refresh, CSR might be a better option."
+      }
+    },
+
+    "nextDocsLink": {
+      "title": "NextJS Client vs Server Rendering"
+    }
   },
   "auth": {
     "signIn": "Sign in",
@@ -134,13 +156,15 @@
   },
   "profile": {
     "title": "Profile",
+    "chooseFile": "Choose File",
+    "noFile": "No file chosen",
     "description": "Manage your account settings and preferences",
     "overview": "Profile Overview",
     "protected": "Protected",
     "overviewDescription": "Your current profile information",
     "userId": "User ID",
     "settings": "Profile Settings",
-    "settingsDescription": "Update your profile information (Note: This is a demo - changes won't be saved)",
+    "settingsDescription": "Update your profile information",
     "fullName": "Full Name",
     "email": "Email",
     "bio": "Bio",
@@ -250,5 +274,11 @@
   "login": {
     "title": "Sign In",
     "description": "Sign in to your account to access protected features."
+  },
+  "notFound": {
+    "title": "404",
+    "description": "This page or resource doesn't seem to exist.",
+    "instruction": "Double-check your URL or use the button below to return home.",
+    "action": "Return Home"
   }
 }

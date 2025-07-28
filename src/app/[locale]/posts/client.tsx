@@ -10,21 +10,19 @@ interface AllPostsClientProps {
 
 const AllPostsClient = ({ posts }: AllPostsClientProps) => {
   return (
-    <div>
-      <div className="m-auto w-2/3">
-        <PostForm className="m-auto w-1/3" />
-        {posts.length < 1 ? (
-          <p className="m-4 text-center">
-            <FormattedMessage id="posts.noPostsAvailable" />
-          </p>
-        ) : (
-          <ul className="grid grid-cols-1 justify-items-center">
-            {posts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </ul>
-        )}
-      </div>
+    <div className="m-auto flex w-full flex-col gap-4">
+      <PostForm className="m-auto w-full" />
+      {posts.length < 1 ? (
+        <p className="m-4 text-center">
+          <FormattedMessage id="posts.noPostsAvailable" />
+        </p>
+      ) : (
+        <div className="grid grid-cols-1 justify-items-center gap-4">
+          {posts.map((post) => (
+            <PostCard key={post.id} post={post} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,11 @@
-import { TRPCError } from "@trpc/server";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
+import { db } from "~/server/db";
+import { mkdir, writeFile } from "fs/promises";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { env } from "~/env";
+import path from "path";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 // Add enum for user sort fields
@@ -31,6 +37,26 @@ const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
 const authenticatedProcedure = protectedProcedure;
 
 export const adminRouter = createTRPCRouter({
+  // Get current user profile info
+  getCurrentUser: authenticatedProcedure.query(async ({ ctx }) => {
+    if (!ctx.session?.user?.id) {
+      throw new TRPCError({ code: "UNAUTHORIZED", message: "No user session" });
+    }
+    const user = await ctx.db.user.findUnique({
+      where: { id: ctx.session.user.id },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
+        role: true,
+      },
+    });
+    if (!user) {
+      throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+    }
+    return user;
+  }),
   // Get all users with pagination, sorting, and filtering
   getUsers: authenticatedProcedure
     .input(
@@ -297,5 +323,117 @@ export const adminRouter = createTRPCRouter({
           cause: error,
         });
       }
+    }),
+
+  updateProfileImage: protectedProcedure
+    .input(
+      z.object({
+        name: z.string().min(1),
+        email: z.string().email(),
+        avatar: z
+          .object({
+            name: z.string(),
+            type: z.string(),
+            data: z.string(), // base64 string
+          })
+          .optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      let imageUrl = ctx.session.user.image;
+
+      if (input.avatar) {
+        if (!input.avatar.type.startsWith("image/")) {
+          throw new Error("Invalid file type");
+        }
+
+        // Estimate size from base64 string
+        const size = Math.ceil((input.avatar.data.length * 3) / 4);
+        if (size > 2 * 1024 * 1024) {
+          throw new Error("File too large (max 2MB)");
+        }
+
+        const buffer = Buffer.from(input.avatar.data, "base64");
+
+        // Single file extension validation for both environments
+        const allowedExtensions = ["jpg", "jpeg", "png", "gif", "webp"];
+        const ext = input.avatar.type.split("/")[1]?.toLowerCase();
+        if (!ext || !allowedExtensions.includes(ext)) {
+          throw new Error(
+            "Invalid file type. Allowed: jpg, jpeg, png, gif, webp",
+          );
+        }
+
+        const fileName = `${ctx.session.user.id}_${Date.now()}.${ext}`;
+
+        if (env.NODE_ENV === "production") {
+          // Validate required environment variables
+          if (
+            !env.AWS_REGION ||
+            !env.AWS_ACCESS_KEY_ID ||
+            !env.AWS_SECRET_ACCESS_KEY ||
+            !env.AWS_BUCKET_NAME
+          ) {
+            throw new Error("Missing required AWS environment variables");
+          }
+
+          // Upload to S3 with proper error handling
+          try {
+            const s3 = new S3Client({
+              region: env.AWS_REGION,
+              credentials: {
+                accessKeyId: env.AWS_ACCESS_KEY_ID,
+                secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+              },
+            });
+
+            const command = new PutObjectCommand({
+              Bucket: env.AWS_BUCKET_NAME,
+              Key: fileName,
+              Body: buffer,
+              ContentType: input.avatar.type,
+              ACL: "public-read",
+            });
+
+            await s3.send(command);
+            imageUrl = `https://${env.AWS_BUCKET_NAME}.s3.amazonaws.com/${fileName}`;
+          } catch (error) {
+            console.error("S3 upload failed:", error);
+            if (error instanceof Error) {
+              throw new Error(`Failed to upload image: ${error.message}`);
+            }
+            throw new Error("Failed to upload image to S3");
+          }
+        } else {
+          // Local storage for development
+          const filePath = path.join(
+            process.cwd(),
+            "public",
+            "uploads",
+            fileName,
+          );
+
+          try {
+            const uploadsDir = path.join(process.cwd(), "public", "uploads");
+            await mkdir(uploadsDir, { recursive: true }); // Ensure directory exists
+            await writeFile(filePath, buffer);
+            imageUrl = `/uploads/${fileName}`;
+          } catch (error) {
+            console.error("File write failed:", error);
+            throw new Error("Failed to save image locally");
+          }
+        }
+      }
+
+      await db.user.update({
+        where: { id: ctx.session.user.id },
+        data: {
+          name: input.name,
+          email: input.email,
+          image: imageUrl,
+        },
+      });
+
+      return { success: true, image: imageUrl };
     }),
 });
