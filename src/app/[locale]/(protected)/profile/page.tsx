@@ -39,7 +39,7 @@ export default async function ProfilePage({
           {messages["profile.description"]}
         </p>
       </div>
-      <ProfileClient user={user} />
+      <ProfileClient user={user} messages={messages} />
     </div>
   );
 }

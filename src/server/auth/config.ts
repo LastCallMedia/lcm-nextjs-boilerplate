@@ -14,6 +14,7 @@ declare module "next-auth" {
     user: {
       id: string;
       role?: "USER" | "ADMIN";
+      language?: string;
       // ...other properties
     } & DefaultSession["user"];
   }
@@ -21,6 +22,7 @@ declare module "next-auth" {
   interface User {
     id: string;
     role?: "USER" | "ADMIN";
+    language?: string;
     // ...other properties
   }
 }
@@ -73,6 +75,7 @@ export const authConfig = {
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.language = user.language;
         token.name = user.name;
         token.email = user.email;
         token.image = user.image;
@@ -88,6 +91,8 @@ export const authConfig = {
           token.role === "USER" || token.role === "ADMIN"
             ? token.role
             : undefined,
+        language:
+          typeof token.language === "string" ? token.language : undefined,
         name: token.name,
         email: token.email,
         image: typeof token.image === "string" ? token.image : undefined,

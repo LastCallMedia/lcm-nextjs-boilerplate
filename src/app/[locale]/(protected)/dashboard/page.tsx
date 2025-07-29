@@ -5,6 +5,7 @@ import { UsersIcon, FileTextIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { auth } from "~/server/auth";
 import { getMessages } from "~/i18n/messages";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Dashboard | LCM Next.js Boilerplate",
@@ -18,6 +19,15 @@ export default async function DashboardPage({
 }) {
   const session = await auth();
   const { locale } = await params;
+  // If not authenticated, redirect to login
+  if (!session) {
+    return redirect(`/${locale ?? "en"}/login`);
+  }
+  // If user has a language preference and it's different from the current locale, redirect
+  const userLocale = session.user?.language ?? "en";
+  if (userLocale !== locale) {
+    return redirect(`/${userLocale}/dashboard`);
+  }
   const messages = getMessages((locale || "en") as "en" | "es");
   return (
     <div className="space-y-6">

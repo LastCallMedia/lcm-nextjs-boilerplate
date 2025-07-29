@@ -185,6 +185,7 @@
       "description": "Manage your account preferences and security options.",
       "emailNotifications": "Email Notifications",
       "emailNotificationsDesc": "Receive updates and notifications via email.",
+      "languageChanged": "Language updated successfully!",
       "twoFactor": "Two-Factor Authentication",
       "twoFactorDesc": "Add an extra layer of security to your account.",
       "enable2fa": "Enable 2FA"

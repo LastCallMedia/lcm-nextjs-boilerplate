@@ -66,6 +66,7 @@ model User {
   emailVerified DateTime?
   image         String?
   role          Role      @default(USER)
+  language      String?   @default("en") // User's preferred language (en, es, etc.)
   accounts      Account[]
   sessions      Session[]
   posts         Post[]

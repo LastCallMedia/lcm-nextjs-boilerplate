@@ -182,6 +182,7 @@
       "description": "Gestiona las preferencias y opciones de seguridad de tu cuenta.",
       "emailNotifications": "Notificaciones por correo electrónico",
       "emailNotificationsDesc": "Recibe actualizaciones y notificaciones por correo electrónico.",
+      "languageChanged": "¡Idioma actualizado correctamente!",
       "twoFactor": "Autenticación en dos pasos",
       "twoFactorDesc": "Agrega una capa extra de seguridad a tu cuenta.",
       "enable2fa": "Activar 2FA"

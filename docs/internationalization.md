@@ -1,10 +1,25 @@
 # Internationalization (i18n) Documentation
 
+# User Language Preference
+
+Users can select their preferred language from a dropdown in their profile page. This selection is saved to their user account in the database.
+
+After logging in, the application automatically detects the user's saved language and redirects them to the dashboard in that language. This ensures a consistent experience for users across sessions, regardless of their browser or device settings.
+
+**How it works:**
+
+- The language dropdown is available in the user profile form.
+- When the user saves their profile, their language preference is stored.
+- On login, the app checks the user's saved language and redirects to the appropriate locale dashboard (e.g., `/es/dashboard` for Spanish).
+
+This feature allows users to personalize their language experience and guarantees that their chosen language is used for navigation and UI after authentication.
+
 This document describes how internationalization is implemented in the LCM Next.js Boilerplate using react-intl.
 
 ## Overview
 
 The internationalization setup supports:
+
 - Multiple languages (English and Spanish by default)
 - Automatic locale detection from browser preferences
 - URL-based locale routing
@@ -14,27 +29,32 @@ The internationalization setup supports:
 ## Supported Locales
 
 Currently supported locales:
+
 - `en` (English) - Default locale
 - `es` (Spanish)
 
 ## Architecture
 
 ### Configuration
+
 - **Location**: `src/i18n/config.ts`
 - Defines available locales, default locale, and locale names
 - Provides utility functions for locale validation
 
 ### Translation Messages
+
 - **Location**: `src/i18n/messages/`
 - JSON files for each locale (e.g., `en.json`, `es.json`)
 - Organized in nested structure for better organization
 
 ### Provider Setup
+
 - **Location**: `src/i18n/provider.tsx`
 - Wraps the app with React Intl provider
 - Flattens nested message structure for react-intl compatibility
 
 ### Middleware
+
 - **Location**: `middleware.ts`
 - Automatically detects user's preferred language
 - Redirects to appropriate locale URL when needed
@@ -44,12 +64,12 @@ Currently supported locales:
 ### In Server Components
 
 ```tsx
-import { getMessages } from '~/i18n';
+import { getMessages } from "~/i18n";
 
 export default async function MyComponent() {
-  const locale = 'en'; // Get from params or headers
+  const locale = "en"; // Get from params or headers
   const messages = await getMessages(locale);
-  
+
   // Use messages directly or pass to client components
   return <div>{messages.common.loading}</div>;
 }
@@ -58,9 +78,9 @@ export default async function MyComponent() {
 ### In Client Components
 
 ```tsx
-'use client';
+"use client";
 
-import { FormattedMessage, FormattedDate } from 'react-intl';
+import { FormattedMessage, FormattedDate } from "react-intl";
 
 export function MyComponent() {
   return (
@@ -81,9 +101,9 @@ export function MyComponent() {
 The `LanguageSwitcher` component is available for users to change languages:
 
 ```tsx
-import { LanguageSwitcher } from '~/_components/i18n';
+import { LanguageSwitcher } from "~/_components/i18n";
 
-<LanguageSwitcher currentLocale="en" />
+<LanguageSwitcher currentLocale="en" />;
 ```
 
 ## Adding New Languages
@@ -96,12 +116,12 @@ Example for French (`fr`):
 
 ```typescript
 // src/i18n/config.ts
-export const locales = ['en', 'es', 'fr'] as const;
+export const locales = ["en", "es", "fr"] as const;
 
 export const localeNames: Record<Locale, string> = {
-  en: 'English',
-  es: 'Español',
-  fr: 'Français',
+  en: "English",
+  es: "Español",
+  fr: "Français",
 };
 ```
 
@@ -111,6 +131,7 @@ export const localeNames: Record<Locale, string> = {
 2. Use the key with `FormattedMessage` or `useIntl` hook
 
 Example:
+
 ```json
 // src/i18n/messages/en.json
 {
@@ -145,6 +166,7 @@ import { FormattedDate, FormattedTime, FormattedRelativeTime } from 'react-intl'
 ## Browser Language Detection
 
 The middleware automatically detects the user's preferred language from:
+
 1. URL path (if present)
 2. `Accept-Language` header
 3. Falls back to default locale (English)
@@ -160,6 +182,7 @@ The middleware automatically detects the user's preferred language from:
 ## Current Implementation Status
 
 ✅ **Completed:**
+
 - react-intl package installation and configuration
 - Basic locale configuration (English and Spanish)
 - IntlProvider setup in root layout
@@ -177,12 +200,14 @@ The middleware automatically detects the user's preferred language from:
 - Proper separation of client/server components for Next.js App Router
 
 🔄 **Available for Extension:**
+
 - Additional language support (add new locale JSON files)
 - More UI components translation
 - Advanced URL-based locale routing with route parameters
 - Custom message interpolation and pluralization
 
 📋 **Future Enhancements:**
+
 - RTL language support
 - Advanced pluralization handling with ICU message format
 - Number and currency formatting
