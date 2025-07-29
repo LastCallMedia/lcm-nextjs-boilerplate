@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
+    "@headlessui/react": "^2.2.5",
     "@aws-sdk/client-s3": "^3.850.0",
     "@hookform/resolvers": "^5.2.0",
     "@prisma/client": "^6.12.0",
