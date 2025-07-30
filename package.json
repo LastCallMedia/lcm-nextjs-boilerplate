@@ -38,7 +38,11 @@
     "act:full": "act",
     "act:lint": "act -j code-quality",
     "act:jest": "act -j jest-tests",
-    "act:e2e": "act -j e2e-tests"
+    "act:e2e": "act -j e2e-tests",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:test": "concurrently \"pnpm dev:only\" \"wait-on http://localhost:3000 && cypress run\" --kill-others --success first",
+    "convert:playwright": "npx @11joselu/cypress-to-playwright cypress/e2e"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -97,8 +101,8 @@
     "react": "^19.1.0",
     "react-day-picker": "^9.8.0",
     "react-dom": "^19.1.0",
-    "react-intl": "^7.1.11",
     "react-hook-form": "^7.61.1",
+    "react-intl": "^7.1.11",
     "react-resizable-panels": "^3.0.3",
     "recharts": "^3.1.0",
     "server-only": "^0.0.1",
@@ -111,6 +115,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@11joselu/cypress-to-playwright": "^0.0.15",
     "@axe-core/playwright": "^4.10.2",
     "@eslint/eslintrc": "^3.3.1",
     "@playwright/test": "^1.54.1",
@@ -125,6 +130,7 @@
     "@types/react-dom": "^19.1.6",
     "@types/swagger-ui-react": "^5.18.0",
     "axe-core": "^4.10.3",
+    "cypress": "^14.5.3",
     "eslint": "^9.32.0",
     "eslint-config-next": "^15.4.3",
     "eslint-config-prettier": "^10.1.8",
