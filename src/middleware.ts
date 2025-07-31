@@ -52,7 +52,7 @@ function isAdmin(request: NextRequest): boolean {
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // Skip middleware for static files, API routes, browser requests and public routes
+  // Skip middleware for static files, API routes, and browser requests
   if (
     pathname.startsWith("/api/") ||
     pathname.startsWith("/_next/") ||
