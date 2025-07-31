@@ -1,5 +1,4 @@
 import { type NextRequest, NextResponse } from "next/server";
-
 const locales = ["en", "es"] as const;
 const defaultLocale = "en";
 
@@ -53,7 +52,7 @@ function isAdmin(request: NextRequest): boolean {
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // Skip middleware for static files, API routes, and browser requests
+  // Skip middleware for static files, API routes, browser requests and public routes
   if (
     pathname.startsWith("/api/") ||
     pathname.startsWith("/_next/") ||
@@ -82,35 +81,42 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(newUrl);
   }
 
-  // Handle authentication for protected routes
-  const isUserRoute = ["/dashboard", "/profile"].some((route) =>
-    pathname.startsWith(`/${pathnameLocale}${route}`),
-  );
+  // Add headers for server components
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-pathname", pathname);
+  requestHeaders.set("x-locale", pathnameLocale);
+
+  // If the request is for a public route, allow it
+  if (
+    pathname === `/${pathnameLocale}/login` ||
+    pathname.startsWith(`/${pathnameLocale}/contact`) ||
+    pathname.startsWith(`/${pathnameLocale}/about`) ||
+    pathname.startsWith(`/${pathnameLocale}/api-docs`)
+  ) {
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
+  }
+
+  const userIsAuthenticated = isAuthenticated(request);
+
+  if (!userIsAuthenticated) {
+    return NextResponse.redirect(
+      new URL(`/${pathnameLocale}/login`, request.url),
+    );
+  }
 
   const isAdminRoute =
     pathname === `/${pathnameLocale}/admin` ||
     pathname.startsWith(`/${pathnameLocale}/admin/`);
 
-  if (isUserRoute || isAdminRoute) {
-    const userIsAuthenticated = isAuthenticated(request);
-
-    if (!userIsAuthenticated) {
-      return NextResponse.redirect(
-        new URL(`/${pathnameLocale}/login`, request.url),
-      );
-    }
-
-    if (isAdminRoute && !isAdmin(request)) {
-      return NextResponse.redirect(
-        new URL(`/${pathnameLocale}/dashboard`, request.url),
-      );
-    }
+  if (isAdminRoute && !isAdmin(request)) {
+    return NextResponse.redirect(
+      new URL(`/${pathnameLocale}/dashboard`, request.url),
+    );
   }
-
-  // Add headers for server components
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-pathname", pathname);
-  requestHeaders.set("x-locale", pathnameLocale);
 
   return NextResponse.next({
     request: {
