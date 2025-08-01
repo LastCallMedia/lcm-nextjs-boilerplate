@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "prisma generate && prisma migrate deploy && tsx prisma/seed.ts && next build",
+    "build": "next build",
     "check": "next lint && tsc --noEmit",
     "db:generate": "prisma migrate dev",
     "db:migrate": "prisma migrate deploy",
@@ -38,7 +38,8 @@
     "act:full": "act",
     "act:lint": "act -j code-quality",
     "act:jest": "act -j jest-tests",
-    "act:e2e": "act -j e2e-tests"
+    "act:e2e": "act -j e2e-tests",
+    "vercel-deploy": "prisma generate && prisma migrate deploy && tsx prisma/seed.ts && next build"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
