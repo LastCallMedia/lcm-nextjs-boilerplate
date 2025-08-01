@@ -10,6 +10,20 @@ jobs:
   jest-tests:
     name: Jest Unit & Accessibility Tests
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: test-db
+          POSTGRES_USER: test-user
+          POSTGRES_PASSWORD: test-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     strategy:
       matrix:
@@ -44,6 +58,12 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Setup test database (migrate & seed)
+        run: pnpm db:migrate && pnpm db:seed
+        env:
+          DATABASE_URL: postgresql://test-user:test-password@localhost:5432/test-db
+          SKIP_ENV_VALIDATION: true
 
       - name: Run Jest unit tests
         run: pnpm test

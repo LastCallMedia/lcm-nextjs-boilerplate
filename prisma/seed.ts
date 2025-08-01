@@ -2,18 +2,29 @@
 import { db } from "~/server/db";
 
 async function main() {
-  // Seed admin user
-  const adminEmail = "admin@example.com";
-  await db.user.upsert({
-    where: { email: adminEmail },
-    update: {},
-    create: {
-      name: "Admin User",
-      email: adminEmail,
-      role: "ADMIN",
-      emailVerified: new Date(),
-    },
-  });
+  // Seed admin users
+  const adminUsers = [
+    { name: "Jen", email: "jen@lastcallmedia.com" },
+    { name: "Luke", email: "luke@lastcallmedia.com" },
+    { name: "Phoenix", email: "phoenix@lastcallmedia.com" },
+    { name: "Raiyan", email: "raiyan@lastcallmedia.com" },
+    { name: "Brady", email: "brady@lastcallmedia.com" },
+    { name: "Fawn", email: "fawn@lastcallmedia.com" },
+    { name: "Gregg", email: "gregg@lastcallmedia.com" },
+    { name: "Nazmul", email: "nazmul.huda@lastcallmedia.com" },
+  ];
+  for (const admin of adminUsers) {
+    await db.user.upsert({
+      where: { email: admin.email },
+      update: {},
+      create: {
+        name: admin.name,
+        email: admin.email,
+        role: "ADMIN",
+        emailVerified: new Date(),
+      },
+    });
+  }
 
   // Seed normal user
   const userEmail = "user@example.com";
@@ -28,7 +39,7 @@ async function main() {
     },
   });
 
-  console.log("Seeded admin and normal user.");
+  console.log("Seeded admin users and normal user.");
 }
 
 main()
