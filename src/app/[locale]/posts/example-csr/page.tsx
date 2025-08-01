@@ -1,10 +1,8 @@
-import { TypingIndicator } from "~/_components/posts/TypingIndicator";
-import { api } from "~/trpc/server";
-import NextRenderingDocsLink from "~/app/[locale]/posts/_components/next-docs-link";
-import AllPostsClient from "~/app/[locale]/posts/client";
-import { getMessages } from "~/i18n";
 import { auth } from "~/server/auth";
 import { redirect } from "next/navigation";
+import { getMessages } from "~/i18n";
+import NextRenderingDocsLink from "~/app/[locale]/posts/_components/next-docs-link";
+import ExampleCsrClient from "~/app/[locale]/posts/example-csr/client";
 
 export default async function Page({
   params,
@@ -16,8 +14,6 @@ export default async function Page({
   if (!session?.user) {
     redirect(`/login?callbackUrl=/${locale}/posts/example-csr`);
   }
-  // SSR: fetch posts on the server, only update on refresh. Loading and error handled by NextJS in ./loading.tsx and ./error.tsx
-  const posts = await api.post.getAll();
   const messages = getMessages((locale || "en") as "en" | "es");
   return (
     <div className="m-auto flex max-w-2xl flex-col gap-8">
@@ -27,8 +23,7 @@ export default async function Page({
       <p>{messages["posts.examples.csrPage.description1"]}</p>
       <p>{messages["posts.examples.csrPage.description2"]}</p>
       <NextRenderingDocsLink />
-      <AllPostsClient posts={posts} />
-      <TypingIndicator channelId="landing" />
+      <ExampleCsrClient />
     </div>
   );
 }
