@@ -21,7 +21,6 @@ services:
 
   # Email testing
   mailhog:
-    container_name: mailhog
     image: mailhog/mailhog:latest
     platform: linux/amd64
     restart: unless-stopped
