@@ -170,6 +170,9 @@
     "pictureNote": "La foto de perfil es gestionada por tu proveedor OAuth",
     "cancel": "Cancelar",
     "save": "Guardar Cambios",
+    "updateSuccess": "Perfil actualizado correctamente",
+    "updateError": "No se pudo actualizar el perfil. Por favor, inténtalo de nuevo.",
+    "anonymous": "Usuario anónimo",
     "demoNoteTitle": "Nota de Demo",
     "demoNoteDescription": "Esta página de perfil demuestra una ruta protegida con visualización de datos de usuario. En una aplicación real, implementarías manejo de formularios, validación y actualizaciones en la base de datos para los cambios de perfil."
   },

@@ -173,6 +173,9 @@
     "pictureNote": "Profile picture is managed by your OAuth provider",
     "cancel": "Cancel",
     "save": "Save Changes",
+    "updateSuccess": "Profile updated successfully",
+    "updateError": "Failed to update profile. Please try again.",
+    "anonymous": "Anonymous User",
     "demoNoteTitle": "Demo Note",
     "demoNoteDescription": "This profile page demonstrates a protected route with user data display. In a real application, you would implement form handling, validation, and database updates for profile changes."
   },

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { FormattedMessage, useIntl } from "react-intl";
+import { t } from "~/i18n/messages";
 
 import { api } from "~/trpc/react";
 import { Input, Button } from "~/_components/ui";
@@ -79,7 +80,7 @@ const PostForm = ({ className }: PostFormProps) => {
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-2xl font-bold">
-        <FormattedMessage id="posts.createPost" />
+        <FormattedMessage id={t("posts.createPost")} />
       </h2>
 
       <form
@@ -105,9 +106,9 @@ const PostForm = ({ className }: PostFormProps) => {
           className="w-full"
         >
           {createPost.isPending ? (
-            <FormattedMessage id="posts.submitting" />
+            <FormattedMessage id={t("posts.submitting")} />
           ) : (
-            <FormattedMessage id="common.submit" />
+            <FormattedMessage id={t("common.submit")} />
           )}
         </Button>
       </form>
