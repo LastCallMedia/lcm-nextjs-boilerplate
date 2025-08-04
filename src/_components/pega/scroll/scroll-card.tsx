@@ -1,9 +1,6 @@
-import {
-  motion,
-  useMotionValueEvent,
-  useScroll,
-  useTransform,
-} from "motion/react";
+"use client";
+
+import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { Card, CardContent } from "~/_components/ui";
 
@@ -14,28 +11,29 @@ const cards = [
 ];
 
 function ScrollCard() {
+  const windowHeight = typeof window !== "undefined" ? window.innerHeight : 500;
   const targetRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll({
     target: targetRef,
     offset: ["start start", "end end"],
   });
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    console.log("Scroll position:", latest);
-    console.log(scrollY.get());
-  });
+  //   useMotionValueEvent(scrollY, "change", (latest) => {
+  //     console.log("Scroll position:", latest);
+  //     console.log(scrollY.get());
+  //   });
   //   const scale = useTransform(scrollY, [1020, 2000], [1, 0.5]);
   //   const opacity = useTransform(scrollY, [1020, 2000], [1, 0]);
   const cardTimeline = cards.map((_, i) => {
-    const start = 1390 + i * window.innerHeight + i * 200; // Adjust start position based on index
-    const end = 1390 + (i + 1) * window.innerHeight;
+    const start = 1390 + i * windowHeight + i * 100; // Adjust start position based on index
+    const end = 1390 + (i + 1) * windowHeight;
     return [start, end];
   });
   const timeline = [[1020, 1500], ...cardTimeline];
-  const animation = timeline.map((data) => ({
+  const animation = timeline.map((data, i) => ({
     // eslint-disable-next-line react-hooks/rules-of-hooks
     scale: useTransform(scrollY, data, [1, 0.5]),
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    opacity: useTransform(scrollY, data, [1, 0]),
+    opacity: useTransform(scrollY, data, [1, i === 0 ? 0 : 0.5]),
   }));
   return (
     <div ref={targetRef} className="bg-background relative">
