@@ -11,7 +11,10 @@ export async function hashPassword(password: string): Promise<string> {
 /**
  * Verify a password against a hash
  */
-export async function verifyPassword(password: string, hash: string | null): Promise<boolean> {
+export async function verifyPassword(
+  password: string,
+  hash: string | null,
+): Promise<boolean> {
   if (!hash) {
     return false;
   }

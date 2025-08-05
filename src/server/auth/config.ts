@@ -39,15 +39,15 @@ const buildProviders = () => {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        email: { 
-          label: "Email", 
+        email: {
+          label: "Email",
           type: "email",
-          placeholder: "john@example.com"
+          placeholder: "john@example.com",
         },
-        password: { 
-          label: "Password", 
-          type: "password" 
-        }
+        password: {
+          label: "Password",
+          type: "password",
+        },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -55,7 +55,7 @@ const buildProviders = () => {
         }
 
         const user = await db.user.findUnique({
-          where: { email: credentials.email as string }
+          where: { email: credentials.email as string },
         });
 
         if (!user?.password) {
@@ -68,7 +68,7 @@ const buildProviders = () => {
         // Verify password
         const passwordMatch = await verifyPassword(
           credentials.password as string,
-          hashedPassword
+          hashedPassword,
         );
 
         if (!passwordMatch) {
@@ -83,8 +83,8 @@ const buildProviders = () => {
           language: user.language ?? undefined,
           image: user.image,
         };
-      }
-    })
+      },
+    }),
   );
 
   // Include Nodemailer provider for magic links

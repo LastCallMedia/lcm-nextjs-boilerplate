@@ -1,4 +1,5 @@
 // Use the default Prisma client import for compatibility with tsx and ESM scripts
+import { hashPassword } from "~/lib/password-utils";
 import { db } from "~/server/db";
 
 async function main() {
@@ -22,6 +23,8 @@ async function main() {
         email: admin.email,
         role: "ADMIN",
         emailVerified: new Date(),
+        // Hash a default password for admin users
+        password: await hashPassword("password123"),
       },
     });
   }
@@ -36,6 +39,8 @@ async function main() {
       email: userEmail,
       role: "USER",
       emailVerified: new Date(),
+      // Hash a default password for normal user
+      password: await hashPassword("password123"),
     },
   });
 

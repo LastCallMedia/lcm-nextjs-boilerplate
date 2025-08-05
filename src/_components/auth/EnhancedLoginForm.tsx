@@ -1,6 +1,15 @@
 "use client";
 
-import { AlertCircle, CheckCircle, Eye, EyeOff, Loader2, Lock, Mail, User } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle,
+  Eye,
+  EyeOff,
+  Loader2,
+  Lock,
+  Mail,
+  User,
+} from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -9,7 +18,12 @@ import { Alert, AlertDescription } from "~/_components/ui/alert";
 import { Button } from "~/_components/ui/button";
 import { Input } from "~/_components/ui/input";
 import { Label } from "~/_components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/_components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "~/_components/ui/tabs";
 import { getSafeLocale } from "~/lib/utils";
 
 type AuthMode = "signin" | "register";
@@ -75,7 +89,10 @@ export default function EnhancedLoginForm() {
           body: JSON.stringify({ email, password, name: name || undefined }),
         });
 
-        const data = (await response.json()) as { error?: string; message?: string };
+        const data = (await response.json()) as {
+          error?: string;
+          message?: string;
+        };
 
         if (!response.ok) {
           setStatus("error");
@@ -156,7 +173,7 @@ export default function EnhancedLoginForm() {
       {/* Auth Mode Switcher */}
       <div className="text-center">
         {authMode === "signin" ? (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             <FormattedMessage id="auth.switchToRegister" />{" "}
             <button
               type="button"
@@ -167,7 +184,7 @@ export default function EnhancedLoginForm() {
             </button>
           </p>
         ) : (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             <FormattedMessage id="auth.switchToLogin" />{" "}
             <button
               type="button"
@@ -181,7 +198,10 @@ export default function EnhancedLoginForm() {
       </div>
 
       {/* Login Method Tabs */}
-      <Tabs value={loginMethod} onValueChange={(value) => setLoginMethod(value as LoginMethod)}>
+      <Tabs
+        value={loginMethod}
+        onValueChange={(value) => setLoginMethod(value as LoginMethod)}
+      >
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="password">
             <FormattedMessage id="auth.passwordLoginTab" />
@@ -245,7 +265,11 @@ export default function EnhancedLoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   type={showPassword ? "text" : "password"}
-                  autoComplete={authMode === "register" ? "new-password" : "current-password"}
+                  autoComplete={
+                    authMode === "register"
+                      ? "new-password"
+                      : "current-password"
+                  }
                   required
                   disabled={isLoading}
                   className="pr-10"
@@ -253,10 +277,14 @@ export default function EnhancedLoginForm() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="text-muted-foreground hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2"
                   disabled={isLoading}
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -282,10 +310,14 @@ export default function EnhancedLoginForm() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    className="text-muted-foreground hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2"
                     disabled={isLoading}
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
                   </button>
                 </div>
               </div>
