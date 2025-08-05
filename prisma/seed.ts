@@ -3,7 +3,10 @@ import { hashPassword } from "~/lib/password-utils";
 import { db } from "~/server/db";
 
 async function main() {
-  // Seed admin users
+  /* Password for users
+   * This password is used for both admin and normal users
+   * It should be set in the .env file as USER_PASSWORD
+   */
   const password = process.env.USER_PASSWORD;
 
   let hashedPassword: string | null = null;
@@ -12,6 +15,7 @@ async function main() {
     hashedPassword = await hashPassword(password);
   }
 
+  // Seed admin users
   const adminUsers = [
     { name: "Jen", email: "jen@lastcallmedia.com" },
     { name: "Luke", email: "luke@lastcallmedia.com" },
@@ -32,7 +36,6 @@ async function main() {
         email: admin.email,
         role: "ADMIN",
         emailVerified: new Date(),
-        // Hash a default password for admin users
         password: hashedPassword,
       },
     });
@@ -48,7 +51,6 @@ async function main() {
       email: userEmail,
       role: "USER",
       emailVerified: new Date(),
-      // Hash a default password for normal user
       password: hashedPassword,
     },
   });
