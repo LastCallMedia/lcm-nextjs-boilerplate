@@ -20,7 +20,9 @@
     "signOut": "Cerrar Sesión",
     "account": "Cuenta",
     "profile": "Perfil",
-    "settings": "ajustes"
+    "settings": "Ajustes",
+    "about": "Acerca de",
+    "contact": "Contacto"
   },
   "home": {
     "title": "¡Hola, {name}s!!",

@@ -1,9 +1,12 @@
 "use client";
 
+import { Disclosure, DisclosureButton } from "@headlessui/react";
 import {
+  Contact,
   File,
   Files,
   Infinity,
+  Info,
   LayoutDashboard,
   LogIn,
   LogOut,
@@ -12,7 +15,6 @@ import {
   User,
   type LucideIcon,
 } from "lucide-react";
-import { Disclosure, DisclosureButton } from "@headlessui/react";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -38,6 +40,7 @@ interface NavbarLinks {
   href: string;
   icon: LucideIcon;
   description?: string;
+  isProtected?: boolean; // Optional, true if the link requires authentication
 }
 
 const protectedLinks: NavbarLinks[] = [
@@ -64,24 +67,39 @@ const adminLinks: NavbarLinks[] = [
   },
 ];
 
-const publicLinks: NavbarLinks[] = [
+const menuLinks: NavbarLinks[] = [
   {
     titleKey: "navigation.post",
     href: "/post",
     icon: File,
     description: "Create a post",
+    isProtected: true,
   },
   {
     titleKey: "navigation.allPosts",
     href: "/posts",
     icon: Files,
     description: "Browse all posts",
+    isProtected: true,
   },
   {
     titleKey: "navigation.infinitePosts",
     href: "/infinite-posts",
     icon: Infinity,
     description: "Explore posts with infinite scroll",
+    isProtected: true,
+  },
+  {
+    titleKey: "navigation.about",
+    href: "/about",
+    icon: Info,
+    description: "Learn more about us",
+  },
+  {
+    titleKey: "navigation.contact",
+    href: "/contact",
+    icon: Contact,
+    description: "Get in touch with us",
   },
 ];
 
@@ -124,16 +142,21 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[200px] gap-4">
-                    {publicLinks.map((link) => (
-                      <NavItem
-                        key={link.titleKey}
-                        titleKey={link.titleKey}
-                        href={`/${currentLocale}${link.href}`}
-                        icon={link.icon}
-                      >
-                        {link.description}
-                      </NavItem>
-                    ))}
+                    {menuLinks.map((link) => {
+                      if (link.isProtected && !session) {
+                        return null; // Skip protected links if not authenticated
+                      }
+                      return (
+                        <NavItem
+                          key={link.titleKey}
+                          titleKey={link.titleKey}
+                          href={`/${currentLocale}${link.href}`}
+                          icon={link.icon}
+                        >
+                          {link.description}
+                        </NavItem>
+                      );
+                    })}
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -276,17 +299,22 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                     <div className="fixed top-16 right-0 left-0 z-50 w-full bg-[#0f172b] shadow-lg">
                       <div className="flex flex-col px-4 py-2">
                         {/* Public Links */}
-                        {publicLinks.map((link) => (
-                          <Link
-                            key={link.titleKey}
-                            href={`/${currentLocale}${link.href}`}
-                            className="flex items-center gap-2 rounded-md py-3 text-base text-gray-700 hover:bg-gray-100 dark:text-zinc-200 dark:hover:bg-zinc-800"
-                            onClick={() => close()}
-                          >
-                            <link.icon className="h-5 w-5" />
-                            <FormattedMessage id={link.titleKey} />
-                          </Link>
-                        ))}
+                        {menuLinks.map((link) => {
+                          if (link.isProtected && !session) {
+                            return null; // Skip protected links if not authenticated
+                          }
+                          return (
+                            <Link
+                              key={link.titleKey}
+                              href={`/${currentLocale}${link.href}`}
+                              className="flex items-center gap-2 rounded-md py-3 text-base text-gray-700 hover:bg-gray-100 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                              onClick={() => close()}
+                            >
+                              <link.icon className="h-5 w-5" />
+                              <FormattedMessage id={link.titleKey} />
+                            </Link>
+                          );
+                        })}
                         {/* Protected Links */}
                         {session &&
                           protectedLinks.map((link) => (
