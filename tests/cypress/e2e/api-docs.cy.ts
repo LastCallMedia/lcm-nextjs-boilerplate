@@ -10,12 +10,6 @@ describe("API Documentation Tests", () => {
     cy.get("body").should("be.visible");
   });
 
-  it("should display API endpoints", () => {
-    // Check if API documentation is rendered
-    cy.get("body").should("be.visible");
-    // API docs might be loaded dynamically
-  });
-
   it("should have interactive API explorer", () => {
     // Check if Swagger/OpenAPI UI is present
     cy.get("body").then(($body) => {
@@ -23,11 +17,6 @@ describe("API Documentation Tests", () => {
         cy.get(".swagger-ui").should("be.visible");
       }
     });
-  });
-
-  it("should allow testing API endpoints", () => {
-    // This would require the API docs to be fully loaded
-    cy.get("body").should("be.visible");
   });
 
   it("should be responsive on mobile devices", () => {
