@@ -1,1 +1,1 @@
-export { ContactForm } from "./ContactForm";
+export { ContactForm } from "~/_components/contact/ContactForm";
