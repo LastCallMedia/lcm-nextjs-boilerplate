@@ -187,7 +187,8 @@
       "languageChanged": "¡Idioma actualizado correctamente!",
       "twoFactor": "Autenticación en dos pasos",
       "twoFactorDesc": "Agrega una capa extra de seguridad a tu cuenta.",
-      "enable2fa": "Activar 2FA"
+      "enable2fa": "Activar 2FA",
+      "language": "Idioma"
     },
     "privacy": {
       "title": "Configuración de Privacidad",

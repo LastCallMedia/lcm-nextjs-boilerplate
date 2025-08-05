@@ -190,7 +190,8 @@
       "languageChanged": "Language updated successfully!",
       "twoFactor": "Two-Factor Authentication",
       "twoFactorDesc": "Add an extra layer of security to your account.",
-      "enable2fa": "Enable 2FA"
+      "enable2fa": "Enable 2FA",
+      "language": "Language"
     },
     "privacy": {
       "title": "Privacy Settings",
