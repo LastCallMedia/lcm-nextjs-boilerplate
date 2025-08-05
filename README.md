@@ -207,15 +207,7 @@ pnpm test:watch
 
 # Run tests with coverage
 pnpm test:coverage
-
-# Run E2E tests with Playwright
-pnpm test:e2e
-
-# Convert Cypress tests to Playwright (if migrating)
-cd tests/ && pnpm convert:playwright
 ```
-
-> **📦 Cypress Migration**: If you have existing Cypress tests, use the [Cypress to Playwright Migration Guide](./tests/cypress/README.md) for automatic conversion and manual adjustment guidance.
 
 #### Writing Tests
 
