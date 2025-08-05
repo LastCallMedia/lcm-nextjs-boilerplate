@@ -1,5 +1,6 @@
 "use client";
 import { api } from "~/trpc/react";
+import { t } from "~/i18n/messages";
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { toast } from "sonner";
@@ -21,7 +22,7 @@ export function LanguageSelectorWrapper({
   if (isLoading)
     return (
       <span className="text-muted-foreground text-xs">
-        {messages["common.loading"] ?? "Loading..."}
+        {messages[t("common.loading")] ?? "Loading..."}
       </span>
     );
   if (error || !data || typeof data.language !== "string") {
@@ -61,7 +62,7 @@ export function LanguageSelectorClient({
       await refetchLanguage.refetch(); // Refetch language from backend
       setSuccess(true);
       toast.success(
-        messages["settings.account.languageChanged"] ??
+        messages[t("settings.account.languageChanged")] ??
           "Language updated successfully!",
       );
       // Redirect to the new locale route
@@ -78,7 +79,7 @@ export function LanguageSelectorClient({
   return (
     <div className="my-8 flex items-center gap-8">
       <Label htmlFor="language-select">
-        {messages["settings.account.language"] ?? "Language"}
+        {messages[t("settings.account.language")] ?? "Language"}
       </Label>
       <Select
         value={currentLanguage}
@@ -95,12 +96,12 @@ export function LanguageSelectorClient({
       </Select>
       {saving && (
         <span className="text-muted-foreground text-xs">
-          {messages["common.loading"] ?? "Saving..."}
+          {messages[t("common.loading")] ?? "Saving..."}
         </span>
       )}
       {success && (
         <span className="text-xs text-green-600">
-          {messages["common.save"] ?? "Saved!"}
+          {messages[t("common.save")] ?? "Saved!"}
         </span>
       )}
     </div>

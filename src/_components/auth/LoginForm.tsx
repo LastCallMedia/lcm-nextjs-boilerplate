@@ -5,6 +5,7 @@ import { signIn } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { t } from "~/i18n/messages";
 import { Alert, AlertDescription } from "~/_components/ui/alert";
 import { Button } from "~/_components/ui/button";
 import { Input } from "~/_components/ui/input";
@@ -56,7 +57,7 @@ export default function LoginForm() {
     <form onSubmit={handleSubmit} className="grid gap-4">
       <div className="grid gap-2">
         <Label htmlFor="email">
-          <FormattedMessage id="auth.email" />
+          <FormattedMessage id={t("auth.email")} />
         </Label>
         <Input
           id="email"
@@ -81,12 +82,12 @@ export default function LoginForm() {
         {isLoading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            <FormattedMessage id="auth.sending" />
+            <FormattedMessage id={t("auth.sending")} />
           </>
         ) : (
           <>
             <Mail className="mr-2 h-4 w-4" />
-            <FormattedMessage id="auth.sendMagicLink" />
+            <FormattedMessage id={t("auth.sendMagicLink")} />
           </>
         )}
       </Button>
@@ -106,7 +107,7 @@ export default function LoginForm() {
       )}
 
       <p className="text-muted-foreground text-center text-xs">
-        <FormattedMessage id="auth.magicLinkInfo" />
+        <FormattedMessage id={t("auth.magicLinkInfo")} />
       </p>
     </form>
   );
