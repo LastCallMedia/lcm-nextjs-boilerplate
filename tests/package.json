@@ -7,7 +7,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "cypress:test": "concurrently \"pnpm dev:only\" \"wait-on http://localhost:3000 && cypress run\" --kill-others --success first",
-    "convert:playwright": "npx @11joselu/cypress-to-playwright cypress/e2e"
+    "convert:playwright": "npx @11joselu/cypress-to-playwright e2e"
   },
   "keywords": [],
   "author": "",
