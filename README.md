@@ -93,6 +93,11 @@ Comprehensive documentation is available in the [`docs/`](./docs/) directory:
 - **[🔧 Development](./docs/development.md)** - Development workflow and tools
 - **[🚀 Deployment](./docs/deployment.md)** - Production deployment guide
 
+### 🤖 AI Development Assistant
+
+- **[📝 Copilot Instructions](./.github/copilot-instructions.md)** - Template for configuring Copilot with project-specific context and guidelines
+- **[🔎 Custom Instructions](./.github/instructions/markdown.instructions.md)** - Example for writing custom markdown instructions with Copilot
+
 ## 📦 Available Scripts
 
 | Command                   | Description                                |

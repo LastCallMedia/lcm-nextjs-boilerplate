@@ -13,6 +13,7 @@
     "home": "Home",
     "posts": "Posts",
     "allPosts": "All Posts",
+    "infinitePosts": "Infinite Posts",
     "post": "Post",
     "menu": "Menu",
     "signIn": "Sign In",
@@ -24,7 +25,6 @@
   },
   "home": {
     "title": "Hello, {name}ers!!",
-    "greeting": "Hello from tRPC",
     "seeAllPosts": "See all posts"
   },
   "posts": {
@@ -185,6 +185,7 @@
       "description": "Manage your account preferences and security options.",
       "emailNotifications": "Email Notifications",
       "emailNotificationsDesc": "Receive updates and notifications via email.",
+      "languageChanged": "Language updated successfully!",
       "twoFactor": "Two-Factor Authentication",
       "twoFactorDesc": "Add an extra layer of security to your account.",
       "enable2fa": "Enable 2FA"

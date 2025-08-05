@@ -26,12 +26,9 @@ export default async function SettingsPage({
 }) {
   const { locale } = await params;
   const session = await auth();
-
-  // Redirect if not authenticated
   if (!session) {
     redirect(`/${locale ?? "en"}/login`);
   }
-
   const messages = getMessages((locale ?? "en") as "en" | "es");
 
   return (
@@ -66,9 +63,7 @@ export default async function SettingsPage({
               </div>
               <Switch defaultChecked disabled />
             </div>
-
             <Separator />
-
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label className="text-base">
