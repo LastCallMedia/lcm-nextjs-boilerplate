@@ -1,0 +1,20 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:test": "concurrently \"pnpm dev:only\" \"wait-on http://localhost:3000 && cypress run\" --kill-others --success first",
+    "convert:playwright": "npx @11joselu/cypress-to-playwright cypress/e2e"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1",
+  "devDependencies": {
+    "@11joselu/cypress-to-playwright": "^0.0.15",
+    "cypress": "^14.5.3"
+  }
+}
