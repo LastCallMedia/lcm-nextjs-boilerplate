@@ -24,7 +24,6 @@
   },
   "home": {
     "title": "¡Hola, {name}s!!",
-    "greeting": "Hola desde tRPC",
     "seeAllPosts": "Ver todas las publicaciones"
   },
   "posts": {

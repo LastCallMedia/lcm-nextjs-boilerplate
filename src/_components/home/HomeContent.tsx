@@ -11,11 +11,6 @@ export function HomeContent() {
           values={{ name: <span className="text-glacier">LCM</span> }}
         />
       </h1>
-      <div className="flex flex-col items-center gap-2">
-        <p className="text-2xl">
-          <FormattedMessage id="home.greeting" />
-        </p>
-      </div>
     </div>
   );
 }
