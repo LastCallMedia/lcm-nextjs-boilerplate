@@ -53,6 +53,7 @@
     "jest.setup.js",
     "jest.config.cjs",
     "coverage",
-    "tests/cypress/*"
+    "tests/cypress/*",
+    "tests/cypress.config.ts"
   ]
 }
