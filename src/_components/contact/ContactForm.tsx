@@ -10,6 +10,27 @@ import { z } from "zod";
 import { api } from "~/trpc/react";
 import { toast } from "sonner";
 
+// Formats a phone number string with basic international support
+function formatPhoneNumber(phoneNumberString: string) {
+  const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+
+  // US numbers
+  const usMatch = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+  if (usMatch) {
+    const intlCode = usMatch[1] ? "+1 " : "";
+    return [intlCode, "(", usMatch[2], ") ", usMatch[3], "-", usMatch[4]].join(
+      "",
+    );
+  }
+
+  // International numbers (just add + if it looks like a country code)
+  if (cleaned.length > 10) {
+    return "+" + cleaned;
+  }
+
+  return phoneNumberString; // Return original if no match
+}
+
 const contactFormSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
@@ -62,7 +83,7 @@ export function ContactForm() {
               <Input
                 id="firstName"
                 {...register("firstName")}
-                placeholder="Your first name"
+                placeholder="John"
                 aria-invalid={!!errors.firstName}
               />
               {errors.firstName && (
@@ -79,7 +100,7 @@ export function ContactForm() {
               <Input
                 id="lastName"
                 {...register("lastName")}
-                placeholder="Your last name"
+                placeholder="Doe"
                 aria-invalid={!!errors.lastName}
               />
               {errors.lastName && (
@@ -97,7 +118,7 @@ export function ContactForm() {
                 id="email"
                 type="email"
                 {...register("email")}
-                placeholder="your.email@company.com"
+                placeholder="johndoe@email.com"
                 aria-invalid={!!errors.email}
               />
               {errors.email && (
@@ -114,7 +135,14 @@ export function ContactForm() {
               <Input
                 id="phoneNumber"
                 type="tel"
-                {...register("phoneNumber")}
+                {...register("phoneNumber", {
+                  onChange: (e) => {
+                    const formatted = formatPhoneNumber(e.target.value);
+                    if (formatted) {
+                      e.target.value = formatted;
+                    }
+                  },
+                })}
                 placeholder="(123) 456-7890"
                 aria-invalid={!!errors.phoneNumber}
               />

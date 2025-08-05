@@ -122,7 +122,7 @@ export const emailRouter = createTRPCRouter({
         await transporter.sendMail({
           from: '"Contact Form" <contact@localhost>',
           to: "admin@lcm-nextjs-boilerplate.com",
-          subject: `Contact Form Submission: ${input.firstName} ${input.lastName}`,
+          subject: `Contact Form Submission: ${input.firstName} ${input.lastName} <${input.email}>`,
           html: adminEmailHtml,
           text: `
 Name: ${input.firstName} ${input.lastName}
