@@ -169,7 +169,7 @@ export default function EnhancedLoginForm() {
   };
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-4" data-testid="enhanced-login-form">
       {/* Auth Mode Switcher */}
       <div className="text-center">
         {authMode === "signin" ? (

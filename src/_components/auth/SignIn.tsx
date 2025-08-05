@@ -1,8 +1,8 @@
 "use client";
 
 import { FormattedMessage } from "react-intl";
-import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
 import EnhancedLoginForm from "~/_components/auth/EnhancedLoginForm";
+import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
 
 const isGoogleConfigured =
   String(process.env.NEXT_PUBLIC_AUTH_GOOGLE_ENABLED).toLowerCase() === "true";

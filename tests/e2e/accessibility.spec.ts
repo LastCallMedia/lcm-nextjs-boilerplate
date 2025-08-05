@@ -1,4 +1,4 @@
-import { waitForPageLoad } from "@/tests/e2e/utils/page-helpers";
+import { login, waitForPageLoad } from "@/tests/e2e/utils/page-helpers";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
@@ -35,6 +35,8 @@ test.describe("Accessibility Tests", () => {
     test(`posts page (${locale}) should have no critical accessibility violations`, async ({
       page,
     }) => {
+      // Login first to view protected content
+      await login(page, "USER");
       await page.goto(`/${locale}/posts`);
       await waitForPageLoad(page);
       const accessibilityScanResults = await new AxeBuilder({ page })

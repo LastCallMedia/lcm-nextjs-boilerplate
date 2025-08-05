@@ -2,6 +2,7 @@ import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import Nodemailer from "next-auth/providers/nodemailer";
+import type { User } from "~/generated/prisma/client";
 import { isGoogleAuthConfigured } from "~/lib/auth-utils";
 import { verifyPassword } from "~/lib/password-utils";
 import { db } from "~/server/db";
@@ -42,7 +43,6 @@ const buildProviders = () => {
         email: {
           label: "Email",
           type: "email",
-          placeholder: "john@example.com",
         },
         password: {
           label: "Password",
@@ -50,26 +50,24 @@ const buildProviders = () => {
         },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
+        const email = credentials?.email as string;
+        const password = credentials?.password as string;
+        if (!email || !password) {
           return null;
         }
 
-        const user = await db.user.findUnique({
-          where: { email: credentials.email as string },
+        const user: User | null = await db.user.findUnique({
+          where: { email: email },
         });
 
-        if (!user?.password) {
-          return null;
+        if (!user?.password || typeof user.password !== "string") {
+          return null; // User not found or password not set
         }
 
-        // At this point, we know user.password is not null
-        const hashedPassword = user.password as string;
+        const hashedPassword: string = user.password as string;
 
         // Verify password
-        const passwordMatch = await verifyPassword(
-          credentials.password as string,
-          hashedPassword,
-        );
+        const passwordMatch = await verifyPassword(password, hashedPassword);
 
         if (!passwordMatch) {
           return null;

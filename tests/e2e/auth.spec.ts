@@ -1,4 +1,4 @@
-import { waitForPageLoad } from "@/tests/e2e/utils/page-helpers";
+import { login, waitForPageLoad } from "@/tests/e2e/utils/page-helpers";
 import { expect, test } from "@playwright/test";
 
 test.describe("Authentication Tests", () => {
@@ -56,4 +56,30 @@ test.describe("Authentication Tests", () => {
       expect(isOnSignIn || signInVisible || is404).toBeTruthy();
     });
   }
+
+  test("should login as test user with email and password", async ({
+    page,
+  }) => {
+    await login(page, "USER");
+
+    // Verify we're logged in by checking the URL contains a protected route
+    await expect(page).toHaveURL(/\/(en|es)\/(dashboard|$)/);
+
+    // Check for user session indication (sign out button should be visible)
+    const signOutButton = page.locator('button:has-text("Sign Out")');
+    await expect(signOutButton).toBeVisible({ timeout: 10000 });
+  });
+
+  test("should login as admin user with email and password", async ({
+    page,
+  }) => {
+    await login(page, "ADMIN");
+
+    // Verify we're logged in and redirected to dashboard
+    await expect(page).toHaveURL(/\/(en|es)\/dashboard/);
+
+    // Check for dashboard title or admin-specific content
+    const dashboardHeading = page.locator("h1").first();
+    await expect(dashboardHeading).toBeVisible({ timeout: 10000 });
+  });
 });

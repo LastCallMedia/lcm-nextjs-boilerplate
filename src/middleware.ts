@@ -88,6 +88,7 @@ export function middleware(request: NextRequest) {
 
   // If the request is for a public route, allow it
   if (
+    pathname === `/${pathnameLocale}` ||
     pathname === `/${pathnameLocale}/login` ||
     pathname.startsWith(`/${pathnameLocale}/contact`) ||
     pathname.startsWith(`/${pathnameLocale}/about`) ||

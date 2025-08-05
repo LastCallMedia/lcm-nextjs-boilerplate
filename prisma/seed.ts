@@ -13,6 +13,7 @@ async function main() {
     { name: "Fawn", email: "fawn@lastcallmedia.com" },
     { name: "Gregg", email: "gregg@lastcallmedia.com" },
     { name: "Nazmul", email: "nazmul.huda@lastcallmedia.com" },
+    { name: "Admin", email: "admin@lascallmedia.com" },
   ];
   for (const admin of adminUsers) {
     await db.user.upsert({
