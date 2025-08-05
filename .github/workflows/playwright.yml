@@ -66,6 +66,7 @@ jobs:
       - name: Setup test database
         run: |
           pnpm prisma db push --force-reset
+          pnpm db:seed
         env:
           DATABASE_URL: postgresql://test-user:test-password@localhost:5432/test-db
 
