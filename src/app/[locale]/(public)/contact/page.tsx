@@ -1,9 +1,6 @@
 import { Building2, Mail, PhoneIcon } from "lucide-react";
-import { Button } from "~/_components/ui/button";
-import { Input } from "~/_components/ui/input";
-import { Label } from "~/_components/ui/label";
 import type { Metadata } from "next";
-import { Textarea } from "~/_components";
+import { ContactForm } from "~/_components/contact/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact | LCM Next.js Boilerplate",
@@ -121,57 +118,7 @@ export default function ContactPage() {
             </dl>
           </div>
         </div>
-        <form
-          action="#"
-          method="POST"
-          className="px-6 pt-20 pb-24 sm:pb-32 lg:px-8 lg:py-48"
-        >
-          <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
-            <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-              <div>
-                <Label htmlFor="firstName">First Name *</Label>
-                <div className="mt-2.5">
-                  <Input id="firstName" placeholder="Your first name" />
-                </div>
-              </div>
-              <div>
-                <Label htmlFor="lastName">Last Name *</Label>
-                <div className="mt-2.5">
-                  <Input id="lastName" placeholder="Your last name" />
-                </div>
-              </div>
-              <div className="sm:col-span-2">
-                <Label htmlFor="email">Email *</Label>
-                <div className="mt-2.5">
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="your.email@company.com"
-                  />
-                </div>
-              </div>
-              <div className="sm:col-span-2">
-                <Label htmlFor="phone-number">Phone Number *</Label>
-                <div className="mt-2.5">
-                  <Input
-                    id="phone-number"
-                    type="tel"
-                    placeholder="(123) 456-7890"
-                  />
-                </div>
-              </div>
-              <div className="sm:col-span-2">
-                <Label htmlFor="message">Message *</Label>
-                <div className="mt-2.5">
-                  <Textarea id="message" placeholder="Your message..." />
-                </div>
-              </div>
-            </div>
-            <div className="mt-8 flex justify-end">
-              <Button>Send Message</Button>
-            </div>
-          </div>
-        </form>
+        <ContactForm />
       </div>
     </div>
   );
