@@ -15,7 +15,8 @@ function formatPhoneNumber(phoneNumberString: string) {
   const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
 
   // US numbers
-  const usMatch = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+  const usRegex = /^(1|)?(\d{3})(\d{3})(\d{4})$/;
+  const usMatch = usRegex.exec(cleaned);
   if (usMatch) {
     const intlCode = usMatch[1] ? "+1 " : "";
     return [intlCode, "(", usMatch[2], ") ", usMatch[3], "-", usMatch[4]].join(
@@ -136,7 +137,7 @@ export function ContactForm() {
                 id="phoneNumber"
                 type="tel"
                 {...register("phoneNumber", {
-                  onChange: (e) => {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                     const formatted = formatPhoneNumber(e.target.value);
                     if (formatted) {
                       e.target.value = formatted;
