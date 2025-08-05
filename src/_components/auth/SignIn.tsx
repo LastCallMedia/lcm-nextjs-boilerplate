@@ -2,17 +2,17 @@
 
 import { FormattedMessage } from "react-intl";
 import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
-import LoginForm from "~/_components/auth/LoginForm";
+import EnhancedLoginForm from "~/_components/auth/EnhancedLoginForm";
 
 const isGoogleConfigured =
   String(process.env.NEXT_PUBLIC_AUTH_GOOGLE_ENABLED).toLowerCase() === "true";
 
 const SignIn = () => {
-  // Show login form with email magic link and Google option
+  // Show enhanced login form with email/password, magic link, and Google options
   return (
     <div className="grid gap-4">
-      {/* Magic Link Email Form */}
-      <LoginForm />
+      {/* Enhanced Login Form with email/password and magic link */}
+      <EnhancedLoginForm />
 
       {/* Divider */}
       <div className="relative">

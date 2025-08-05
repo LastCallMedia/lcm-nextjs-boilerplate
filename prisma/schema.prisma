@@ -65,6 +65,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  password      String?   // For email/password authentication
   role          Role      @default(USER)
   language      String?   @default("en") // User's preferred language (en, es, etc.)
   accounts      Account[]
