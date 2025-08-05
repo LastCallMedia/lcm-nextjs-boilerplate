@@ -49,53 +49,89 @@ export const emailRouter = createTRPCRouter({
    */
   sendContactForm: publicProcedure
     .input(contactFormSchema)
-    .mutation(async ({ input, ctx }) => {
+    .mutation(async ({ input }) => {
       try {
         // Create email transporter
         const transporter = createEmailTransporter();
 
         // Email content for the business/admin
         const adminEmailHtml = `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #333; border-bottom: 2px solid #3b82f6; padding-bottom: 10px;">
-              New Contact Form Submission
-            </h2>
-            <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h3 style="color: #374151; margin-top: 0;">Contact Information</h3>
-              <p><strong>Name:</strong> ${input.firstName} ${input.lastName}</p>
-              <p><strong>Email:</strong> <a href="mailto:${input.email}">${input.email}</a></p>
-              <p><strong>Phone:</strong> <a href="tel:${input.phoneNumber}">${input.phoneNumber}</a></p>
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden;">
+            
+            <!-- Header with Logo -->
+            <div style="background: #f8fafc; padding: 24px; text-align: center; border-bottom: 1px solid #e5e7eb;">
+              <div style="margin-bottom: 12px;">
+                <span style="font-size: 24px; font-weight: 700; color: #4ecdc4;">LCM</span>
+              </div>
+              <h1 style="margin: 0; font-size: 20px; font-weight: 600; color: #2d2d2d;">New Contact Submission</h1>
             </div>
-            <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h3 style="color: #374151; margin-top: 0;">Message</h3>
-              <p style="white-space: pre-wrap; line-height: 1.6;">${input.message}</p>
+            
+            <!-- Content -->
+            <div style="padding: 32px;">
+              
+              <!-- Contact Information -->
+              <div style="margin-bottom: 24px;">
+                <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                  <div style="width: 48px; height: 48px; background: #4ecdc4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
+                    <span style="color: white; font-weight: 600; font-size: 18px;">${input.firstName.charAt(0)}${input.lastName.charAt(0)}</span>
+                  </div>
+                  <div>
+                    <h2 style="margin: 0; font-size: 18px; font-weight: 600; color: #2d2d2d;">${input.firstName} ${input.lastName}</h2>
+                  </div>
+                </div>
+                
+                <div style="background: #f8fafc; border-radius: 8px; padding: 20px; border-left: 3px solid #4ecdc4;">
+                  <div style="margin-bottom: 12px;">
+                    <span style="font-size: 14px; font-weight: 500; color: #6b7280;">Email</span>
+                    <p style="margin: 4px 0 0 0; color: #2d2d2d;"><a href="mailto:${input.email}" style="color: #20605c; text-decoration: none;">${input.email}</a></p>
+                  </div>
+                  <div>
+                    <span style="font-size: 14px; font-weight: 500; color: #6b7280;">Phone</span>
+                    <p style="margin: 4px 0 0 0; color: #2d2d2d;"><a href="tel:${input.phoneNumber}" style="color: #20605c; text-decoration: none;">${input.phoneNumber}</a></p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Message -->
+              <div style="margin-bottom: 24px;">
+                <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 600; color: #2d2d2d;">Message</h3>
+                <div style="background: #f8fafc; border-radius: 8px; padding: 20px; border: 1px solid #e5e7eb;">
+                  <p style="margin: 0; color: #2d2d2d; line-height: 1.6; white-space: pre-wrap;">${input.message}</p>
+                </div>
+              </div>
+              
             </div>
-            <div style="margin-top: 30px; padding: 15px; background-color: #eff6ff; border-left: 4px solid #3b82f6;">
-              <p style="margin: 0; font-size: 14px; color: #6b7280;">
-                <strong>Submitted:</strong> ${new Date().toLocaleString()}<br>
-                <strong>User Agent:</strong> ${ctx.headers.get("user-agent") ?? "Unknown"}
+            
+            <!-- Footer -->
+            <div style="background: #f8fafc; padding: 16px 32px; border-top: 1px solid #e5e7eb; text-align: center;">
+              <p style="margin: 0; color: #6b7280; font-size: 14px;">
+                Received ${new Date().toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
               </p>
             </div>
+            
           </div>
         `;
 
         // Send email to admin/business
         await transporter.sendMail({
-          from: '"Contact Form" <noreply@lcm-nextjs-boilerplate.com>',
-          to: "admin@lcm-nextjs-boilerplate.com", // Change this to your actual business email
-          subject: `New Contact Form Submission from ${input.firstName} ${input.lastName}`,
+          from: '"Contact Form" <contact@localhost>',
+          to: "admin@lcm-nextjs-boilerplate.com",
+          subject: `Contact Form Submission: ${input.firstName} ${input.lastName}`,
           html: adminEmailHtml,
           text: `
-New Contact Form Submission
-
 Name: ${input.firstName} ${input.lastName}
 Email: ${input.email}
 Phone: ${input.phoneNumber}
 
-Message:
 ${input.message}
 
-Submitted: ${new Date().toLocaleString()}
+${new Date().toLocaleString()}
           `.trim(),
         });
 
