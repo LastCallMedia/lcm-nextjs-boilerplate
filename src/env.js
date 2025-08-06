@@ -16,6 +16,7 @@ export const env = createEnv({
     AUTH_URL: z.string().url(),
     EMAIL_SERVER: z.string().optional(),
     EMAIL_FROM: z.string().email().optional(),
+    RESEND_API_KEY: z.string().optional(),
     DATABASE_URL: z.string().url(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
