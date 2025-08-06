@@ -20,7 +20,9 @@
     "signOut": "Sign Out",
     "account": "Account",
     "profile": "Profile",
-    "settings": "Settings"
+    "settings": "Settings",
+    "about": "About",
+    "contact": "Contact"
   },
   "home": {
     "title": "Hello, {name}ers!!",
