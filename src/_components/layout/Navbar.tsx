@@ -20,6 +20,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { t } from "~/i18n/messages";
 import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
 import { LanguageSwitcher } from "~/_components/i18n";
 import { ThemeModeToggle } from "~/_components/theme";
@@ -138,7 +139,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
             <div className="flex items-center gap-4">
               <NavigationMenuItem>
                 <NavigationMenuTrigger>
-                  <FormattedMessage id="navigation.menu" />
+                  <FormattedMessage id={t("navigation.menu")} />
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[200px] gap-4">
@@ -166,7 +167,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>
                     <Shield className="mr-1 h-4 w-4" />
-                    <FormattedMessage id="navigation.account" />
+                    <FormattedMessage id={t("navigation.account")} />
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[280px] gap-3 p-4">
@@ -203,7 +204,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                     className={navigationMenuTriggerStyle()}
                   >
                     <LogIn className="mr-2 h-4 w-4" />
-                    <FormattedMessage id="navigation.signIn" />
+                    <FormattedMessage id={t("navigation.signIn")} />
                   </Link>
                 </NavigationMenuItem>
               )}
@@ -225,7 +226,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                     }
                   >
                     <LogOut className="mr-2 h-4 w-4" />
-                    <FormattedMessage id="navigation.signOut" />
+                    <FormattedMessage id={t("navigation.signOut")} />
                   </Button>
                 </NavigationMenuItem>
               )}
@@ -349,7 +350,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                             onClick={() => close()}
                           >
                             <LogIn className="h-5 w-5" />
-                            <FormattedMessage id="navigation.signIn" />
+                            <FormattedMessage id={t("navigation.signIn")} />
                           </Link>
                         )}
                         {!session && isGoogleConfigured && (
@@ -366,7 +367,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
                             }
                           >
                             <LogOut className="h-5 w-5" />
-                            <FormattedMessage id="navigation.signOut" />
+                            <FormattedMessage id={t("navigation.signOut")} />
                           </button>
                         )}
                       </div>

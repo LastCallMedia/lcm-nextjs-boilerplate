@@ -2,6 +2,7 @@
 
 import { FormattedMessage } from "react-intl";
 import EnhancedLoginForm from "~/_components/auth/EnhancedLoginForm";
+import { t } from "~/i18n/messages";
 import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
 
 const isGoogleConfigured =
@@ -21,7 +22,7 @@ const SignIn = () => {
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background text-muted-foreground px-2">
-            <FormattedMessage id="auth.orContinueWith" />
+            <FormattedMessage id={t("auth.orContinueWith")} />
           </span>
         </div>
       </div>

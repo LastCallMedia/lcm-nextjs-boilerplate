@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "~/_components/ui/card";
 import { auth } from "~/server/auth";
-import { getMessages } from "~/i18n/messages";
+import { getMessages, t } from "~/i18n/messages";
 
 export const metadata: Metadata = {
   title: "Login | LCM Next.js Boilerplate",
@@ -37,10 +37,10 @@ export default async function LoginPage({
         <Card>
           <CardHeader className="space-y-1">
             <CardTitle className="text-center text-2xl">
-              {messages["login.title"]}
+              {messages[t("login.title")]}
             </CardTitle>
             <CardDescription className="text-center">
-              {messages["login.description"]}
+              {messages[t("login.description")]}
             </CardDescription>
           </CardHeader>
           <CardContent>

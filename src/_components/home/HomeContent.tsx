@@ -1,13 +1,14 @@
 "use client";
 
 import { FormattedMessage } from "react-intl";
+import { t } from "~/i18n/messages";
 
 export function HomeContent() {
   return (
     <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
       <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
         <FormattedMessage
-          id="home.title"
+          id={t("home.title")}
           values={{ name: <span className="text-glacier">LCM</span> }}
         />
       </h1>
@@ -16,5 +17,5 @@ export function HomeContent() {
 }
 
 export function SeeAllPostsButton() {
-  return <FormattedMessage id="home.seeAllPosts" />;
+  return <FormattedMessage id={t("home.seeAllPosts")} />;
 }

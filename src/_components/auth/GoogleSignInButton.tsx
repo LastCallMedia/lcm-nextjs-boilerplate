@@ -2,6 +2,7 @@
 import { signIn } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { FormattedMessage } from "react-intl";
+import { t } from "~/i18n/messages";
 import { Button } from "~/_components/ui/button";
 import {
   Tooltip,
@@ -30,7 +31,7 @@ const GoogleSignInButton = ({
               className="w-full cursor-not-allowed opacity-50"
             >
               <FormattedMessage
-                id="auth.signInWith"
+                id={t("auth.signInWith")}
                 values={{ provider: "Google" }}
               />
             </Button>
@@ -38,10 +39,10 @@ const GoogleSignInButton = ({
           <TooltipContent>
             <div className="text-center">
               <div>
-                <FormattedMessage id="auth.googleNotConfigured" />
+                <FormattedMessage id={t("auth.googleNotConfigured")} />
               </div>
               <div>
-                <FormattedMessage id="auth.googleConfigMessage" />
+                <FormattedMessage id={t("auth.googleConfigMessage")} />
               </div>
             </div>
           </TooltipContent>
@@ -59,7 +60,10 @@ const GoogleSignInButton = ({
         signIn("google", { callbackUrl: `/${safeLocale}/dashboard` })
       }
     >
-      <FormattedMessage id="auth.signInWith" values={{ provider: "Google" }} />
+      <FormattedMessage
+        id={t("auth.signInWith")}
+        values={{ provider: "Google" }}
+      />
     </Button>
   );
 };

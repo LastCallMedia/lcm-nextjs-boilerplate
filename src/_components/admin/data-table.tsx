@@ -19,6 +19,7 @@ import {
 } from "~/_components/ui/select";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { FormattedMessage } from "react-intl";
+import { t } from "~/i18n/messages";
 
 function renderCellValue(value: unknown): React.ReactNode {
   if (value === null || value === undefined) return "";
@@ -147,7 +148,7 @@ export function DataTable<T, TSortField extends string = string>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  <FormattedMessage id="dataTable.loading" />
+                  <FormattedMessage id={t("dataTable.loading")} />
                 </TableCell>
               </TableRow>
             ) : isSearching ? (
@@ -156,7 +157,7 @@ export function DataTable<T, TSortField extends string = string>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  <FormattedMessage id="dataTable.searching" />
+                  <FormattedMessage id={t("dataTable.searching")} />
                 </TableCell>
               </TableRow>
             ) : data.length ? (
@@ -199,7 +200,7 @@ export function DataTable<T, TSortField extends string = string>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  <FormattedMessage id="dataTable.noResults" />
+                  <FormattedMessage id={t("dataTable.noResults")} />
                 </TableCell>
               </TableRow>
             )}
@@ -217,7 +218,7 @@ export function DataTable<T, TSortField extends string = string>({
         <div className="flex items-center space-x-2">
           <p className="text-muted-foreground text-sm" aria-live="polite">
             <FormattedMessage
-              id="dataTable.showingResults"
+              id={t("dataTable.showingResults")}
               values={{
                 from: (pagination.page - 1) * pagination.pageSize + 1,
                 to: Math.min(
@@ -233,7 +234,7 @@ export function DataTable<T, TSortField extends string = string>({
         <div className="flex items-center space-x-2">
           <div className="flex items-center space-x-2">
             <label htmlFor="page-size-select" className="text-sm font-medium">
-              <FormattedMessage id="dataTable.rowsPerPage" />
+              <FormattedMessage id={t("dataTable.rowsPerPage")} />
             </label>
             <Select
               value={pagination.pageSize.toString()}
@@ -263,7 +264,7 @@ export function DataTable<T, TSortField extends string = string>({
           <div className="flex items-center space-x-2">
             <p className="text-sm font-medium">
               <FormattedMessage
-                id="dataTable.pageOf"
+                id={t("dataTable.pageOf")}
                 values={{
                   page: pagination.page,
                   totalPages: pagination.totalPages,
@@ -283,7 +284,7 @@ export function DataTable<T, TSortField extends string = string>({
               >
                 <ChevronLeftIcon className="h-4 w-4" />
                 <span className="sr-only">
-                  <FormattedMessage id="dataTable.goToPrevPage" />
+                  <FormattedMessage id={t("dataTable.goToPrevPage")} />
                 </span>
               </Button>
               <Button
@@ -298,7 +299,7 @@ export function DataTable<T, TSortField extends string = string>({
               >
                 <ChevronRightIcon className="h-4 w-4" />
                 <span className="sr-only">
-                  <FormattedMessage id="dataTable.goToNextPage" />
+                  <FormattedMessage id={t("dataTable.goToNextPage")} />
                 </span>
               </Button>
             </div>

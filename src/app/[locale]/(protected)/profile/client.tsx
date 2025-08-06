@@ -17,6 +17,7 @@ interface ProfileClientProps {
   messages: Record<string, string>;
 }
 import { FormattedMessage } from "react-intl";
+import { t } from "~/i18n/messages";
 import { useSession } from "next-auth/react";
 import { useState, useRef } from "react";
 import { api } from "~/trpc/react";
@@ -50,7 +51,7 @@ export default function ProfileClient({ user, messages }: ProfileClientProps) {
       }
       toast.success(
         <FormattedMessage
-          id="profile.updateSuccess"
+          id={t("profile.updateSuccess")}
           defaultMessage="Profile updated successfully"
         />,
       );
@@ -65,7 +66,7 @@ export default function ProfileClient({ user, messages }: ProfileClientProps) {
       toast.error(
         err.message ?? (
           <FormattedMessage
-            id="profile.updateError"
+            id={t("profile.updateError")}
             defaultMessage="Failed to update profile. Please try again."
           />
         ),
@@ -104,13 +105,13 @@ export default function ProfileClient({ user, messages }: ProfileClientProps) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FormattedMessage
-              id="profile.overview"
+              id={t("profile.overview")}
               defaultMessage="Profile Overview"
             />
           </CardTitle>
           <CardDescription>
             <FormattedMessage
-              id="profile.overviewDescription"
+              id={t("profile.overviewDescription")}
               defaultMessage="Your current profile information"
             />
           </CardDescription>
@@ -132,7 +133,7 @@ export default function ProfileClient({ user, messages }: ProfileClientProps) {
               <h3 className="font-medium">
                 {name ?? user?.name ?? (
                   <FormattedMessage
-                    id="profile.anonymous"
+                    id={t("profile.anonymous")}
                     defaultMessage="Anonymous User"
                   />
                 )}
@@ -144,7 +145,7 @@ export default function ProfileClient({ user, messages }: ProfileClientProps) {
             <div>
               <Label className="text-muted-foreground text-xs">
                 <FormattedMessage
-                  id="profile.userId"
+                  id={t("profile.userId")}
                   defaultMessage="User ID"
                 />
               </Label>
@@ -163,13 +164,13 @@ export default function ProfileClient({ user, messages }: ProfileClientProps) {
         <CardHeader>
           <CardTitle>
             <FormattedMessage
-              id="profile.settings"
+              id={t("profile.settings")}
               defaultMessage="Profile Settings"
             />
           </CardTitle>
           <CardDescription>
             <FormattedMessage
-              id="profile.settingsDescription"
+              id={t("profile.settingsDescription")}
               defaultMessage="Update your profile information and avatar"
             />
           </CardDescription>
@@ -180,7 +181,7 @@ export default function ProfileClient({ user, messages }: ProfileClientProps) {
               <div className="space-y-2">
                 <Label htmlFor="name">
                   <FormattedMessage
-                    id="profile.fullName"
+                    id={t("profile.fullName")}
                     defaultMessage="Full Name"
                   />
                 </Label>
@@ -197,7 +198,10 @@ export default function ProfileClient({ user, messages }: ProfileClientProps) {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">
-                  <FormattedMessage id="profile.email" defaultMessage="Email" />
+                  <FormattedMessage
+                    id={t("profile.email")}
+                    defaultMessage="Email"
+                  />
                 </Label>
                 <Input
                   id="email"
@@ -213,7 +217,7 @@ export default function ProfileClient({ user, messages }: ProfileClientProps) {
             <div className="space-y-2">
               <Label htmlFor="avatar">
                 <FormattedMessage
-                  id="profile.picture"
+                  id={t("profile.picture")}
                   defaultMessage="Avatar Image"
                 />
               </Label>
@@ -252,14 +256,14 @@ export default function ProfileClient({ user, messages }: ProfileClientProps) {
                       />
                       <span className="truncate select-none">
                         <FormattedMessage
-                          id="profile.chooseFile"
+                          id={t("profile.chooseFile")}
                           defaultMessage="Choose File"
                         />
                         {avatarRef.current?.files?.[0]?.name
                           ? `: ${avatarRef.current.files[0].name}`
                           : ` `}
                         <FormattedMessage
-                          id="profile.noFile"
+                          id={t("profile.noFile")}
                           defaultMessage="No file chosen"
                         />
                       </span>
@@ -271,17 +275,20 @@ export default function ProfileClient({ user, messages }: ProfileClientProps) {
 
             <div className="flex justify-end space-x-2">
               <Button variant="outline" type="reset" disabled={loading}>
-                <FormattedMessage id="profile.cancel" defaultMessage="Cancel" />
+                <FormattedMessage
+                  id={t("profile.cancel")}
+                  defaultMessage="Cancel"
+                />
               </Button>
               <Button type="submit" disabled={loading}>
                 {loading ? (
                   <FormattedMessage
-                    id="common.loading"
+                    id={t("common.loading")}
                     defaultMessage="Saving..."
                   />
                 ) : (
                   <FormattedMessage
-                    id="profile.save"
+                    id={t("profile.save")}
                     defaultMessage="Save Changes"
                   />
                 )}
