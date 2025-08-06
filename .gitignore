@@ -48,6 +48,7 @@ yarn-error.log*
 
 # playwright
 /playwright-report/
+/tests/e2e/.auth/
 /prisma/generated/
 
 # generated prisma client

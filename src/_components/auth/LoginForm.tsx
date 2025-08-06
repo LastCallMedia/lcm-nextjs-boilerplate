@@ -5,11 +5,11 @@ import { signIn } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { t } from "~/i18n/messages";
 import { Alert, AlertDescription } from "~/_components/ui/alert";
 import { Button } from "~/_components/ui/button";
 import { Input } from "~/_components/ui/input";
 import { Label } from "~/_components/ui/label";
+import { t } from "~/i18n/messages";
 import { getSafeLocale } from "~/lib/utils";
 
 export default function LoginForm() {
@@ -54,7 +54,11 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-4">
+    <form
+      data-testid="login-form"
+      onSubmit={handleSubmit}
+      className="grid gap-4"
+    >
       <div className="grid gap-2">
         <Label htmlFor="email">
           <FormattedMessage id={t("auth.email")} />
@@ -93,7 +97,10 @@ export default function LoginForm() {
       </Button>
 
       {status === "success" && (
-        <Alert className="border-green-200 bg-green-50 text-green-800">
+        <Alert
+          data-testid="success-alert"
+          className="border-green-200 bg-green-50 text-green-800"
+        >
           <CheckCircle className="h-4 w-4" />
           <AlertDescription>{message}</AlertDescription>
         </Alert>

@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import path from "path";
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -11,12 +12,16 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI ? "dot" : "html",
+  // Global setup only - teardown will be handled in the same file
+  globalSetup: path.resolve("./tests/e2e/global-auth-setup.ts"),
 
   use: {
     baseURL: "http://localhost:3000",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
+    // Use the stored authentication state for all tests
+    storageState: "tests/e2e/.auth/user.json",
   },
 
   projects: [
