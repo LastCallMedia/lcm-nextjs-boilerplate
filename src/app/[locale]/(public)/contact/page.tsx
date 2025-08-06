@@ -1,15 +1,6 @@
+import { Building2, Mail, PhoneIcon } from "lucide-react";
 import type { Metadata } from "next";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/_components/ui/card";
-import { Button } from "~/_components/ui/button";
-import { Input } from "~/_components/ui/input";
-import { Label } from "~/_components/ui/label";
-import { Badge } from "~/_components/ui/badge";
+import { ContactForm } from "~/_components/contact/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact | LCM Next.js Boilerplate",
@@ -18,182 +9,116 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="container mx-auto py-8">
-      <div className="mb-12 text-center">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          Let&apos;s build something amazing together.
-        </h1>
-        <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-lg">
-          Ready to explore, innovate, and scale with confidence? We&apos;ll
-          guide you the entire way. Get in touch below.
-        </p>
-      </div>
-
-      <div className="grid gap-8 lg:grid-cols-3">
-        {/* Contact Form */}
-        <div className="lg:col-span-2">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                Send a Message
-                <Badge variant="outline">Public</Badge>
-              </CardTitle>
-              <CardDescription>
-                Fill out the form below and we&apos;ll get back to you soon
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name *</Label>
-                  <Input
-                    id="firstName"
-                    placeholder="Your first name"
-                    disabled
+    <div className="bg-background relative isolate h-full">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
+        <div className="relative px-6 pt-24 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48">
+          <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
+            <div className="bg-muted ring-border absolute inset-y-0 left-0 -z-10 w-full overflow-hidden ring-1 lg:w-1/2">
+              <svg
+                aria-hidden="true"
+                className="stroke-border absolute inset-0 size-full mask-[radial-gradient(100%_100%_at_top_right,white,transparent)] dark:mask-[radial-gradient(100%_100%_at_top_right,black,transparent)]"
+              >
+                <defs>
+                  <pattern
+                    x="100%"
+                    y={-1}
+                    id="83fd4e5a-9d52-42fc-97b6-718e5d7ee527"
+                    width={200}
+                    height={200}
+                    patternUnits="userSpaceOnUse"
+                  >
+                    <path d="M130 200V.5M.5 .5H200" fill="none" />
+                  </pattern>
+                </defs>
+                <rect
+                  width="100%"
+                  height="100%"
+                  strokeWidth={0}
+                  className="fill-background"
+                />
+                <svg x="100%" y={-1} className="fill-muted/50 overflow-visible">
+                  <path d="M-470.5 0h201v201h-201Z" strokeWidth={0} />
+                </svg>
+                <rect
+                  fill="url(#83fd4e5a-9d52-42fc-97b6-718e5d7ee527)"
+                  width="100%"
+                  height="100%"
+                  strokeWidth={0}
+                />
+              </svg>
+              <div
+                aria-hidden="true"
+                className="absolute top-[calc(100%-13rem)] -left-56 hidden transform-gpu blur-3xl lg:top-[calc(50%-7rem)] lg:left-[max(-14rem,calc(100%-59rem))]"
+              >
+                <div
+                  style={{
+                    clipPath:
+                      "polygon(74.1% 56.1%, 100% 38.6%, 97.5% 73.3%, 85.5% 100%, 80.7% 98.2%, 72.5% 67.7%, 60.2% 37.8%, 52.4% 32.2%, 47.5% 41.9%, 45.2% 65.8%, 27.5% 23.5%, 0.1% 35.4%, 17.9% 0.1%, 27.6% 23.5%, 76.1% 2.6%, 74.1% 56.1%)",
+                  }}
+                  className="from-primary/20 to-accent/20 aspect-1155/678 w-288.75 bg-gradient-to-br opacity-60"
+                />
+              </div>
+            </div>
+            <h2 className="text-foreground text-4xl font-semibold tracking-tight text-pretty sm:text-5xl">
+              Let&apos;s build something amazing together.
+            </h2>
+            <p className="text-muted-foreground mt-6 text-lg/8">
+              Ready to explore, innovate, and scale with confidence? We&apos;ll
+              guide you the entire way. Get in touch below.
+            </p>
+            <dl className="text-muted-foreground mt-10 space-y-4 text-base/7">
+              <div className="flex gap-x-4">
+                <dt className="flex-none">
+                  <span className="sr-only">Address</span>
+                  <Building2
+                    aria-hidden="true"
+                    className="text-muted-foreground/60 h-7 w-6"
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name *</Label>
-                  <Input id="lastName" placeholder="Your last name" disabled />
-                </div>
+                </dt>
+                <dd>
+                  545 Mavis Island
+                  <br />
+                  Chicago, IL 99191
+                </dd>
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email">Business Email *</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="your.email@company.com"
-                  disabled
-                />
+              <div className="flex gap-x-4">
+                <dt className="flex-none">
+                  <span className="sr-only">Telephone</span>
+                  <PhoneIcon
+                    aria-hidden="true"
+                    className="text-muted-foreground/60 h-7 w-6"
+                  />
+                </dt>
+                <dd>
+                  <a
+                    href="tel:+1 (555) 234-5678"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    +1 (555) 123-4567
+                  </a>
+                </dd>
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="organization">Organization *</Label>
-                <Input
-                  id="organization"
-                  placeholder="Your company or organization"
-                  disabled
-                />
+              <div className="flex gap-x-4">
+                <dt className="flex-none">
+                  <span className="sr-only">Email</span>
+                  <Mail
+                    aria-hidden="true"
+                    className="text-muted-foreground/60 h-7 w-6"
+                  />
+                </dt>
+                <dd>
+                  <a
+                    href="mailto:hello@example.com"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    hello@lcm-nextjs-boilerplate.com
+                  </a>
+                </dd>
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="hearAbout">How did you hear about us? *</Label>
-                <Input
-                  id="hearAbout"
-                  placeholder="Search engine, referral, social media, etc."
-                  disabled
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="message">
-                  Tell us about your project or challenge *
-                </Label>
-                <textarea
-                  id="message"
-                  className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex min-h-[120px] w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-                  placeholder="e.g., tech stack, timeline, goals, specific requirements..."
-                  disabled
-                />
-              </div>
-
-              <Button className="w-full" disabled>
-                Send Message
-              </Button>
-
-              <div className="bg-muted/50 rounded-lg border p-3">
-                <p className="text-muted-foreground text-sm">
-                  <strong>Demo Note:</strong> This contact form is for
-                  demonstration purposes only. In a real application, you would
-                  implement form handling and email sending functionality.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+            </dl>
+          </div>
         </div>
-
-        {/* Contact Information */}
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Other ways to contact us</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h4 className="mb-1 font-medium">Call:</h4>
-                <p className="text-muted-foreground mb-2 text-sm">
-                  +1 (555) 123-4567
-                </p>
-                <p className="text-muted-foreground text-xs">
-                  We&apos;re ready to help you anytime within business hours.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="mb-1 font-medium">Email:</h4>
-                <p className="text-muted-foreground mb-2 text-sm">
-                  hello@lcm-nextjs-boilerplate.com
-                </p>
-                <p className="text-muted-foreground text-xs">
-                  We&apos;ll do our best to reply within one business day.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="mb-1 font-medium">Support:</h4>
-                <p className="text-muted-foreground mb-2 text-sm">
-                  support@lcm-nextjs-boilerplate.com
-                </p>
-                <p className="text-muted-foreground text-xs">
-                  For technical support and bug reports.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="mb-1 font-medium">Partnerships:</h4>
-                <p className="text-muted-foreground mb-2 text-sm">
-                  partnerships@lcm-nextjs-boilerplate.com
-                </p>
-                <p className="text-muted-foreground text-xs">
-                  Talk to our team about collaboration opportunities.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>About Our Process</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground text-sm">
-                We build digital solutions that scale with certainty through
-                empathy-driven design and agile development practices.
-              </p>
-              <div className="space-y-3">
-                <div>
-                  <h5 className="text-sm font-medium">Discovery & Planning</h5>
-                  <p className="text-muted-foreground text-xs">
-                    We start by understanding your goals and requirements.
-                  </p>
-                </div>
-                <div>
-                  <h5 className="text-sm font-medium">Design & Development</h5>
-                  <p className="text-muted-foreground text-xs">
-                    Iterative development with continuous feedback.
-                  </p>
-                </div>
-                <div>
-                  <h5 className="text-sm font-medium">Launch & Support</h5>
-                  <p className="text-muted-foreground text-xs">
-                    Ongoing support to ensure your success.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <ContactForm />
       </div>
     </div>
   );
