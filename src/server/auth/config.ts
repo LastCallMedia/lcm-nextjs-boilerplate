@@ -51,6 +51,12 @@ const buildProviders = () => {
         from: process.env.EMAIL_FROM,
         async sendVerificationRequest({ identifier: email, url, provider }) {
           try {
+            if (!resend) {
+              throw new Error(
+                "Resend client not initialized. Check RESEND_API_KEY configuration.",
+              );
+            }
+
             const { host } = new URL(url);
             const html = await render(
               MagicLinkEmail({

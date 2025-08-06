@@ -3,8 +3,9 @@ import { env } from "~/env.js";
 
 /**
  * Resend client instance for sending emails
+ * Only initialize if API key is available to prevent build errors
  */
-export const resend = new Resend(env.RESEND_API_KEY);
+export const resend = env.RESEND_API_KEY ? new Resend(env.RESEND_API_KEY) : null;
 
 /**
  * Default email sender configuration
