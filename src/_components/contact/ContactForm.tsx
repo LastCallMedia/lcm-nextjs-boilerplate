@@ -144,6 +144,11 @@ export function ContactForm() {
                     }
                   },
                 })}
+                onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                  // Remove any non-numeric characters except spaces, parentheses, hyphens, and plus
+                  const target = e.target as HTMLInputElement;
+                  target.value = target.value.replace(/[^0-9\s()\-+]/g, "");
+                }}
                 placeholder="(123) 456-7890"
                 aria-invalid={!!errors.phoneNumber}
               />
