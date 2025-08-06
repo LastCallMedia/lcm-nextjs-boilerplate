@@ -1,6 +1,7 @@
+import { t } from "~/i18n/messages";
+import { getMessages } from "~/i18n";
 import { auth } from "~/server/auth";
 import { redirect } from "next/navigation";
-import { getMessages } from "~/i18n";
 import NextRenderingDocsLink from "~/app/[locale]/posts/_components/next-docs-link";
 import ExampleCsrClient from "~/app/[locale]/posts/example-csr/client";
 
@@ -14,14 +15,16 @@ export default async function Page({
   if (!session?.user) {
     redirect(`/login?callbackUrl=/${locale}/posts/example-csr`);
   }
+
   const messages = getMessages((locale || "en") as "en" | "es");
+
   return (
     <div className="m-auto flex max-w-2xl flex-col gap-8">
       <h1 className="m-4 text-center text-2xl font-bold">
-        {messages["posts.examples.csrPage.title"]}
+        {messages[t("posts.examples.csrPage.title")]}
       </h1>
-      <p>{messages["posts.examples.csrPage.description1"]}</p>
-      <p>{messages["posts.examples.csrPage.description2"]}</p>
+      <p>{messages[t("posts.examples.csrPage.description1")]} </p>
+      <p>{messages[t("posts.examples.csrPage.description2")]} </p>
       <NextRenderingDocsLink />
       <ExampleCsrClient />
     </div>

@@ -79,14 +79,14 @@ export default async function MyComponent() {
 
 ```tsx
 "use client";
-
 import { FormattedMessage, FormattedDate } from "react-intl";
+import { t } from "~/i18n/messages";
 
 export function MyComponent() {
   return (
     <div>
       <h1>
-        <FormattedMessage id="home.title" values={{ name: "LCM" }} />
+        <FormattedMessage id={t("home.title")} values={{ name: "LCM" }} />
       </h1>
       <p>
         <FormattedDate value={new Date()} />
@@ -128,7 +128,7 @@ export const localeNames: Record<Locale, string> = {
 ## Adding New Translation Keys
 
 1. Add the key to all locale files in `src/i18n/messages/`
-2. Use the key with `FormattedMessage` or `useIntl` hook
+2. Use the key with `FormattedMessage` and `t()` or with the `useIntl` hook
 
 Example:
 
@@ -142,8 +142,7 @@ Example:
 ```
 
 ```tsx
-// In component
-<FormattedMessage id="common.welcome" />
+<FormattedMessage id={t("common.welcome")} />
 ```
 
 ## Date and Time Formatting
