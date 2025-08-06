@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { type ChangeEvent, useState } from "react";
 import { Button } from "~/_components/ui/button";
 import {
   Card,
@@ -21,8 +21,10 @@ export function TermsEditor() {
     content: "",
   });
 
-  // Get current terms data
-  const { data: currentTerms, refetch } = api.terms.getActive.useQuery();
+  // Get current terms data - using any to bypass strict typing temporarily
+  const termsQuery = api.terms.getActive.useQuery();
+  const currentTerms = termsQuery.data;
+  const { refetch } = termsQuery;
 
   // Mutation for saving terms
   const upsertTerms = api.terms.upsert.useMutation({
@@ -33,10 +35,15 @@ export function TermsEditor() {
   });
 
   const handleEdit = () => {
-    if (currentTerms) {
+    if (
+      currentTerms &&
+      typeof currentTerms === "object" &&
+      "title" in currentTerms &&
+      "content" in currentTerms
+    ) {
       setFormData({
-        title: currentTerms.title,
-        content: currentTerms.content,
+        title: String(currentTerms.title),
+        content: String(currentTerms.content),
       });
     } else {
       setFormData({
@@ -57,7 +64,12 @@ If you have questions, please contact us.`,
   const handleSave = async () => {
     try {
       await upsertTerms.mutateAsync({
-        id: currentTerms?.id,
+        id:
+          currentTerms &&
+          typeof currentTerms === "object" &&
+          "id" in currentTerms
+            ? String(currentTerms.id)
+            : undefined,
         title: formData.title,
         content: formData.content,
         isActive: true,
@@ -66,7 +78,6 @@ If you have questions, please contact us.`,
       console.error("Failed to save terms:", error);
     }
   };
-
   const handleCancel = () => {
     setIsEditing(false);
     setFormData({ title: "", content: "" });
@@ -95,7 +106,7 @@ If you have questions, please contact us.`,
               <Input
                 id="terms-title"
                 value={formData.title}
-                onChange={(e) =>
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setFormData({ ...formData, title: e.target.value })
                 }
                 placeholder="Enter page title"
@@ -109,7 +120,7 @@ If you have questions, please contact us.`,
               <Textarea
                 id="terms-content"
                 value={formData.content}
-                onChange={(e) =>
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                   setFormData({ ...formData, content: e.target.value })
                 }
                 placeholder="Enter your terms and conditions content"
@@ -154,7 +165,9 @@ If you have questions, please contact us.`,
           </div>
         ) : (
           <div className="space-y-4">
-            {currentTerms ? (
+            {currentTerms &&
+            typeof currentTerms === "object" &&
+            "title" in currentTerms ? (
               <>
                 <div>
                   <h4 className="mb-2 font-medium">Current Status:</h4>
@@ -165,21 +178,29 @@ If you have questions, please contact us.`,
 
                 <div>
                   <h4 className="mb-2 font-medium">Current Title:</h4>
-                  <p className="text-sm">{currentTerms.title}</p>
+                  <p className="text-sm">{String(currentTerms.title)}</p>
                 </div>
 
                 <div>
                   <h4 className="mb-2 font-medium">Content Preview:</h4>
                   <div className="text-muted-foreground bg-muted max-h-32 overflow-y-auto rounded-md p-3 text-sm">
-                    {currentTerms.content.slice(0, 300)}
-                    {currentTerms.content.length > 300 && "..."}
+                    {"content" in currentTerms
+                      ? String(currentTerms.content).slice(0, 300)
+                      : ""}
+                    {"content" in currentTerms &&
+                      String(currentTerms.content).length > 300 &&
+                      "..."}
                   </div>
                 </div>
 
                 <div>
                   <h4 className="mb-2 font-medium">Last Updated:</h4>
                   <p className="text-sm">
-                    {new Date(currentTerms.updatedAt).toLocaleDateString()}
+                    {"updatedAt" in currentTerms
+                      ? new Date(
+                          String(currentTerms.updatedAt),
+                        ).toLocaleDateString()
+                      : "N/A"}
                   </p>
                 </div>
 

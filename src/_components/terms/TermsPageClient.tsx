@@ -10,7 +10,9 @@ import {
 import { api } from "~/trpc/react";
 
 export function TermsPageClient() {
-  const { data: termsData, isLoading } = api.terms.getActive.useQuery();
+  const termsQuery = api.terms.getActive.useQuery();
+  const termsData = termsQuery.data;
+  const isLoading = termsQuery.isLoading;
 
   // Function to render content with basic markdown-like formatting
   const renderContent = (content: string) => {
@@ -85,8 +87,19 @@ If you have any questions about these Terms and Conditions, please contact us th
     );
   }
 
-  const title = termsData?.title ?? "Terms and Conditions";
-  const content = termsData?.content ?? defaultContent;
+  // Safely extract title and content with type guards
+  let title = "Terms and Conditions";
+  let content = defaultContent;
+
+  if (
+    termsData &&
+    typeof termsData === "object" &&
+    "title" in termsData &&
+    "content" in termsData
+  ) {
+    title = String(termsData.title);
+    content = String(termsData.content);
+  }
 
   return (
     <div className="container mx-auto py-8">
