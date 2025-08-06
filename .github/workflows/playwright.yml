@@ -88,6 +88,9 @@ jobs:
           NEXTAUTH_SECRET: test-secret-for-ci
           NEXTAUTH_URL: http://localhost:3000
           DATABASE_URL: postgresql://test-user:test-password@localhost:5432/test-db
+          MAILHOG_SMTP_PORT: 1025
+          EMAIL_SERVER: smtp://localhost:1025
+          EMAIL_FROM: noreply@lcm-nextjs-boilerplate.local
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
