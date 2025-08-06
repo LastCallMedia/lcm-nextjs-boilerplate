@@ -60,16 +60,31 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String      @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?     @unique
   emailVerified DateTime?
   image         String?
-  role          Role      @default(USER)
-  language      String?   @default("en") // User's preferred language (en, es, etc.)
+  role          Role        @default(USER)
+  language      String?     @default("en") // User's preferred language (en, es, etc.)
   accounts      Account[]
   sessions      Session[]
   posts         Post[]
+  termsPages    TermsPage[]
+}
+
+model TermsPage {
+  id        String   @id @default(cuid())
+  title     String
+  content   String   @db.Text
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  createdBy   User   @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  createdById String
+
+  @@map("terms_pages")
 }
 
 enum Role {

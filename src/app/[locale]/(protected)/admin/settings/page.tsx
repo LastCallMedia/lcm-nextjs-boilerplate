@@ -11,6 +11,7 @@ import { Button } from "~/_components/ui/button";
 import { Switch } from "~/_components/ui/switch";
 import { Label } from "~/_components/ui/label";
 import { Separator } from "~/_components/ui/separator";
+import { TermsEditor } from "~/_components/admin/TermsEditor";
 import { auth } from "~/server/auth";
 import { getMessages, t } from "~/i18n/messages";
 
@@ -79,6 +80,9 @@ export default async function SettingsPage({
             </div>
           </CardContent>
         </Card>
+
+        {/* Terms and Conditions Management */}
+        <TermsEditor />
 
         {/* Privacy Settings */}
         <Card>
