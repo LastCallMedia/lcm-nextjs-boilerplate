@@ -1,4 +1,7 @@
-import { ensureAuthenticated, waitForPageLoad } from "@/tests/e2e/utils/page-helpers";
+import {
+  ensureAuthenticated,
+  waitForPageLoad,
+} from "@/tests/e2e/utils/page-helpers";
 import { expect, test } from "@playwright/test";
 
 test.describe("Post Management Tests", () => {

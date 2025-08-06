@@ -31,9 +31,9 @@ export default async function globalSetup(config: FullConfig) {
       }
     };
 
-    process.on('exit', cleanup);
-    process.on('SIGINT', cleanup);
-    process.on('SIGTERM', cleanup);
+    process.on("exit", cleanup);
+    process.on("SIGINT", cleanup);
+    process.on("SIGTERM", cleanup);
   } catch (error) {
     console.error("❌ Failed to start global SMTP server:", error);
     throw error;
@@ -47,28 +47,41 @@ export default async function globalSetup(config: FullConfig) {
 
   try {
     // Navigate to the login page
-    await page.goto(`${config.projects[0]?.use?.baseURL ?? 'http://localhost:3000'}/en/login`);
+    await page.goto(
+      `${config.projects[0]?.use?.baseURL ?? "http://localhost:3000"}/en/login`,
+    );
 
     // Wait for the login form to be visible
-    await page.waitForSelector("[data-testid='login-form']", { timeout: 10000 });
+    await page.waitForSelector("[data-testid='login-form']", {
+      timeout: 10000,
+    });
 
     // Wait a bit for the page to fully load and CSRF token to be set
     await page.waitForTimeout(1000);
 
     // Fill in the email
-    await page.locator('input[name="email"]').fill("test@example.com", { timeout: 1000 });
-    
+    await page
+      .locator('input[name="email"]')
+      .fill("test@example.com", { timeout: 1000 });
+
     // Click the "Send Magic Link" button
     await page.click('button[type="submit"]', { delay: 1000 });
-    
+
     // Wait for the success message to appear, but with a longer timeout and different approach
     try {
-      await page.waitForSelector("[data-testid='success-alert']", { timeout: 15000 });
+      await page.waitForSelector("[data-testid='success-alert']", {
+        timeout: 15000,
+      });
     } catch (error) {
       // If success alert doesn't appear, check if we can see a different success indicator
-      console.log("Success alert not found, checking for other success indicators...");
-      const successText = await page.textContent('body');
-      if (successText?.includes('Check your email') || successText?.includes('Magic link sent')) {
+      console.log(
+        "Success alert not found, checking for other success indicators...",
+      );
+      const successText = await page.textContent("body");
+      if (
+        successText?.includes("Check your email") ||
+        successText?.includes("Magic link sent")
+      ) {
         console.log("Found alternative success message");
       } else {
         console.log("Page content:", successText);
@@ -79,12 +92,14 @@ export default async function globalSetup(config: FullConfig) {
     // Capture the email with magic link
     let emailLink = null;
     try {
-      const { email } = await globalMailServer.captureOne("test@example.com", { wait: 3000 });
+      const { email } = await globalMailServer.captureOne("test@example.com", {
+        wait: 3000,
+      });
 
       if (typeof email.html !== "string") {
         throw new Error("Email HTML content is missing or invalid.");
       }
-      
+
       const $ = cheerioLoad(email.html);
       emailLink = $("a[href*='auth/callback/nodemailer']").attr("href");
       console.log("✅ Magic link captured successfully");
@@ -102,7 +117,7 @@ export default async function globalSetup(config: FullConfig) {
     await page.waitForURL(new RegExp(`/en/(dashboard|$)`), { timeout: 15000 });
 
     // Save the authentication state
-    const authStateFile = 'tests/e2e/.auth/user.json';
+    const authStateFile = "tests/e2e/.auth/user.json";
     await context.storageState({ path: authStateFile });
     global.authStateFile = authStateFile;
 
