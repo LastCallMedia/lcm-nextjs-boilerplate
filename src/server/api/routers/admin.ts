@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { db } from "~/server/db";

@@ -11,7 +11,7 @@ import { Button } from "~/_components/ui/button";
 import { Switch } from "~/_components/ui/switch";
 import { Label } from "~/_components/ui/label";
 import { Separator } from "~/_components/ui/separator";
-import { TermsEditor } from "~/_components/admin/TermsEditor";
+import { LegalPageEditor } from "~/_components/admin/LegalPageEditor";
 import { auth } from "~/server/auth";
 import { getMessages, t } from "~/i18n/messages";
 
@@ -81,9 +81,6 @@ export default async function SettingsPage({
           </CardContent>
         </Card>
 
-        {/* Terms and Conditions Management */}
-        <TermsEditor />
-
         {/* Privacy Settings */}
         <Card>
           <CardHeader>
@@ -122,6 +119,21 @@ export default async function SettingsPage({
             </div>
           </CardContent>
         </Card>
+
+        {/* Legal Pages Management */}
+        {session.user.role === "ADMIN" && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Legal Pages</CardTitle>
+              <CardDescription>
+                Manage your Terms and Conditions and Privacy Policy pages
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <LegalPageEditor />
+            </CardContent>
+          </Card>
+        )}
 
         {/* Danger Zone */}
         <Card className="border-destructive">

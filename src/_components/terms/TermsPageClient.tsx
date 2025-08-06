@@ -10,7 +10,7 @@ import {
 import { api } from "~/trpc/react";
 
 export function TermsPageClient() {
-  const termsQuery = api.terms.getActive.useQuery();
+  const termsQuery = api.legalPages.getActive.useQuery({ type: "TERMS" });
   const termsData = termsQuery.data;
   const isLoading = termsQuery.isLoading;
 

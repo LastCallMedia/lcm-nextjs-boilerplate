@@ -1,8 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider               = "prisma-client" // New ESM-compatible generator (no -js suffix)
+  provider               = "prisma-client"
   output                 = "../src/generated/prisma"
   runtime                = "nodejs"
   moduleFormat           = "esm"
@@ -66,30 +63,25 @@ model User {
   emailVerified DateTime?
   image         String?
   role          Role        @default(USER)
-  language      String?     @default("en") // User's preferred language (en, es, etc.)
+  language      String?     @default("en")
   accounts      Account[]
-  sessions      Session[]
   posts         Post[]
-  termsPages    TermsPage[]
+  sessions      Session[]
+  legalPages    LegalPage[]
 }
 
-model TermsPage {
-  id        String   @id @default(cuid())
-  title     String
-  content   String   @db.Text
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  createdBy   User   @relation(fields: [createdById], references: [id], onDelete: Cascade)
+model LegalPage {
+  id          String        @id @default(cuid())
+  type        LegalPageType
+  title       String
+  content     String
+  isActive    Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
   createdById String
+  createdBy   User          @relation(fields: [createdById], references: [id], onDelete: Cascade)
 
-  @@map("terms_pages")
-}
-
-enum Role {
-  USER
-  ADMIN
+  @@map("legal_pages")
 }
 
 model VerificationToken {
@@ -98,4 +90,15 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum LegalPageType {
+  TERMS
+  PRIVACY
+  COOKIES
 }
