@@ -1,12 +1,3 @@
-/*
- * ESLint disable is necessary here because:
- * 1. T3 stack's strict TypeScript config conflicts with Prisma's generated types
- * 2. The ctx.db is properly typed at runtime but TypeScript can't infer it
- * 3. This is the recommended pattern in T3 stack documentation
- * 4. Alternative approaches (like custom interfaces) are verbose and don't solve the root cause
- */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
-
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import {
@@ -18,7 +9,7 @@ import {
 // Define the expected return type for legal page
 type LegalPageResponse = {
   id: string;
-  type: "TERMS" | "PRIVACY" | "COOKIES";
+  type: "TERMS" | "PRIVACY";
   title: string;
   content: string;
   isActive: boolean;
@@ -29,7 +20,7 @@ type LegalPageResponse = {
 
 type LegalPageWithUser = {
   id: string;
-  type: "TERMS" | "PRIVACY" | "COOKIES";
+  type: "TERMS" | "PRIVACY";
   title: string;
   content: string;
   isActive: boolean;
@@ -48,7 +39,7 @@ type LegalPageListResponse = {
 };
 
 // Zod enum for legal page types
-const LegalPageTypeEnum = z.enum(["TERMS", "PRIVACY", "COOKIES"]);
+const LegalPageTypeEnum = z.enum(["TERMS", "PRIVACY"]);
 
 export const legalPagesRouter = createTRPCRouter({
   // Get the active legal page by type (public)

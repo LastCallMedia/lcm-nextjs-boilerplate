@@ -100,5 +100,4 @@ enum Role {
 enum LegalPageType {
   TERMS
   PRIVACY
-  COOKIES
 }
