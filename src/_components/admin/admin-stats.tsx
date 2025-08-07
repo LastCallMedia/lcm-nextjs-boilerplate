@@ -16,6 +16,7 @@ import {
   UserCheckIcon,
 } from "lucide-react";
 import { FormattedMessage } from "react-intl";
+import { t } from "~/i18n/messages";
 
 // RecentUser defines the type for users in the recentUsers array from getStats.
 type RecentUser = {
@@ -65,14 +66,14 @@ export function AdminStats() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              <FormattedMessage id="adminStats.totalUsers" />
+              <FormattedMessage id={t("adminStats.totalUsers")} />
             </CardTitle>
             <UsersIcon className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.userCount}</div>
             <p className="text-muted-foreground text-xs">
-              <FormattedMessage id="adminStats.totalUsersDesc" />
+              <FormattedMessage id={t("adminStats.totalUsersDesc")} />
             </p>
           </CardContent>
         </Card>
@@ -80,14 +81,14 @@ export function AdminStats() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              <FormattedMessage id="adminStats.totalPosts" />
+              <FormattedMessage id={t("adminStats.totalPosts")} />
             </CardTitle>
             <FileTextIcon className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.postCount}</div>
             <p className="text-muted-foreground text-xs">
-              <FormattedMessage id="adminStats.totalPostsDesc" />
+              <FormattedMessage id={t("adminStats.totalPostsDesc")} />
             </p>
           </CardContent>
         </Card>
@@ -95,14 +96,14 @@ export function AdminStats() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              <FormattedMessage id="adminStats.adminUsers" />
+              <FormattedMessage id={t("adminStats.adminUsers")} />
             </CardTitle>
             <ShieldCheckIcon className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.adminCount}</div>
             <p className="text-muted-foreground text-xs">
-              <FormattedMessage id="adminStats.adminUsersDesc" />
+              <FormattedMessage id={t("adminStats.adminUsersDesc")} />
             </p>
           </CardContent>
         </Card>
@@ -110,7 +111,7 @@ export function AdminStats() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              <FormattedMessage id="adminStats.postsPerUser" />
+              <FormattedMessage id={t("adminStats.postsPerUser")} />
             </CardTitle>
             <FileTextIcon className="text-muted-foreground h-4 w-4" />
           </CardHeader>
@@ -121,7 +122,7 @@ export function AdminStats() {
                 : "0"}
             </div>
             <p className="text-muted-foreground text-xs">
-              <FormattedMessage id="adminStats.postsPerUserDesc" />
+              <FormattedMessage id={t("adminStats.postsPerUserDesc")} />
             </p>
           </CardContent>
         </Card>
@@ -133,17 +134,17 @@ export function AdminStats() {
           <CardTitle className="flex items-center space-x-2">
             <UserCheckIcon className="h-5 w-5" />
             <span>
-              <FormattedMessage id="adminStats.recentVerified" />
+              <FormattedMessage id={t("adminStats.recentVerified")} />
             </span>
           </CardTitle>
           <CardDescription>
-            <FormattedMessage id="adminStats.recentVerifiedDesc" />
+            <FormattedMessage id={t("adminStats.recentVerifiedDesc")} />
           </CardDescription>
         </CardHeader>
         <CardContent>
           {stats.recentUsers.length === 0 ? (
             <p className="text-muted-foreground text-sm">
-              <FormattedMessage id="adminStats.noRecentVerified" />
+              <FormattedMessage id={t("adminStats.noRecentVerified")} />
             </p>
           ) : (
             <div className="space-y-3">
@@ -172,9 +173,9 @@ export function AdminStats() {
                       variant={user.emailVerified ? "default" : "destructive"}
                     >
                       {user.emailVerified ? (
-                        <FormattedMessage id="adminStats.verified" />
+                        <FormattedMessage id={t("adminStats.verified")} />
                       ) : (
-                        <FormattedMessage id="adminStats.unverified" />
+                        <FormattedMessage id={t("adminStats.unverified")} />
                       )}
                     </Badge>
                   </div>

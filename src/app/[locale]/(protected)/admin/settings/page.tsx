@@ -12,7 +12,7 @@ import { Switch } from "~/_components/ui/switch";
 import { Label } from "~/_components/ui/label";
 import { Separator } from "~/_components/ui/separator";
 import { auth } from "~/server/auth";
-import { getMessages } from "~/i18n/messages";
+import { getMessages, t } from "~/i18n/messages";
 
 export const metadata: Metadata = {
   title: "Settings | LCM Next.js Boilerplate",
@@ -26,22 +26,19 @@ export default async function SettingsPage({
 }) {
   const { locale } = await params;
   const session = await auth();
-
-  // Redirect if not authenticated
   if (!session) {
     redirect(`/${locale ?? "en"}/login`);
   }
-
   const messages = getMessages((locale ?? "en") as "en" | "es");
 
   return (
     <div className="container mx-auto py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">
-          {messages["settings.title"]}
+          {messages[t("settings.title")]}
         </h1>
         <p className="text-muted-foreground">
-          {messages["settings.description"]}
+          {messages[t("settings.description")]}
         </p>
       </div>
 
@@ -49,37 +46,35 @@ export default async function SettingsPage({
         {/* Account Settings */}
         <Card>
           <CardHeader>
-            <CardTitle>{messages["settings.account.title"]}</CardTitle>
+            <CardTitle>{messages[t("settings.account.title")]}</CardTitle>
             <CardDescription>
-              {messages["settings.account.description"]}
+              {messages[t("settings.account.description")]}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label className="text-base">
-                  {messages["settings.account.emailNotifications"]}
+                  {messages[t("settings.account.emailNotifications")]}
                 </Label>
                 <div className="text-muted-foreground text-sm">
-                  {messages["settings.account.emailNotificationsDesc"]}
+                  {messages[t("settings.account.emailNotificationsDesc")]}
                 </div>
               </div>
               <Switch defaultChecked disabled />
             </div>
-
             <Separator />
-
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label className="text-base">
-                  {messages["settings.account.twoFactor"]}
+                  {messages[t("settings.account.twoFactor")]}
                 </Label>
                 <div className="text-muted-foreground text-sm">
-                  {messages["settings.account.twoFactorDesc"]}
+                  {messages[t("settings.account.twoFactorDesc")]}
                 </div>
               </div>
               <Button variant="outline" size="sm" disabled>
-                {messages["settings.account.enable2fa"]}
+                {messages[t("settings.account.enable2fa")]}
               </Button>
             </div>
           </CardContent>
@@ -88,19 +83,19 @@ export default async function SettingsPage({
         {/* Privacy Settings */}
         <Card>
           <CardHeader>
-            <CardTitle>{messages["settings.privacy.title"]}</CardTitle>
+            <CardTitle>{messages[t("settings.privacy.title")]}</CardTitle>
             <CardDescription>
-              {messages["settings.privacy.description"]}
+              {messages[t("settings.privacy.description")]}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label className="text-base">
-                  {messages["settings.privacy.publicProfile"]}
+                  {messages[t("settings.privacy.publicProfile")]}
                 </Label>
                 <div className="text-muted-foreground text-sm">
-                  {messages["settings.privacy.publicProfileDesc"]}
+                  {messages[t("settings.privacy.publicProfileDesc")]}
                 </div>
               </div>
               <Switch disabled />
@@ -111,14 +106,14 @@ export default async function SettingsPage({
             <div className="space-y-4">
               <div>
                 <Label className="text-base">
-                  {messages["settings.privacy.exportData"]}
+                  {messages[t("settings.privacy.exportData")]}
                 </Label>
                 <div className="text-muted-foreground text-sm">
-                  {messages["settings.privacy.exportDataDesc"]}
+                  {messages[t("settings.privacy.exportDataDesc")]}
                 </div>
               </div>
               <Button variant="outline" disabled>
-                {messages["settings.privacy.exportDataButton"]}
+                {messages[t("settings.privacy.exportDataButton")]}
               </Button>
             </div>
           </CardContent>
@@ -128,23 +123,23 @@ export default async function SettingsPage({
         <Card className="border-destructive">
           <CardHeader>
             <CardTitle className="text-destructive">
-              {messages["settings.danger.title"]}
+              {messages[t("settings.danger.title")]}
             </CardTitle>
             <CardDescription>
-              {messages["settings.danger.description"]}
+              {messages[t("settings.danger.description")]}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label className="text-base">
-                {messages["settings.danger.deleteAccount"]}
+                {messages[t("settings.danger.deleteAccount")]}
               </Label>
               <div className="text-muted-foreground text-sm">
-                {messages["settings.danger.deleteAccountDesc"]}
+                {messages[t("settings.danger.deleteAccountDesc")]}
               </div>
             </div>
             <Button variant="destructive" disabled>
-              {messages["settings.danger.deleteAccountButton"]}
+              {messages[t("settings.danger.deleteAccountButton")]}
             </Button>
           </CardContent>
         </Card>
@@ -152,11 +147,11 @@ export default async function SettingsPage({
         {/* Demo Notice */}
         <Card className="bg-muted/50">
           <CardHeader>
-            <CardTitle>{messages["settings.demo.title"]}</CardTitle>
+            <CardTitle>{messages[t("settings.demo.title")]}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground text-sm">
-              {messages["settings.demo.description"]}
+              {messages[t("settings.demo.description")]}
             </p>
           </CardContent>
         </Card>

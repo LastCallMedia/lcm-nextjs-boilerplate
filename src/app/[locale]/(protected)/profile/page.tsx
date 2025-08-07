@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { auth } from "~/server/auth";
 import { api } from "~/trpc/server";
-import { getMessages } from "~/i18n/messages";
+import { getMessages, t } from "~/i18n/messages";
 import ProfileClient from "~/app/[locale]/(protected)/profile/client";
 
 export const metadata: Metadata = {
@@ -33,13 +33,13 @@ export default async function ProfilePage({
     <div className="container mx-auto py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">
-          {messages["profile.title"]}
+          {messages[t("profile.title")]}
         </h1>
         <p className="text-muted-foreground">
-          {messages["profile.description"]}
+          {messages[t("profile.description")]}
         </p>
       </div>
-      <ProfileClient user={user} />
+      <ProfileClient user={user} messages={messages} />
     </div>
   );
 }

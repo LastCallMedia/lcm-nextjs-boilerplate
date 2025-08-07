@@ -1,19 +1,20 @@
 import { waitForPageLoad } from "@/tests/e2e/utils/page-helpers";
 import { expect, test } from "@playwright/test";
 
-test.describe("Authentication Tests", () => {
-  // Supported locales to test
-  const locales = ["en", "es"];
+const locales = ["en", "es"];
+test.describe(`Login Tests`, () => {
+  // Reset storage state for this file to avoid being authenticated
+  test.use({ storageState: { cookies: [], origins: [] } });
 
   for (const locale of locales) {
     test(`sign in page (${locale}) should load correctly`, async ({ page }) => {
-      await page.goto(`/${locale}/auth/login`);
+      await page.goto(`/${locale}/login`);
       await waitForPageLoad(page, "body");
       await expect(page.locator("body")).toBeVisible();
     });
 
     test(`sign in form (${locale}) should be functional`, async ({ page }) => {
-      await page.goto(`/${locale}/auth/login`);
+      await page.goto(`/${locale}/login`);
       await waitForPageLoad(page, "body");
       const providerButtons = page.locator(
         'button[type="submit"], a[href*="auth/login"]',

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getMessages } from "~/i18n/messages";
+import { getMessages, t } from "~/i18n/messages";
 import { Button } from "~/_components";
 import Link from "next/link";
 
@@ -17,18 +17,20 @@ export default async function PostsExamplesPage({
   const messages = getMessages((locale || "en") as "en" | "es");
   return (
     <div className="m-auto flex min-h-[60vh] max-w-2xl flex-col items-center justify-center gap-6">
-      <h1 className="text-2xl font-bold">{messages["posts.examples.title"]}</h1>
-      <p>{messages["posts.examples.description1"]}</p>
-      <p>{messages["posts.examples.description2"]}</p>
+      <h1 className="text-2xl font-bold">
+        {messages[t("posts.examples.title")]}
+      </h1>
+      <p>{messages[t("posts.examples.description1")]}</p>
+      <p>{messages[t("posts.examples.description2")]}</p>
       <div className="flex w-full flex-row gap-4">
         <Button asChild className="grow">
           <Link href={`/${locale}/posts/example-ssr`}>
-            {messages["posts.examples.ssrLink"]}
+            {messages[t("posts.examples.ssrLink")]}
           </Link>
         </Button>
         <Button asChild className="grow">
           <Link href={`/${locale}/posts/example-csr`}>
-            {messages["posts.examples.csrLink"]}
+            {messages[t("posts.examples.csrLink")]}
           </Link>
         </Button>
       </div>

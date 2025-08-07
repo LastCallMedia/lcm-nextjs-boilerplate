@@ -1,6 +1,7 @@
 "use client";
 
 import { FormattedMessage } from "react-intl";
+import { t } from "~/i18n/messages";
 import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
 import LoginForm from "~/_components/auth/LoginForm";
 
@@ -21,7 +22,7 @@ const SignIn = () => {
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background text-muted-foreground px-2">
-            <FormattedMessage id="auth.orContinueWith" />
+            <FormattedMessage id={t("auth.orContinueWith")} />
           </span>
         </div>
       </div>

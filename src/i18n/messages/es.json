@@ -20,11 +20,12 @@
     "signOut": "Cerrar Sesión",
     "account": "Cuenta",
     "profile": "Perfil",
-    "settings": "Ajustes"
+    "settings": "Ajustes",
+    "about": "Acerca de",
+    "contact": "Contacto"
   },
   "home": {
     "title": "¡Hola, {name}s!!",
-    "greeting": "Hola desde tRPC",
     "seeAllPosts": "Ver todas las publicaciones"
   },
   "posts": {
@@ -171,6 +172,9 @@
     "pictureNote": "La foto de perfil es gestionada por tu proveedor OAuth",
     "cancel": "Cancelar",
     "save": "Guardar Cambios",
+    "updateSuccess": "Perfil actualizado correctamente",
+    "updateError": "No se pudo actualizar el perfil. Por favor, inténtalo de nuevo.",
+    "anonymous": "Usuario anónimo",
     "demoNoteTitle": "Nota de Demo",
     "demoNoteDescription": "Esta página de perfil demuestra una ruta protegida con visualización de datos de usuario. En una aplicación real, implementarías manejo de formularios, validación y actualizaciones en la base de datos para los cambios de perfil."
   },
@@ -182,9 +186,11 @@
       "description": "Gestiona las preferencias y opciones de seguridad de tu cuenta.",
       "emailNotifications": "Notificaciones por correo electrónico",
       "emailNotificationsDesc": "Recibe actualizaciones y notificaciones por correo electrónico.",
+      "languageChanged": "¡Idioma actualizado correctamente!",
       "twoFactor": "Autenticación en dos pasos",
       "twoFactorDesc": "Agrega una capa extra de seguridad a tu cuenta.",
-      "enable2fa": "Activar 2FA"
+      "enable2fa": "Activar 2FA",
+      "language": "Idioma"
     },
     "privacy": {
       "title": "Configuración de Privacidad",

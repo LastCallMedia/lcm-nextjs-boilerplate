@@ -13,6 +13,7 @@
     "home": "Home",
     "posts": "Posts",
     "allPosts": "All Posts",
+    "infinitePosts": "Infinite Posts",
     "post": "Post",
     "menu": "Menu",
     "signIn": "Sign In",
@@ -20,11 +21,11 @@
     "account": "Account",
     "profile": "Profile",
     "settings": "Settings",
-    "infinitePosts": "Infinite Posts"
+    "about": "About",
+    "contact": "Contact"
   },
   "home": {
     "title": "Hello, {name}ers!!",
-    "greeting": "Hello from tRPC",
     "seeAllPosts": "See all posts"
   },
   "posts": {
@@ -174,6 +175,9 @@
     "pictureNote": "Profile picture is managed by your OAuth provider",
     "cancel": "Cancel",
     "save": "Save Changes",
+    "updateSuccess": "Profile updated successfully",
+    "updateError": "Failed to update profile. Please try again.",
+    "anonymous": "Anonymous User",
     "demoNoteTitle": "Demo Note",
     "demoNoteDescription": "This profile page demonstrates a protected route with user data display. In a real application, you would implement form handling, validation, and database updates for profile changes."
   },
@@ -185,9 +189,11 @@
       "description": "Manage your account preferences and security options.",
       "emailNotifications": "Email Notifications",
       "emailNotificationsDesc": "Receive updates and notifications via email.",
+      "languageChanged": "Language updated successfully!",
       "twoFactor": "Two-Factor Authentication",
       "twoFactorDesc": "Add an extra layer of security to your account.",
-      "enable2fa": "Enable 2FA"
+      "enable2fa": "Enable 2FA",
+      "language": "Language"
     },
     "privacy": {
       "title": "Privacy Settings",

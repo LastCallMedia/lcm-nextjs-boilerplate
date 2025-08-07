@@ -4,7 +4,8 @@ import Link from "next/link";
 import { UsersIcon, FileTextIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { auth } from "~/server/auth";
-import { getMessages } from "~/i18n/messages";
+import { getMessages, t } from "~/i18n/messages";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Dashboard | LCM Next.js Boilerplate",
@@ -18,14 +19,23 @@ export default async function DashboardPage({
 }) {
   const session = await auth();
   const { locale } = await params;
+  // If not authenticated, redirect to login
+  if (!session) {
+    return redirect(`/${locale ?? "en"}/login`);
+  }
+  // If user has a language preference and it's different from the current locale, redirect
+  const userLocale = session.user?.language ?? "en";
+  if (userLocale !== locale) {
+    return redirect(`/${userLocale}/dashboard`);
+  }
   const messages = getMessages((locale || "en") as "en" | "es");
   return (
     <div className="space-y-6">
       {/* Dashboard Header */}
       <header className="mb-6">
-        <h1 className="text-3xl font-bold">{messages["dashboard.title"]}</h1>
+        <h1 className="text-3xl font-bold">{messages[t("dashboard.title")]}</h1>
         <p className="text-muted-foreground">
-          {messages["dashboard.description"]}
+          {messages[t("dashboard.description")]}
         </p>
       </header>
 
@@ -39,15 +49,15 @@ export default async function DashboardPage({
             <Button
               variant="outline"
               className="hover:bg-accent flex h-24 w-full cursor-pointer flex-col space-y-2 transition-colors"
-              aria-label={messages["dashboard.users.ariaLabel"]}
+              aria-label={messages[t("dashboard.users.ariaLabel")]}
             >
               <UsersIcon className="h-8 w-8" aria-hidden="true" />
               <div className="text-center">
                 <div className="font-medium">
-                  {messages["dashboard.users.title"]}
+                  {messages[t("dashboard.users.title")]}
                 </div>
                 <div className="text-muted-foreground text-sm">
-                  {messages["dashboard.users.description"]}
+                  {messages[t("dashboard.users.description")]}
                 </div>
               </div>
             </Button>
@@ -57,15 +67,15 @@ export default async function DashboardPage({
             <Button
               variant="outline"
               className="hover:bg-accent flex h-24 w-full cursor-pointer flex-col space-y-2 transition-colors"
-              aria-label={messages["dashboard.posts.ariaLabel"]}
+              aria-label={messages[t("dashboard.posts.ariaLabel")]}
             >
               <FileTextIcon className="h-8 w-8" aria-hidden="true" />
               <div className="text-center">
                 <div className="font-medium">
-                  {messages["dashboard.posts.title"]}
+                  {messages[t("dashboard.posts.title")]}
                 </div>
                 <div className="text-muted-foreground text-sm">
-                  {messages["dashboard.posts.description"]}
+                  {messages[t("dashboard.posts.description")]}
                 </div>
               </div>
             </Button>

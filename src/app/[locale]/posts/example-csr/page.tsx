@@ -1,42 +1,32 @@
-"use client";
-
-import { TypingIndicator } from "~/_components/posts/TypingIndicator";
-import { api } from "~/trpc/react";
+import { t } from "~/i18n/messages";
+import { getMessages } from "~/i18n";
+import { auth } from "~/server/auth";
+import { redirect } from "next/navigation";
 import NextRenderingDocsLink from "~/app/[locale]/posts/_components/next-docs-link";
-import AllPostsClient from "~/app/[locale]/posts/client";
-import { FormattedMessage } from "react-intl";
+import ExampleCsrClient from "~/app/[locale]/posts/example-csr/client";
 
-export default function Page() {
-  // CSR: fetch posts on render, and update when the query is invalidated. Loading and error handled right in the UI
-  const { data: posts, isLoading, isError, error } = api.post.getAll.useQuery();
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const session = await auth();
+  const { locale } = await params;
+  if (!session?.user) {
+    redirect(`/login?callbackUrl=/${locale}/posts/example-csr`);
+  }
+
+  const messages = getMessages((locale || "en") as "en" | "es");
 
   return (
     <div className="m-auto flex max-w-2xl flex-col gap-8">
       <h1 className="m-4 text-center text-2xl font-bold">
-        <FormattedMessage id="posts.examples.csrPage.title" />
+        {messages[t("posts.examples.csrPage.title")]}
       </h1>
-      <p>
-        <FormattedMessage id="posts.examples.csrPage.description1" />
-      </p>
-      <p>
-        <FormattedMessage id="posts.examples.csrPage.description2" />
-      </p>
+      <p>{messages[t("posts.examples.csrPage.description1")]} </p>
+      <p>{messages[t("posts.examples.csrPage.description2")]} </p>
       <NextRenderingDocsLink />
-
-      {isLoading ? (
-        <div className="mb-4 text-center text-gray-500">
-          <FormattedMessage id="posts.loading" />
-        </div>
-      ) : isError ? (
-        <div className="mb-4 text-center text-red-500">
-          <FormattedMessage id="posts.error" />{" "}
-          {error?.message || "Unknown error"}
-        </div>
-      ) : (
-        <AllPostsClient posts={posts ?? []} />
-      )}
-
-      <TypingIndicator channelId="landing" />
+      <ExampleCsrClient />
     </div>
   );
 }
