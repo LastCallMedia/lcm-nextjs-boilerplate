@@ -127,6 +127,30 @@ model VerificationToken {
 }
 ```
 
+## Email Integration
+
+### Magic Link Setup
+
+Magic links use **Resend** for production and **MailHog** for development:
+
+```bash
+# Production (Resend)
+RESEND_API_KEY=re_your_api_key_here
+EMAIL_FROM=noreply@yourdomain.com
+
+# Development (MailHog - included in Docker)
+EMAIL_SERVER=smtp://localhost:1025
+EMAIL_FROM=noreply@lcm-nextjs-boilerplate.local
+```
+
+### Email Template
+
+Magic link emails use a branded React Email template that automatically matches your development/production environment:
+
+- **Development**: Uses MailHog (localhost:8025)
+- **Production**: Uses Resend with custom HTML template
+- **Design**: Last Call Media branded with teal colors
+
 ## Usage Patterns
 
 ### Server Components
