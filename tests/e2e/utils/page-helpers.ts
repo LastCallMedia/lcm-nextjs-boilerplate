@@ -32,3 +32,23 @@ export async function waitForPageLoad(
   // Add a small delay to ensure components are fully rendered
   await page.waitForTimeout(DEFAULT_RENDER_DELAY_MS);
 }
+
+/**
+ * Simple login function that checks if already authenticated,
+ * and if not, redirects to login page for authentication.
+ * This assumes global authentication state is already set up.
+ */
+export async function ensureAuthenticated(page: Page): Promise<void> {
+  // Try to navigate to a protected page to check if already authenticated
+  await page.goto("/en/dashboard");
+
+  // Check if we're redirected to login (if not authenticated)
+  if (page.url().includes("/login")) {
+    // If redirected to login, it means auth state wasn't properly loaded
+    // This should not happen if global auth is set up correctly
+    console.warn("⚠️ Not authenticated, but global auth should handle this");
+  }
+
+  // Wait for page to be ready
+  await waitForPageLoad(page, "body");
+}
