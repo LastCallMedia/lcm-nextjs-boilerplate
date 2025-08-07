@@ -5,7 +5,7 @@ import { api } from "~/trpc/react";
 import AllPostsClient from "~/app/[locale]/posts/client";
 import { FormattedMessage } from "react-intl";
 
-export default function ExampleCsrClient() {
+export default function ExampleClientSideRendering() {
   const { data: posts, isLoading, isError, error } = api.post.getAll.useQuery();
 
   return (
