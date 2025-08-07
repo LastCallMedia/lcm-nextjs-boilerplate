@@ -22,6 +22,7 @@ The admin dashboard is protected and only accessible to users with the `ADMIN` r
 
 - **User Management**: View, search, and change user roles at `/admin/users`
 - **Post Management**: Moderate posts at `/admin/posts`
+- **Legal Pages**: Manage Terms and Privacy Policy content at `/admin/settings`
 - **System settings**
 
 ## Access
@@ -52,6 +53,38 @@ Admins can:
 - View all users and posts
 - Change user roles (USER ↔ ADMIN)
 - Delete users (and their posts)
+- Manage legal pages (Terms and Privacy Policy)
+
+## Legal Pages Management
+
+The admin dashboard includes a comprehensive legal pages system accessible in `/admin/settings`:
+
+### Features
+
+- **Type Selector**: Switch between Terms and Privacy Policy
+- **Markdown Editor**: Rich content editing with preview
+- **Version Control**: Active/inactive status for content versioning
+- **Toast Notifications**: Success/error feedback on save
+
+### Usage
+
+1. Navigate to `/admin/settings`
+2. Select page type (Terms/Privacy) in dropdown
+3. Click "Edit Page" or "Create Page"
+4. Enter title and markdown content
+5. Save with automatic confirmation
+
+### Database Structure
+
+- `LegalPage` model with type differentiation (TERMS, PRIVACY)
+- User relation for tracking creators
+- Public routes: `/terms` and `/privacy`
+
+### API Endpoints
+
+- `legalPages.getActive()` - Get active page by type
+- `legalPages.upsert()` - Create/update legal pages (ADMIN only)
+- `legalPages.delete()` - Remove legal pages (ADMIN only)
 
 ## API Routes
 
