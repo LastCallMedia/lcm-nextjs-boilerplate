@@ -20,7 +20,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
+import GoogleSignInButton from "~/_components/auth/google-sign-in-button";
 import { LanguageSwitcher } from "~/_components/i18n";
 import { ThemeModeToggle } from "~/_components/theme";
 import {

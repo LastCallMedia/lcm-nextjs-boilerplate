@@ -2,7 +2,7 @@
 
 import { FormattedMessage } from "react-intl";
 import { t } from "~/i18n/messages";
-import PostForm from "~/_components/posts/PostForm";
+import PostForm from "~/_components/posts/post-form";
 import { api } from "~/trpc/react";
 
 export function LatestPost() {

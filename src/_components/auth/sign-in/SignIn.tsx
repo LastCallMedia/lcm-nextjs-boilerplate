@@ -2,8 +2,8 @@
 
 import { FormattedMessage } from "react-intl";
 import { t } from "~/i18n/messages";
-import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
-import LoginForm from "~/_components/auth/LoginForm";
+import GoogleSignInButton from "~/_components/auth/google-sign-in-button";
+import LoginForm from "~/_components/auth/login-form";
 
 const isGoogleConfigured =
   String(process.env.NEXT_PUBLIC_AUTH_GOOGLE_ENABLED).toLowerCase() === "true";
