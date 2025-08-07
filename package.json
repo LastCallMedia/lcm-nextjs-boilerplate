@@ -50,8 +50,8 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
-    "@headlessui/react": "^2.2.7",
     "@aws-sdk/client-s3": "^3.858.0",
+    "@headlessui/react": "^2.2.7",
     "@hookform/resolvers": "^5.2.1",
     "@prisma/client": "^6.13.0",
     "@prisma/extension-accelerate": "^2.0.2",
@@ -120,7 +120,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
     "@eslint/eslintrc": "^3.3.1",
-    "@playwright/test": "^1.54.1",
+    "@playwright/test": "^1.54.2",
     "@tailwindcss/postcss": "^4.1.11",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
@@ -132,6 +132,7 @@
     "@types/react-dom": "^19.1.6",
     "@types/swagger-ui-react": "^5.18.0",
     "axe-core": "^4.10.3",
+    "cheerio": "^1.1.2",
     "eslint": "^9.32.0",
     "eslint-config-next": "^15.4.5",
     "eslint-config-prettier": "^10.1.8",
@@ -142,11 +143,12 @@
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "prisma": "^6.13.0",
+    "smtp-tester": "^2.1.0",
     "tailwindcss": "^4.1.11",
     "tsx": "^4.20.3",
     "tw-animate-css": "^1.3.6",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.38.0"
+    "typescript-eslint": "^8.39.0"
   },
   "ct3aMetadata": {
     "initVersion": "7.39.3"
