@@ -16,9 +16,11 @@ export default async function Page({
   const session = await auth();
   const { locale } = await params;
   if (!session?.user) {
-    redirect(`/login?callbackUrl=/${locale}/posts/example-ssr`);
+    redirect(
+      `/login?callbackUrl=/${locale}/posts/example-server-side-rendering`,
+    );
   }
-  // SSR: fetch posts on the server, only update on refresh. Loading and error handled by NextJS in ./loading.tsx and ./error.tsx
+  // Server Side Rendering: fetch posts on the server, only update on refresh. Loading and error handled by NextJS in ./loading.tsx and ./error.tsx
   const posts = await api.post.getAll();
   const messages = getMessages((locale || "en") as "en" | "es");
   return (

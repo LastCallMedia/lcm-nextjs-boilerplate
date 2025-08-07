@@ -3,7 +3,7 @@ import { getMessages } from "~/i18n";
 import { auth } from "~/server/auth";
 import { redirect } from "next/navigation";
 import NextRenderingDocsLink from "~/app/[locale]/posts/_components/next-docs-link";
-import ExampleCsrClient from "~/app/[locale]/posts/example-csr/client";
+import ExampleClientSideRendering from "~/app/[locale]/posts/example-client-side-rendering/client";
 
 export default async function Page({
   params,
@@ -13,7 +13,9 @@ export default async function Page({
   const session = await auth();
   const { locale } = await params;
   if (!session?.user) {
-    redirect(`/login?callbackUrl=/${locale}/posts/example-csr`);
+    redirect(
+      `/login?callbackUrl=/${locale}/posts/example-client-side-rendering`,
+    );
   }
 
   const messages = getMessages((locale || "en") as "en" | "es");
@@ -26,7 +28,7 @@ export default async function Page({
       <p>{messages[t("posts.examples.csrPage.description1")]} </p>
       <p>{messages[t("posts.examples.csrPage.description2")]} </p>
       <NextRenderingDocsLink />
-      <ExampleCsrClient />
+      <ExampleClientSideRendering />
     </div>
   );
 }
