@@ -26,7 +26,6 @@ export default function LoginForm() {
     setStatus("idle");
 
     try {
-      // Always use "nodemailer" as provider ID - NextAuth.js handles Resend vs SMTP internally
       const result = await signIn("nodemailer", {
         email,
         redirect: false,
