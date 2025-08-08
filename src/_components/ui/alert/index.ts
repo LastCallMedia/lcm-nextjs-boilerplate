@@ -1,1 +1,1 @@
-export * from "~/_components/ui/alert/alert";
+export * from "~/_components/ui/alert/Alert";

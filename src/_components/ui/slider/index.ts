@@ -1,1 +1,1 @@
-export * from "~/_components/ui/slider/slider";
+export * from "~/_components/ui/slider/Slider";

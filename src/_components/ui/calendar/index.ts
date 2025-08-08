@@ -1,1 +1,1 @@
-export * from "~/_components/ui/calendar/calendar";
+export * from "~/_components/ui/calendar/Calendar";

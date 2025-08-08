@@ -1,1 +1,1 @@
-export * from "~/_components/ui/popover/popover";
+export * from "~/_components/ui/popover/Popover";

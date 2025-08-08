@@ -1,1 +1,1 @@
-export * from "~/_components/ui/sheet/sheet";
+export * from "~/_components/ui/sheet/Sheet";

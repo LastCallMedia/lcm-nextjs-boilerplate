@@ -1,1 +1,1 @@
-export * from "~/_components/ui/scroll-area/scroll-area";
+export * from "~/_components/ui/scroll-area/ScrollArea";

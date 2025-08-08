@@ -1,1 +1,1 @@
-export * from "~/_components/ui/label/label";
+export * from "~/_components/ui/label/Label";

@@ -1,1 +1,1 @@
-export * from "~/_components/ui/sonner/sonner";
+export * from "~/_components/ui/sonner/Sonner";

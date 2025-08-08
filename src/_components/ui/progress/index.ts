@@ -1,1 +1,1 @@
-export * from "~/_components/ui/progress/progress";
+export * from "~/_components/ui/progress/Progress";

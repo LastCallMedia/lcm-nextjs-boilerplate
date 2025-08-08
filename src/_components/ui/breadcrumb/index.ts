@@ -1,1 +1,1 @@
-export * from "~/_components/ui/breadcrumb/breadcrumb";
+export * from "~/_components/ui/breadcrumb/Breadcrumb";

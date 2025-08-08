@@ -1,1 +1,1 @@
-export * from "~/_components/ui/command/command";
+export * from "~/_components/ui/command/Command";

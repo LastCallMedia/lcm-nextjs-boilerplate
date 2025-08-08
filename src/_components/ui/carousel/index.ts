@@ -1,1 +1,1 @@
-export * from "~/_components/ui/carousel/carousel";
+export * from "~/_components/ui/carousel/Carousel";

@@ -1,1 +1,1 @@
-export * from "~/_components/ui/sidebar/sidebar";
+export * from "~/_components/ui/sidebar/Sidebar";

@@ -1,1 +1,1 @@
-export * from "~/_components/ui/alert-dialog/alert-dialog";
+export * from "~/_components/ui/alert-dialog/AlertDialog";

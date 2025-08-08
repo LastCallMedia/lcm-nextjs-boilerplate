@@ -1,1 +1,1 @@
-export * from "~/_components/ui/hover-card/hover-card";
+export * from "~/_components/ui/hover-card/HoverCard";

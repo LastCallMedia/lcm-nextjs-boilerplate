@@ -1,1 +1,1 @@
-export * from "~/_components/ui/textarea/textarea";
+export * from "~/_components/ui/textarea/Textarea";

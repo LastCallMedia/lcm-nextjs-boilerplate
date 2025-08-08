@@ -1,1 +1,1 @@
-export * from "~/_components/ui/collapsible/collapsible";
+export * from "~/_components/ui/collapsible/Collapsible";

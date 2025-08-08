@@ -1,1 +1,1 @@
-export * from "~/_components/admin/data-table/data-table";
+export * from "~/_components/admin/data-table/DataTable";

@@ -1,1 +1,1 @@
-export * from "~/_components/ui/context-menu/context-menu";
+export * from "~/_components/ui/context-menu/ContextMenu";

@@ -1,1 +1,1 @@
-export * from "~/_components/ui/accordion/accordion";
+export * from "~/_components/ui/accordion/Accordion";

@@ -1,1 +1,1 @@
-export * from "~/_components/ui/aspect-ratio/aspect-ratio";
+export * from "~/_components/ui/aspect-ratio/AspectRatio";

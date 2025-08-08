@@ -1,1 +1,1 @@
-export * from "~/_components/ui/radio-group/radio-group";
+export * from "~/_components/ui/radio-group/RadioGroup";

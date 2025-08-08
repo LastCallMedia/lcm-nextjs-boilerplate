@@ -1,1 +1,1 @@
-export * from "~/_components/admin/admin-stats/admin-stats";
+export * from "~/_components/admin/admin-stats/AdminStats";

@@ -1,1 +1,1 @@
-export * from "~/_components/admin/search-input/search-input";
+export * from "~/_components/admin/search-input/SearchInput";

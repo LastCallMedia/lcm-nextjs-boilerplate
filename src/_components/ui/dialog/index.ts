@@ -1,1 +1,1 @@
-export * from "~/_components/ui/dialog/dialog";
+export * from "~/_components/ui/dialog/Dialog";

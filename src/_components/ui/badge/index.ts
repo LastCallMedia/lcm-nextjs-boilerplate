@@ -1,1 +1,1 @@
-export * from "~/_components/ui/badge/badge";
+export * from "~/_components/ui/badge/Badge";
