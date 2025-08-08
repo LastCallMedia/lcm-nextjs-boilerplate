@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import SignIn from "~/_components/auth/SignIn";
+import SignIn from "~/_components/auth/sign-in";
 import {
   Card,
   CardContent,

@@ -1,4 +1,4 @@
-import { TypingIndicator } from "~/_components/posts/TypingIndicator";
+import { TypingIndicator } from "~/_components/posts/typing-indicator";
 import { api } from "~/trpc/server";
 import NextRenderingDocsLink from "~/app/[locale]/posts/_components/next-docs-link";
 import AllPostsClient from "~/app/[locale]/posts/client";
