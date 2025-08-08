@@ -49,7 +49,7 @@ const buildProviders = () => {
       Nodemailer({
         server: "smtp://dummy:dummy@dummy.com:587", // Required but not used
         from: process.env.EMAIL_FROM,
-        name: "resend",
+        // Remove name to use default "nodemailer" for consistency
         async sendVerificationRequest({ identifier: email, url, provider }) {
           try {
             if (!resend) {
