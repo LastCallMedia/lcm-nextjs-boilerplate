@@ -382,7 +382,7 @@ export function Navbar({ currentLocale }: NavbarProps) {
       </div>
     </nav>
   );
-};
+}
 
 function NavItem({
   titleKey,
