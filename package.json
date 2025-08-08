@@ -43,6 +43,7 @@
     "act:lint": "act -j code-quality",
     "act:jest": "act -j jest-tests",
     "act:e2e": "act -j e2e-tests",
+    "vercel-build": "prisma generate && next build",
     "vercel-deploy": "prisma generate && prisma migrate deploy && tsx prisma/seed.ts && next build"
   },
   "prisma": {
@@ -154,7 +155,7 @@
     "initVersion": "7.39.3"
   },
   "engines": {
-    "node": "22.0.0",
+    "node": ">=22.0.0",
     "pnpm": ">=8.0.0"
   },
   "packageManager": "pnpm@10.13.1"
