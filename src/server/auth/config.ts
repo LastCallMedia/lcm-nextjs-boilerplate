@@ -47,8 +47,9 @@ const buildProviders = () => {
   ) {
     providers.push(
       Nodemailer({
-        server: process.env.EMAIL_SERVER ?? "", // Not used with custom sendVerificationRequest
+        server: "smtp://dummy:dummy@dummy.com:587", // Required but not used
         from: process.env.EMAIL_FROM,
+        name: "resend",
         async sendVerificationRequest({ identifier: email, url, provider }) {
           try {
             if (!resend) {
@@ -91,7 +92,6 @@ const buildProviders = () => {
     );
   } else if (process.env.EMAIL_SERVER && process.env.EMAIL_FROM) {
     // Use SMTP (MailHog) for local development or when Resend is not configured
-    console.log("Using SMTP server for email delivery (development mode)");
     providers.push(
       Nodemailer({
         server: process.env.EMAIL_SERVER,
