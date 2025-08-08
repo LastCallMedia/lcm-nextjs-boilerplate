@@ -2,7 +2,7 @@ import { Facebook, Github, Instagram, Youtube } from "lucide-react";
 import { useIntl } from "react-intl";
 import Link from "next/link";
 
-export default function SimpleWithSocialLinks() {
+export function SimpleWithSocialLinks() {
   const intl = useIntl();
 
   const socialNavigation = [

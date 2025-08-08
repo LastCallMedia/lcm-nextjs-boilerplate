@@ -1,7 +1,7 @@
 import { TypingIndicator } from "~/_components/posts/typing-indicator";
 import { api } from "~/trpc/server";
 import NextRenderingDocsLink from "~/app/[locale]/posts/_components/next-docs-link";
-import AllPostsClient from "~/app/[locale]/posts/client";
+import { AllPostsClient } from "~/app/[locale]/posts/client";
 import { getMessages } from "~/i18n";
 import { auth } from "~/server/auth";
 import { redirect } from "next/navigation";

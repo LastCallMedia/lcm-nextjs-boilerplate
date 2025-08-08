@@ -24,7 +24,7 @@ import { api } from "~/trpc/react";
 import { toast } from "sonner";
 import { LanguageSelectorWrapper } from "~/app/[locale]/(protected)/profile/LanguageSelectorClient";
 
-export default function ProfileClient({ user, messages }: ProfileClientProps) {
+export function ProfileClient({ user, messages }: ProfileClientProps) {
   const { update: updateSession } = useSession();
   const [name, setName] = useState(user?.name ?? "");
   const [serverAvatar, setServerAvatar] = useState<string | undefined>(

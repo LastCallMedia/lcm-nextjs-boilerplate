@@ -2,7 +2,7 @@
 
 import { TypingIndicator } from "~/_components/posts/typing-indicator";
 import { api } from "~/trpc/react";
-import AllPostsClient from "~/app/[locale]/posts/client";
+import { AllPostsClient } from "~/app/[locale]/posts/client";
 import { FormattedMessage } from "react-intl";
 
 export default function ExampleClientSideRendering() {
