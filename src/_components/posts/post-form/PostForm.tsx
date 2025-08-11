@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useRef } from "react";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -15,13 +15,12 @@ interface PostFormProps {
   className?: string;
 }
 
-const PostForm = ({ className }: PostFormProps) => {
+export function PostForm({ className }: PostFormProps) {
   const intl = useIntl();
   const utils = api.useUtils();
-  const userId = useMemo(() => crypto.randomUUID(), []);
-  /** Channel ID to group typing state per-input or page section */
-  const channelId = "landing";
-  const typingTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const userId = "user";
+  const channelId = "general";
+  const typingTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const createPostSchema = z.object({
     name: z.string().min(1, intl.formatMessage({ id: "posts.titleRequired" })),
@@ -114,6 +113,4 @@ const PostForm = ({ className }: PostFormProps) => {
       </form>
     </div>
   );
-};
-
-export default PostForm;
+}

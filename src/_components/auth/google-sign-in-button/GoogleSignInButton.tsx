@@ -12,11 +12,11 @@ import {
 } from "~/_components/ui/tooltip";
 import { getSafeLocale } from "~/lib/utils";
 
-const GoogleSignInButton = ({
+export function GoogleSignInButton({
   isGoogleConfigured,
 }: {
   isGoogleConfigured: boolean;
-}) => {
+}) {
   const { locale } = useParams();
   const safeLocale = getSafeLocale(locale);
 
@@ -66,6 +66,4 @@ const GoogleSignInButton = ({
       />
     </Button>
   );
-};
-
-export default GoogleSignInButton;
+}

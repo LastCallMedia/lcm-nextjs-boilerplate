@@ -22,4 +22,4 @@
 
 export { default as FourColumnWithMission } from "~/_components/layout/footer-templates/four-column-with-mission";
 export { default as SimpleCentered } from "~/_components/layout/footer-templates/simple-centered";
-export { default as SimpleWithSocialLinks } from "~/_components/layout/footer-templates/simple-with-social-links";
+export { SimpleWithSocialLinks } from "~/_components/layout/footer-templates/simple-with-social-links";

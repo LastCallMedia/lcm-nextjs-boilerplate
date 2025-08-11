@@ -24,5 +24,3 @@ export function PostCard({ post, className }: PostCardProps) {
     </Card>
   );
 }
-
-export default PostCard;

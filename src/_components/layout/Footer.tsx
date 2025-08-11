@@ -8,8 +8,6 @@ import { SimpleWithSocialLinks } from "~/_components/layout/footer-templates";
  * You can replace it with any other footer template like FourColumnWithMission, SimpleCentered, etc.
  */
 
-const Footer = () => {
+export function Footer() {
   return <SimpleWithSocialLinks />;
-};
-
-export default Footer;
+}

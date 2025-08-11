@@ -1,7 +1,7 @@
 import React from "react";
 import { Skeleton } from "~/_components/ui";
 
-const PostSkeleton = () => {
+export function PostSkeleton() {
   return (
     <div className="flex flex-col space-y-3">
       <Skeleton className="h-[125px] max-w-lg rounded-xl" />
@@ -11,6 +11,4 @@ const PostSkeleton = () => {
       </div>
     </div>
   );
-};
-
-export default PostSkeleton;
+}
