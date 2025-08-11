@@ -30,11 +30,19 @@ export default function SimpleWithSocialLinks() {
 
   const mainNavigation = [
     {
-      name: "About",
+      name: intl.formatMessage({ id: "footer.navigation.about" }),
       href: "/about",
     },
     {
-      name: "Contact",
+      name: intl.formatMessage({ id: "footer.legal.privacy" }),
+      href: "/privacy",
+    },
+    {
+      name: intl.formatMessage({ id: "footer.legal.terms" }),
+      href: "/terms",
+    },
+    {
+      name: intl.formatMessage({ id: "navigation.contact" }),
       href: "/contact",
     },
     // Add more main navigation items here as needed

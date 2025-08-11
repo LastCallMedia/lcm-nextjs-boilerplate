@@ -1,6 +1,6 @@
 "use client";
 
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, useState, useEffect } from "react";
 import { toast } from "sonner";
 import { Button } from "~/_components/ui/button";
 import {
@@ -34,9 +34,15 @@ export function LegalPageEditor() {
   });
 
   // Get current legal page data for the selected type
-  const legalPageQuery = api.legalPages.getActive.useQuery({
-    type: selectedType,
-  });
+  const legalPageQuery = api.legalPages.getActive.useQuery(
+    { type: selectedType },
+    {
+      enabled: true, // Always enabled
+      retry: 3,
+      retryDelay: 1000,
+    },
+  );
+
   const currentLegalPage = legalPageQuery.data;
   const { refetch } = legalPageQuery;
 
@@ -56,18 +62,17 @@ export function LegalPageEditor() {
     },
   });
 
+  // Reset editing state when type changes
+  useEffect(() => {
+    setIsEditing(false);
+  }, [selectedType]);
+
   const handleEdit = () => {
-    if (
-      currentLegalPage &&
-      typeof currentLegalPage === "object" &&
-      "title" in currentLegalPage &&
-      "content" in currentLegalPage &&
-      "type" in currentLegalPage
-    ) {
+    if (currentLegalPage) {
       setFormData({
-        type: String(currentLegalPage.type) as "TERMS" | "PRIVACY",
-        title: String(currentLegalPage.title),
-        content: String(currentLegalPage.content),
+        type: currentLegalPage.type,
+        title: currentLegalPage.title,
+        content: currentLegalPage.content,
       });
     } else {
       // Set default content based on type
@@ -92,12 +97,7 @@ export function LegalPageEditor() {
 
   const handleSave = () => {
     upsertLegalPage.mutate({
-      id:
-        currentLegalPage &&
-        typeof currentLegalPage === "object" &&
-        "id" in currentLegalPage
-          ? String(currentLegalPage.id)
-          : undefined,
+      id: currentLegalPage?.id,
       type: formData.type,
       title: formData.title,
       content: formData.content,
@@ -116,20 +116,14 @@ export function LegalPageEditor() {
 
   const handleTypeChange = (newType: "TERMS" | "PRIVACY") => {
     setSelectedType(newType);
-    setIsEditing(false); // Exit edit mode when switching types
   };
 
   // Get display data for the current page
   const getDisplayData = () => {
-    if (
-      currentLegalPage &&
-      typeof currentLegalPage === "object" &&
-      "title" in currentLegalPage &&
-      "content" in currentLegalPage
-    ) {
+    if (currentLegalPage) {
       return {
-        title: String(currentLegalPage.title),
-        content: String(currentLegalPage.content),
+        title: currentLegalPage.title,
+        content: currentLegalPage.content,
       };
     }
 
@@ -153,6 +147,23 @@ export function LegalPageEditor() {
     return (
       <div className="flex items-center justify-center py-8">
         <div className="border-primary h-8 w-8 animate-spin rounded-full border-b-2"></div>
+      </div>
+    );
+  }
+
+  if (legalPageQuery.error) {
+    return (
+      <div className="py-8 text-center">
+        <p className="text-destructive">
+          Error loading legal pages: {legalPageQuery.error.message}
+        </p>
+        <Button
+          variant="outline"
+          onClick={() => void refetch()}
+          className="mt-2"
+        >
+          Retry
+        </Button>
       </div>
     );
   }
@@ -278,8 +289,26 @@ export function LegalPageEditor() {
   );
 }
 
+/**
+ * Default Terms and Conditions template content.
+ *
+ * ⚠️ IMPORTANT DISCLAIMER:
+ * This is placeholder/template content for demonstration purposes only.
+ * This content is NOT legal advice and should NOT be used in production
+ * without proper legal review.
+ *
+ * For production use:
+ * - Replace with actual legal documents drafted by qualified legal counsel
+ * - Ensure compliance with applicable laws and jurisdictions
+ * - Have all legal content reviewed by a lawyer
+ *
+ * Source: Generic template language commonly used in web applications,
+ * generated for demonstration purposes only.
+ */
 function getDefaultTermsContent() {
-  return `## 1. Acceptance of Terms
+  return `## ⚠️ PLACEHOLDER CONTENT - REPLACE BEFORE PRODUCTION USE
+
+## 1. Acceptance of Terms
 By accessing and using this application, you accept and agree to be bound by the terms and provision of this agreement.
 
 ## 2. Use License
@@ -298,11 +327,32 @@ The materials appearing on this application could include technical, typographic
 We may revise these terms of service at any time without notice. By using this application, you are agreeing to be bound by the then current version of these terms of service.
 
 ## 7. Contact Information
-If you have any questions about these Terms and Conditions, please contact us through our contact page.`;
+If you have any questions about these Terms and Conditions, please contact us through our contact page.
+
+⚠️ This is placeholder content for demonstration purposes only. 
+Replace with actual terms drafted by qualified legal counsel before production use.`;
 }
 
+/**
+ * Default Privacy Policy template content.
+ *
+ * ⚠️ IMPORTANT DISCLAIMER:
+ * This is placeholder/template content for demonstration purposes only.
+ * This content is NOT legal advice and should NOT be used in production
+ * without proper legal review.
+ *
+ * For production use:
+ * - Replace with actual legal documents drafted by qualified legal counsel
+ * - Ensure compliance with applicable privacy laws (GDPR, CCPA, etc.)
+ * - Have all legal content reviewed by a lawyer
+ *
+ * Source: Generic template language commonly used in web applications,
+ * generated for demonstration purposes only.
+ */
 function getDefaultPrivacyContent() {
-  return `## 1. Information We Collect
+  return `## ⚠️ PLACEHOLDER CONTENT - REPLACE BEFORE PRODUCTION USE
+
+## 1. Information We Collect
 We collect information you provide directly to us, such as when you create an account, use our services, or contact us for support.
 
 ## 2. How We Use Your Information
@@ -327,5 +377,8 @@ Our services are not intended for children under 13, and we do not knowingly col
 We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page.
 
 ## 9. Contact Us
-If you have any questions about this privacy policy, please contact us through our contact page.`;
+If you have any questions about this privacy policy, please contact us through our contact page.
+
+⚠️ This is placeholder content for demonstration purposes only. 
+Replace with actual privacy policy drafted by qualified legal counsel before production use.`;
 }
