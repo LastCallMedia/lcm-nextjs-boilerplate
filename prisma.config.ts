@@ -15,8 +15,8 @@ export default defineConfig({
     // Custom migrations path (default: ./prisma/migrations)
     path: path.join("prisma", "migrations"),
 
-    // Seed script configuration
-    seed: "tsx prisma/seed.ts",
+    // Seed script configuration with environment file
+    seed: "tsx --env-file=.env prisma/seed.ts",
   },
 
   // TypedSQL configuration (for future use with typedSql preview feature)
