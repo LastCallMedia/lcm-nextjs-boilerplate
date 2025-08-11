@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider        = "prisma-client"
   output          = "../src/generated/prisma"
@@ -54,21 +51,31 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String      @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?     @unique
   emailVerified DateTime?
   image         String?
-  role          Role      @default(USER)
-  language      String?   @default("en") // User's preferred language (en, es, etc.)
+  role          Role        @default(USER)
+  language      String?     @default("en")
   accounts      Account[]
-  sessions      Session[]
   posts         Post[]
+  sessions      Session[]
+  legalPages    LegalPage[]
 }
 
-enum Role {
-  USER
-  ADMIN
+model LegalPage {
+  id          String        @id @default(cuid())
+  type        LegalPageType
+  title       String
+  content     String
+  isActive    Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  createdById String
+  createdBy   User          @relation(fields: [createdById], references: [id], onDelete: Cascade)
+
+  @@map("legal_pages")
 }
 
 model VerificationToken {
@@ -77,4 +84,14 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum LegalPageType {
+  TERMS
+  PRIVACY
 }

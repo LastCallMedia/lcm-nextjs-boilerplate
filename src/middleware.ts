@@ -92,7 +92,9 @@ export function middleware(request: NextRequest) {
     pathname === `/${pathnameLocale}/login` ||
     pathname.startsWith(`/${pathnameLocale}/contact`) ||
     pathname.startsWith(`/${pathnameLocale}/about`) ||
-    pathname.startsWith(`/${pathnameLocale}/api-docs`)
+    pathname.startsWith(`/${pathnameLocale}/api-docs`) ||
+    pathname.startsWith(`/${pathnameLocale}/privacy`) ||
+    pathname.startsWith(`/${pathnameLocale}/terms`)
   ) {
     return NextResponse.next({
       request: {

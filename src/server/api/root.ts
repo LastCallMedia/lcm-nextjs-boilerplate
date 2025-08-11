@@ -1,4 +1,5 @@
 import { adminRouter } from "~/server/api/routers/admin";
+import { legalPagesRouter } from "~/server/api/routers/legal-pages";
 import { emailRouter } from "~/server/api/routers/email";
 import { postRouter } from "~/server/api/routers/post";
 import { typingRouter } from "~/server/api/routers/typing";
@@ -13,6 +14,7 @@ export const appRouter = createTRPCRouter({
   post: postRouter,
   admin: adminRouter,
   typing: typingRouter,
+  legalPages: legalPagesRouter,
   email: emailRouter,
 });
 
