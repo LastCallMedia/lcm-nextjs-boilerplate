@@ -6,12 +6,14 @@
   "scripts": {
     "build": "next build",
     "check": "next lint && tsc --noEmit",
-    "db:generate": "prisma migrate dev",
+    "db:generate": "prisma generate",
     "db:migrate": "prisma migrate deploy",
+    "db:migrate:dev": "prisma migrate dev",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:seed": "prisma db seed",
     "db:seed-posts": "tsx --env-file=.env prisma/seed-posts.ts",
+    "db:reset": "prisma migrate reset",
     "dev": "pnpm docker:dev && next dev --turbo",
     "dev:only": "next dev --turbo",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
@@ -45,9 +47,6 @@
     "act:e2e": "act -j e2e-tests",
     "vercel-build": "prisma generate && next build",
     "vercel-deploy": "prisma generate && prisma migrate deploy && tsx prisma/seed.ts && next build"
-  },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",

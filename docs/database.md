@@ -103,10 +103,33 @@ datasource db {
 ```
 
 **Note**: This project uses the new ESM-compatible `prisma-client` generator (without the `-js` suffix) which:
+
 - Generates TypeScript files directly to `src/generated/prisma`
 - Provides better ESM support and import/export compatibility
 - Will become the default in Prisma v7
 - Eliminates issues with code generation into `node_modules`
+
+### Prisma Config File
+
+The project uses `prisma.config.ts` for modern Prisma configuration:
+
+```typescript
+import { defineConfig } from "prisma/config";
+
+export default defineConfig({
+  schema: "prisma/schema.prisma",
+  migrations: {
+    path: "prisma/migrations",
+    seed: "tsx prisma/seed.ts",
+  },
+});
+```
+
+**Benefits**:
+
+- Eliminates deprecation warnings from `package.json#prisma`
+- Uses official Prisma configuration format
+- Centralizes all Prisma settings in one file
 
 ### Database Connection
 
