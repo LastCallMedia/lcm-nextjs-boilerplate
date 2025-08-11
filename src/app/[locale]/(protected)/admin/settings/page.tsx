@@ -11,6 +11,7 @@ import { Button } from "~/_components/ui/button";
 import { Switch } from "~/_components/ui/switch";
 import { Label } from "~/_components/ui/label";
 import { Separator } from "~/_components/ui/separator";
+import { LegalPageEditor } from "~/_components/admin/LegalPageEditor";
 import { auth } from "~/server/auth";
 import { getMessages, t } from "~/i18n/messages";
 
@@ -43,6 +44,20 @@ export default async function SettingsPage({
       </div>
 
       <div className="grid gap-6">
+        {/* Legal Pages Management */}
+        {session.user.role === "ADMIN" && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Legal Pages</CardTitle>
+              <CardDescription>
+                Manage your Terms and Conditions and Privacy Policy pages
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <LegalPageEditor />
+            </CardContent>
+          </Card>
+        )}
         {/* Account Settings */}
         <Card>
           <CardHeader>

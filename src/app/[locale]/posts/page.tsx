@@ -5,7 +5,8 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Posts Examples | LCM Next.js Boilerplate",
-  description: "Examples of SSR and CSR posts",
+  description:
+    "Examples of Server Side Rendering and Client Side Rendering posts",
 };
 
 export default async function PostsExamplesPage({
@@ -24,12 +25,12 @@ export default async function PostsExamplesPage({
       <p>{messages[t("posts.examples.description2")]}</p>
       <div className="flex w-full flex-row gap-4">
         <Button asChild className="grow">
-          <Link href={`/${locale}/posts/example-ssr`}>
+          <Link href={`/${locale}/posts/example-server-side-rendering`}>
             {messages[t("posts.examples.ssrLink")]}
           </Link>
         </Button>
         <Button asChild className="grow">
-          <Link href={`/${locale}/posts/example-csr`}>
+          <Link href={`/${locale}/posts/example-client-side-rendering`}>
             {messages[t("posts.examples.csrLink")]}
           </Link>
         </Button>

@@ -20,7 +20,9 @@
     "signOut": "Sign Out",
     "account": "Account",
     "profile": "Profile",
-    "settings": "Settings"
+    "settings": "Settings",
+    "about": "About",
+    "contact": "Contact"
   },
   "home": {
     "title": "Hello, {name}ers!!",
@@ -48,17 +50,17 @@
       "title": "Posts Examples",
       "description1": "To help illustrate server-side versus client-side data fetching and rendering, 2 versions of the Posts page have been created. You can view and use each one with the links below.",
       "description2": "Remember that components themselves (not just pages) can be server or client rendered, and you can mix/match them to achieve the best results.",
-      "ssrLink": "SSR Example",
-      "csrLink": "CSR Example",
+      "ssrLink": "Server Side Rendering Example",
+      "csrLink": "Client Side Rendering Example",
       "csrPage": {
-        "title": "All Posts (CSR Example)",
-        "description1": "This page is client-side rendered, so posts can be fetched dynamically without a page refresh. This means you can see new posts appear as they are added, without needing to reload the page.",
-        "description2": "CSR is good for content that changes often, especially when changed by user action. If you're using large/heavy queries or want to move work off of the client, SSR may be a better option."
+        "title": "All Posts (Client Side Rendering Example)",
+        "description1": "This page uses client-side rendering, so posts can be fetched dynamically without a page refresh. You can see new posts appear as they are added, without needing to reload the page.",
+        "description2": "Client Side Rendering is good for content that changes often, especially when changed by user action. If you're using large/heavy queries or want to move work off of the client, Server Side Rendering may be a better option."
       },
       "ssrPage": {
-        "title": "All Posts (SSR Example)",
+        "title": "All Posts (Server Side Rendering Example)",
         "description1": "This page is server-side rendered, so posts can only be fetched at time of page render (i.e. page load, refresh, etc). This means you can't see a newly added post unless we manually refresh the page.",
-        "description2": "SSR is good for static or rarely-changing content. If you want data to auto-update without a page refresh, CSR might be a better option."
+        "description2": "Server Side Rendering is good for static or rarely-changing content. If you want data to auto-update without a page refresh, Client Side Rendering might be a better option."
       }
     },
 

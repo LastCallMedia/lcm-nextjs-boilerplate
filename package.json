@@ -6,12 +6,14 @@
   "scripts": {
     "build": "next build",
     "check": "next lint && tsc --noEmit",
-    "db:generate": "prisma migrate dev",
+    "db:generate": "prisma generate",
     "db:migrate": "prisma migrate deploy",
+    "db:migrate:dev": "prisma migrate dev",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:seed": "prisma db seed",
     "db:seed-posts": "tsx --env-file=.env prisma/seed-posts.ts",
+    "db:reset": "prisma migrate reset",
     "dev": "pnpm docker:dev && next dev --turbo",
     "dev:only": "next dev --turbo",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
@@ -43,15 +45,13 @@
     "act:lint": "act -j code-quality",
     "act:jest": "act -j jest-tests",
     "act:e2e": "act -j e2e-tests",
+    "vercel-build": "prisma generate && next build",
     "vercel-deploy": "prisma generate && prisma migrate deploy && tsx prisma/seed.ts && next build"
-  },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
+    "@aws-sdk/client-s3": "^3.862.0",
     "@headlessui/react": "^2.2.7",
-    "@aws-sdk/client-s3": "^3.858.0",
     "@hookform/resolvers": "^5.2.1",
     "@prisma/client": "^6.13.0",
     "@prisma/extension-accelerate": "^2.0.2",
@@ -81,6 +81,8 @@
     "@radix-ui/react-toggle": "^1.1.9",
     "@radix-ui/react-toggle-group": "^1.1.10",
     "@radix-ui/react-tooltip": "^1.2.7",
+    "@react-email/components": "^0.4.0",
+    "@react-email/render": "^1.1.4",
     "@t3-oss/env-nextjs": "^0.13.8",
     "@tanstack/react-query": "^5.84.1",
     "@trpc/client": "^11.4.3",
@@ -93,7 +95,7 @@
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
-    "lucide-react": "^0.536.0",
+    "lucide-react": "^0.537.0",
     "next": "^15.4.5",
     "next-auth": "5.0.0-beta.29",
     "next-themes": "^0.4.6",
@@ -104,7 +106,8 @@
     "react-intl": "^7.1.11",
     "react-hook-form": "^7.62.0",
     "react-resizable-panels": "^3.0.4",
-    "recharts": "^3.1.0",
+    "recharts": "^3.1.2",
+    "resend": "^4.8.0",
     "server-only": "^0.0.1",
     "sonner": "^2.0.7",
     "superjson": "^2.2.2",
@@ -117,7 +120,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
     "@eslint/eslintrc": "^3.3.1",
-    "@playwright/test": "^1.54.1",
+    "@playwright/test": "^1.54.2",
     "@tailwindcss/postcss": "^4.1.11",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
@@ -129,8 +132,9 @@
     "@types/react-dom": "^19.1.6",
     "@types/swagger-ui-react": "^5.18.0",
     "axe-core": "^4.10.3",
+    "cheerio": "^1.1.2",
     "eslint": "^9.32.0",
-    "eslint-config-next": "^15.4.5",
+    "eslint-config-next": "^15.4.6",
     "eslint-config-prettier": "^10.1.8",
     "jest": "^30.0.5",
     "jest-axe": "^10.0.0",
@@ -139,17 +143,18 @@
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "prisma": "^6.13.0",
+    "smtp-tester": "^2.1.0",
     "tailwindcss": "^4.1.11",
     "tsx": "^4.20.3",
     "tw-animate-css": "^1.3.6",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.38.0"
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.39.0"
   },
   "ct3aMetadata": {
     "initVersion": "7.39.3"
   },
   "engines": {
-    "node": "22.0.0",
+    "node": ">=22.0.0",
     "pnpm": ">=8.0.0"
   },
   "packageManager": "pnpm@10.13.1"

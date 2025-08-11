@@ -72,15 +72,18 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/lcm-nextjs-boilerplat
 
 #### Required Environment Variables
 
-| Variable               | Description                               | Required        |
-| ---------------------- | ----------------------------------------- | --------------- |
-| `NODE_ENV`             | Environment mode (development/production) | Yes             |
-| `AUTH_SECRET`          | NextAuth.js secret for JWT signing        | Yes             |
-| `AUTH_GOOGLE_ID`       | Google OAuth client ID                    | For Google auth |
-| `AUTH_GOOGLE_SECRET`   | Google OAuth client secret                | For Google auth |
-| `AUTH_URL`             | Base URL for authentication callbacks     | Yes             |
-| `NEXT_PUBLIC_BASE_URL` | Public-facing base URL                    | Yes             |
-| `DATABASE_URL`         | PostgreSQL connection string              | Yes             |
+| Variable               | Description                                  | Required        |
+| ---------------------- | -------------------------------------------- | --------------- |
+| `NODE_ENV`             | Environment mode (development/production)    | Yes             |
+| `AUTH_SECRET`          | NextAuth.js secret for JWT signing           | Yes             |
+| `AUTH_GOOGLE_ID`       | Google OAuth client ID                       | For Google auth |
+| `AUTH_GOOGLE_SECRET`   | Google OAuth client secret                   | For Google auth |
+| `AUTH_URL`             | Base URL for authentication callbacks        | Yes             |
+| `NEXT_PUBLIC_BASE_URL` | Public-facing base URL                       | Yes             |
+| `DATABASE_URL`         | PostgreSQL connection string                 | Yes             |
+| `EMAIL_SERVER`         | SMTP server URL (dev: smtp://localhost:1025) | For magic links |
+| `EMAIL_FROM`           | From email address                           | For magic links |
+| `RESEND_API_KEY`       | Resend API key (production only)             | For production  |
 
 ### 4. Database Setup
 

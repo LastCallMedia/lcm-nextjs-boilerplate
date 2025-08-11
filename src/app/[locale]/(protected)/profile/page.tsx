@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { auth } from "~/server/auth";
 import { api } from "~/trpc/server";
 import { getMessages, t } from "~/i18n/messages";
-import ProfileClient from "~/app/[locale]/(protected)/profile/client";
+import { ProfileClient } from "~/app/[locale]/(protected)/profile/client";
 
 export const metadata: Metadata = {
   title: "Profile | LCM Next.js Boilerplate",
