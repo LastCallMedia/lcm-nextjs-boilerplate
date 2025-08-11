@@ -2,6 +2,9 @@ import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import Nodemailer from "next-auth/providers/nodemailer";
 import { isGoogleAuthConfigured } from "~/lib/auth-utils";
+import { render } from "@react-email/render";
+import { resend } from "~/lib/email";
+import { MagicLinkEmail } from "~/_components/email";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -31,12 +34,104 @@ declare module "next-auth" {
 const buildProviders = () => {
   const providers = [];
 
-  // Include Nodemailer provider for magic links
-  if (process.env.EMAIL_SERVER && process.env.EMAIL_FROM) {
+  // Check if we're in development with local domain
+  const isLocalDevelopment =
+    process.env.NODE_ENV === "development" &&
+    process.env.EMAIL_FROM?.includes(".local");
+
+  // Use Resend for production or development with verified domains
+  if (
+    process.env.RESEND_API_KEY &&
+    process.env.EMAIL_FROM &&
+    !isLocalDevelopment
+  ) {
+    providers.push(
+      Nodemailer({
+        server: "smtp://dummy:dummy@dummy.com:587", // Required but not used
+        from: process.env.EMAIL_FROM,
+        // Remove name to use default "nodemailer" for consistency
+        async sendVerificationRequest({ identifier: email, url, provider }) {
+          try {
+            if (!resend) {
+              throw new Error(
+                "Resend client not initialized. Check RESEND_API_KEY configuration.",
+              );
+            }
+
+            const { host } = new URL(url);
+            const html = await render(
+              MagicLinkEmail({
+                url,
+                host,
+                appName: "LCM Boilerplate",
+              }),
+            );
+
+            const result = await resend.emails.send({
+              from:
+                provider.from ??
+                process.env.EMAIL_FROM ??
+                "noreply@yourdomain.com",
+              to: email,
+              subject: `Sign in to LCM Boilerplate`,
+              html,
+            });
+
+            if (result.error) {
+              console.error("Failed to send magic link email:", result.error);
+              throw new Error(`Failed to send email: ${result.error.message}`);
+            }
+
+            console.log("Magic link email sent successfully:", result.data?.id);
+          } catch (error) {
+            console.error("Error sending magic link email:", error);
+            throw error;
+          }
+        },
+      }),
+    );
+  } else if (process.env.EMAIL_SERVER && process.env.EMAIL_FROM) {
+    // Use SMTP (MailHog) for local development or when Resend is not configured
     providers.push(
       Nodemailer({
         server: process.env.EMAIL_SERVER,
         from: process.env.EMAIL_FROM,
+        async sendVerificationRequest({ identifier: email, url, provider }) {
+          try {
+            const { host } = new URL(url);
+            const html = await render(
+              MagicLinkEmail({
+                url,
+                host,
+                appName: "LCM Boilerplate",
+              }),
+            );
+
+            // Use nodemailer directly for SMTP
+            const nodemailer = await import("nodemailer");
+            const transport = nodemailer.createTransport(
+              process.env.EMAIL_SERVER,
+            );
+
+            const result = await transport.sendMail({
+              from:
+                provider.from ??
+                process.env.EMAIL_FROM ??
+                "noreply@yourdomain.com",
+              to: email,
+              subject: `Sign in to LCM Boilerplate`,
+              html,
+            });
+
+            console.log(
+              "Magic link email sent successfully via SMTP:",
+              result.messageId,
+            );
+          } catch (error) {
+            console.error("Error sending magic link email via SMTP:", error);
+            throw error;
+          }
+        },
       }),
     );
   }

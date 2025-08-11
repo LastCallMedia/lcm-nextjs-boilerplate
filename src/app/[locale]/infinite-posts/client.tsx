@@ -5,11 +5,11 @@ import { api } from "~/trpc/react";
 import { Alert, AlertDescription } from "~/_components/ui/alert";
 import { Button } from "~/_components/ui/button";
 import { RefreshCw } from "lucide-react";
-import { PostCard } from "~/_components/posts/PostCard";
+import { PostCard } from "~/_components/posts/post-card";
 import { InfiniteScrollContainer } from "~/_components/ui";
-import PostSkeleton from "~/_components/posts/PostSkeleton";
+import { PostSkeleton } from "~/_components/posts/post-skeleton";
 
-const InfinitePostsClient = () => {
+export function InfinitePostsClient() {
   const infiniteQuery = api.post.getInfinitePosts.useInfiniteQuery(
     {},
     {
@@ -71,6 +71,4 @@ const InfinitePostsClient = () => {
       </InfiniteScrollContainer>
     </div>
   );
-};
-
-export default InfinitePostsClient;
+}

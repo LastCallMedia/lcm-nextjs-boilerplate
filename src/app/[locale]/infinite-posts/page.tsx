@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import InfinitePostsClient from "~/app/[locale]/infinite-posts/client";
+import { InfinitePostsClient } from "~/app/[locale]/infinite-posts/client";
 
 const InfinitePosts = () => {
   return (

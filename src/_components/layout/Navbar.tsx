@@ -20,7 +20,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import GoogleSignInButton from "~/_components/auth/GoogleSignInButton";
+import { GoogleSignInButton } from "~/_components/auth/google-sign-in-button";
 import { LanguageSwitcher } from "~/_components/i18n";
 import { ThemeModeToggle } from "~/_components/theme";
 import {
@@ -108,7 +108,7 @@ interface NavbarProps {
   currentLocale: Locale;
 }
 
-const Navbar = ({ currentLocale }: NavbarProps) => {
+export function Navbar({ currentLocale }: NavbarProps) {
   const { data: session } = useSession();
   const isGoogleConfigured =
     process.env.NEXT_PUBLIC_AUTH_GOOGLE_ENABLED?.toLowerCase() === "true";
@@ -382,7 +382,7 @@ const Navbar = ({ currentLocale }: NavbarProps) => {
       </div>
     </nav>
   );
-};
+}
 
 function NavItem({
   titleKey,
@@ -407,5 +407,3 @@ function NavItem({
     </li>
   );
 }
-
-export default Navbar;

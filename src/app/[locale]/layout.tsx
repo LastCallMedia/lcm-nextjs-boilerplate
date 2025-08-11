@@ -1,7 +1,7 @@
 import { SessionProvider } from "next-auth/react";
 import { AuthProvider } from "~/_components/auth";
 import { Footer } from "~/_components/layout";
-import Navbar from "~/_components/layout/Navbar";
+import { Navbar } from "~/_components/layout/Navbar";
 import { Toaster } from "~/_components/ui/sonner";
 import { ThemeProvider } from "~/_components/ui/theme-provider";
 import { IntlProvider, getMessages, getValidLocale, locales } from "~/i18n";
