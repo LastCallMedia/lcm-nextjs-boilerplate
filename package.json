@@ -49,8 +49,12 @@
     "vercel-deploy": "prisma generate && prisma migrate deploy && tsx prisma/seed.ts && next build"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^2.0.17",
+    "@ai-sdk/react": "^2.0.19",
     "@auth/prisma-adapter": "^2.10.0",
     "@aws-sdk/client-s3": "^3.863.0",
+    "@copilotkit/react-core": "^1.10.2",
+    "@copilotkit/react-ui": "^1.10.2",
     "@headlessui/react": "^2.2.7",
     "@hookform/resolvers": "^5.2.1",
     "@prisma/client": "^6.13.0",
@@ -89,6 +93,7 @@
     "@trpc/react-query": "^11.4.3",
     "@trpc/server": "^11.4.3",
     "@types/nodemailer": "^6.4.17",
+    "ai": "^5.0.19",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
