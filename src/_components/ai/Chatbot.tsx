@@ -3,23 +3,19 @@
 import React from "react";
 import { CopilotPopup } from "@copilotkit/react-ui";
 import { api } from "~/trpc/react";
+import { toast } from "sonner";
 
 const Chatbot = () => {
   const chatMutation = api.ai.chat.useMutation();
 
-  const onSubmitMessage = async (message: string): Promise<void> => {
+  const onSubmitMessage = async (message: string) => {
     try {
-      const response = await chatMutation.mutateAsync({
+      await chatMutation.mutateAsync({
         message,
         context: undefined,
       });
-
-      if (response.postIdeas && response.postIdeas.length > 0) {
-        console.log("Generated post ideas:", response.postIdeas);
-      }
-      console.log("AI Response:", response.response);
     } catch (error) {
-      console.error("Failed to send message:", error);
+      toast.error("Failed to send message");
       throw error;
     }
   };

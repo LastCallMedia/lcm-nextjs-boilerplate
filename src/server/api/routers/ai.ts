@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { openai } from "@ai-sdk/openai";
-import { generateObject } from "ai";
+import { generateObject, streamText } from "ai";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 // Schema for post idea generation
@@ -24,7 +24,7 @@ const ChatMessageSchema = z.object({
     .describe("Additional context about the user or their needs"),
 });
 
-// Schema for chat response
+// Schema for chat response (for post ideas)
 const ChatResponseSchema = z.object({
   response: z.string(),
   postIdeas: z.array(PostIdeaSchema).optional(),
@@ -33,7 +33,7 @@ const ChatResponseSchema = z.object({
 
 export const aiRouter = createTRPCRouter({
   /**
-   * Generate a chat response with optional post ideas
+   * Generate a chat response using structured output for post ideas or streaming text for general chat
    */
   chat: publicProcedure
     .meta({
@@ -43,7 +43,7 @@ export const aiRouter = createTRPCRouter({
         tags: ["ai"],
         summary: "Chat with AI assistant",
         description:
-          "Send a message to the AI assistant and get a response with optional post ideas",
+          "Send a message to the AI assistant. Uses structured output (generateObject) for post idea requests, and streaming text (streamText) for general chat",
       },
     })
     .input(ChatMessageSchema)
@@ -55,10 +55,27 @@ export const aiRouter = createTRPCRouter({
 
       try {
         // Check if the message is asking for post ideas
-        const isPostIdeaRequest =
-          input.message.toLowerCase().includes("post idea") ||
-          input.message.toLowerCase().includes("blog idea") ||
-          input.message.toLowerCase().includes("content idea");
+        const lowerMessage = input.message.toLowerCase();
+        const postIdeaKeywords = [
+          "post idea",
+          "blog idea",
+          "content idea",
+          "article idea",
+          "what should i write",
+          "writing ideas",
+          "topic ideas",
+          "blog topics",
+          "post topics",
+          "content topics",
+          "what to write about",
+          "writing suggestions",
+          "blog post suggestions",
+          "content suggestions",
+        ];
+
+        const isPostIdeaRequest = postIdeaKeywords.some((keyword) =>
+          lowerMessage.includes(keyword),
+        );
 
         if (isPostIdeaRequest) {
           // Generate structured post ideas
@@ -85,8 +102,8 @@ export const aiRouter = createTRPCRouter({
 
           return result.object;
         } else {
-          // Regular chat response
-          const result = await generateObject({
+          // Regular chat response using streamText
+          const result = await streamText({
             model: openai("gpt-4o-mini"),
             prompt: `
               User message: ${input.message}
@@ -96,18 +113,13 @@ export const aiRouter = createTRPCRouter({
               Provide a helpful, friendly response to the user's message.
               If they seem interested in content creation, offer to help generate post ideas.
             `,
-            schema: z.object({
-              response: z.string().describe("A helpful response to the user"),
-              suggestions: z
-                .array(z.string())
-                .optional()
-                .describe("Optional suggestions"),
-            }),
           });
 
+          // Convert stream to text for the response
+          const responseText = await result.text;
+
           return {
-            response: result.object.response,
-            suggestions: result.object.suggestions,
+            response: responseText,
           };
         }
       } catch (error) {
