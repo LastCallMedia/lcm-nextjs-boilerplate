@@ -1,6 +1,6 @@
 # Contributing Guide
 
-Thank you for your interest in contributing to the LCM Next.js Boilerplate! This guide will help you get started with contributing to the project.
+Thank you for your interest in contributing to the LCM Next.js Quickstart! This guide will help you get started with contributing to the project.
 
 ## Table of Contents
 
@@ -624,7 +624,7 @@ DEBUG=prisma:query pnpm dev
 
 ## Thank You
 
-Thank you for contributing to the LCM Next.js Boilerplate! Your efforts help make this project better for everyone. 🎉
+Thank you for contributing to the LCM Next.js Quickstart! Your efforts help make this project better for everyone. 🎉
 
 ---
 
