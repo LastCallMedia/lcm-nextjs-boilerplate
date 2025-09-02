@@ -12,7 +12,35 @@ This guide covers the comprehensive testing strategy implemented in the LCM Next
 - **jest-axe**: Accessibility testing for Jest
 - **axe-playwright**: Accessibility testing for Playwright
 
-### Test Structure
+## Running Tests
+
+### Quick Start
+
+```bash
+# Install Playwright browsers
+pnpm install:playwright
+
+# Run all unit tests
+pnpm test
+
+# Run tests in watch mode
+pnpm test:watch
+
+# Run tests with coverage
+pnpm test:coverage
+
+# Run E2E tests
+pnpm test:e2e
+
+# Run with visual interface
+pnpm test:e2e:ui
+
+# Run in headed mode (visible browser)
+pnpm test:e2e:headed
+```
+
+
+## Test Structure
 
 ```
 tests/
@@ -419,22 +447,6 @@ describe("Database Integration", () => {
 ```
 
 ## End-to-End Testing
-
-### Quick Start
-
-```bash
-# Install Playwright browsers
-pnpm install:playwright
-
-# Run E2E tests
-pnpm test:e2e
-
-# Run with visual interface
-pnpm test:e2e:ui
-
-# Run in headed mode (visible browser)
-pnpm test:e2e:headed
-```
 
 ### Playwright Configuration
 
