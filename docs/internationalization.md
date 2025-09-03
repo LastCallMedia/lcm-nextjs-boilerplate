@@ -14,7 +14,7 @@ After logging in, the application automatically detects the user's saved languag
 
 This feature allows users to personalize their language experience and guarantees that their chosen language is used for navigation and UI after authentication.
 
-This document describes how internationalization is implemented in the LCM Next.js Boilerplate using react-intl.
+This document describes how internationalization is implemented in LCM Next.js Quickstart using react-intl.
 
 ## Overview
 
