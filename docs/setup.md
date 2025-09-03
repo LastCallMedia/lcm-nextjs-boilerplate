@@ -255,10 +255,4 @@ After successful setup:
 4. **Learn about the database**: [Database Documentation](./database.md)
 5. **Start building**: [Development Guide](./development.md)
 
-## Additional Resources
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [T3 Stack Documentation](https://create.t3.gg/)
-- [Prisma Documentation](https://www.prisma.io/docs)
-- [tRPC Documentation](https://trpc.io/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)

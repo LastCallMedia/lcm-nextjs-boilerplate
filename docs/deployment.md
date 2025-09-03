@@ -5,6 +5,7 @@ This guide covers deployment strategies, hosting options, and production configu
 ## Deployment Overview
 
 The project supports multiple deployment strategies:
+The project supports multiple deployment strategies:
 
 - **Docker-based**: Containerized deployment for any platform
 - **Vercel**: Optimal for Next.js applications
