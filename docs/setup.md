@@ -1,6 +1,6 @@
 # Setup & Installation Guide
 
-This guide provides detailed instructions for setting up the LCM Next.js Boilerplate on your local development environment.
+This guide provides detailed instructions for setting up LCM Next.js Quickstart on your local development environment.
 
 ## Prerequisites
 

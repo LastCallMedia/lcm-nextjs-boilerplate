@@ -1,10 +1,10 @@
 # Deployment Guide
 
-This guide covers deployment strategies, hosting options, and production configuration for the LCM Next.js Boilerplate.
+This guide covers deployment strategies, hosting options, and production configuration for the LCM Next.js Quickstart.
 
 ## Deployment Overview
 
-The boilerplate supports multiple deployment strategies:
+The project supports multiple deployment strategies:
 
 - **Docker-based**: Containerized deployment for any platform
 - **Vercel**: Optimal for Next.js applications

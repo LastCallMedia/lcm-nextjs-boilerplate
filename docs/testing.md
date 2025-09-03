@@ -1,6 +1,6 @@
 # Testing Guide
 
-This guide covers the comprehensive testing strategy implemented in the LCM Next.js Boilerplate, including unit testing, integration testing, and end-to-end testing.
+This guide covers the comprehensive testing strategy implemented in LCM Next.js Quickstart, including unit testing, integration testing, and end-to-end testing.
 
 ## Testing Stack
 
