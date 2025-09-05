@@ -168,29 +168,59 @@ export const aiRouter = createTRPCRouter({
 
         if (isPostIdeaRequest) {
           // Generate structured post ideas
-          const result = await generateObject({
-            model: openai("gpt-4o-mini"),
-            prompt: `
-              User message: ${input.message}
-              ${fullContext ? `Context: ${fullContext}` : ""}
-              
-              Generate 2-3 creative blog post ideas based on the user's request. 
-              Consider current trends, practical value, and engaging content.
-              Make the ideas specific and actionable.
-              ${userContext ? "Consider the user's previous posts to avoid repetition and suggest complementary topics." : ""}
-            `,
-            schema: z.object({
-              response: z.string().describe("A helpful response to the user"),
-              postIdeas: z
-                .array(PostIdeaSchema)
-                .describe("Generated post ideas"),
-              suggestions: z
-                .array(z.string())
-                .describe("Additional suggestions or tips"),
-            }),
-          });
+          try {
+            const result = await generateObject({
+              model: openai("gpt-4o-mini"),
+              prompt: `
+                User message: ${input.message}
+                ${fullContext ? `Context: ${fullContext}` : ""}
+                
+                Generate 2-3 creative blog post ideas based on the user's request. 
+                Consider current trends, practical value, and engaging content.
+                Make the ideas specific and actionable.
+                ${userContext ? "Consider the user's previous posts to avoid repetition and suggest complementary topics." : ""}
+                
+                Please provide:
+                1. A helpful response message to the user
+                2. 2-3 detailed post ideas with titles, descriptions, tags, and outlines
+                3. Additional suggestions or tips
+              `,
+              schema: z.object({
+                response: z
+                  .string()
+                  .describe(
+                    "A helpful response message to the user explaining the post ideas",
+                  ),
+                postIdeas: z
+                  .array(PostIdeaSchema)
+                  .describe("Generated post ideas"),
+                suggestions: z
+                  .array(z.string())
+                  .describe("Additional suggestions or tips"),
+              }),
+            });
 
-          response = result.object;
+            response = result.object;
+          } catch (error) {
+            console.error("Error generating structured post ideas:", error);
+            // Fallback to regular chat response if structured generation fails
+            const fallbackResult = await streamText({
+              model: openai("gpt-4o-mini"),
+              prompt: `
+                User message: ${input.message}
+                ${fullContext ? `Context: ${fullContext}` : ""}
+                
+                The user is asking for post ideas. Provide helpful suggestions for blog post topics with brief descriptions.
+                Be creative and specific in your recommendations.
+                ${userContext ? "Consider their previous posts to avoid repetition and suggest complementary topics." : ""}
+              `,
+            });
+
+            const responseText = await fallbackResult.text;
+            response = {
+              response: responseText,
+            };
+          }
         } else {
           // Regular chat response using streamText
           const result = await streamText({
@@ -244,6 +274,22 @@ export const aiRouter = createTRPCRouter({
         };
       } catch (error) {
         console.error("AI chat error:", error);
+
+        // Provide more specific error messages based on error type
+        if (error instanceof Error) {
+          if (error.message.includes("API key")) {
+            throw new Error("AI service is not properly configured");
+          }
+          if (error.message.includes("quota")) {
+            throw new Error(
+              "AI service quota exceeded. Please try again later",
+            );
+          }
+          if (error.message.includes("timeout")) {
+            throw new Error("AI service timeout. Please try again");
+          }
+        }
+
         throw new Error("Failed to generate AI response");
       }
     }),

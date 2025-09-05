@@ -73,7 +73,17 @@ const Chatbot = () => {
         setSessionId(response.sessionId);
       }
     } catch (error) {
-      toast.error("Failed to send message");
+      console.error("Error in onSubmitMessage:", error);
+
+      // Provide more specific error messages
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to send message";
+
+      toast.error(errorMessage);
+
+      // Remove the user message from history if the AI response failed
+      setConversationHistory(conversationHistory);
+
       throw error;
     }
   };
