@@ -3,7 +3,7 @@
 A production-ready Next.js boilerplate project for Last Call Media, designed to accelerate project development with modern best practices and a comprehensive tech stack.
 
 
-[![Node.js](https://img.shields.io/badge/Node.js-22+-green.svg)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-22-green.svg)](https://nodejs.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-15.3+-blue.svg)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8+-blue.svg)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -14,8 +14,8 @@ A production-ready Next.js boilerplate project for Last Call Media, designed to 
 
 ### Prerequisites
 
-- [**Node.js**](https://nodejs.org/): 22.0 or higher 
-- [**pnpm**](https://pnpm.io/installation): 8.0.0 or higher
+- [**Node.js**](https://nodejs.org/): v22.0 
+- [**pnpm**](https://pnpm.io/installation): v8.0.0 or higher
 - [**Docker**](https://docs.docker.com/desktop/setup/install/windows-install/): For database and development services
 
 ### Installation
