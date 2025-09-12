@@ -16,20 +16,12 @@ function sanitizeUserInput(message: string): string {
     /\b\d{3}-?\d{2}-?\d{4}\b/g,
     // API keys (common patterns)
     /\b[a-zA-Z0-9_-]{20,}\b/g,
-    // URLs with potential sensitive info
-    /https?:\/\/[^\s]+/g,
     // Prompt injection attempts
-    /ignore.{0,20}(previous|prior|above|system).{0,20}(instructions?|prompts?|rules?)/gi,
-    /forget.{0,20}(previous|prior|above|all|everything).{0,20}(instructions?|prompts?|rules?)/gi,
-    /(disregard|bypass|override).{0,20}(instructions?|prompts?|rules?|system)/gi,
-    /you.{0,10}are.{0,10}now.{0,20}(a|an).{0,20}(different|new)/gi,
-    /act.{0,10}as.{0,10}(if|a|an).{0,20}(different|new|jailbreak)/gi,
-    /pretend.{0,10}(to.{0,10}be|you.{0,10}are).{0,20}(a|an)/gi,
+    /(ignore|forget|disregard|bypass|override).{0,30}(previous|prior|above|system|instructions?|prompts?|rules?)/gi,
+    /(you.{0,10}are.{0,10}now|act.{0,10}as|pretend.{0,10}(to.{0,10}be|you.{0,10}are)).{0,30}(different|new|jailbreak)/gi,
   ];
 
   let sanitized = message;
-
-  // Replace all sensitive patterns with a single redaction placeholder
   sensitivePatterns.forEach((pattern) => {
     sanitized = sanitized.replace(pattern, "[REDACTED]");
   });
@@ -75,8 +67,6 @@ export const aiRouter = createTRPCRouter({
       try {
         // Sanitize user input to prevent exposure of sensitive information
         const sanitizedMessage = sanitizeUserInput(input.message);
-
-        // Note: We use sanitizedMessage throughout to protect user privacy
         let conversationContext = "";
         let userContext = "";
         let sessionId: string | undefined;
@@ -84,7 +74,7 @@ export const aiRouter = createTRPCRouter({
         // If user is authenticated, get personalized context and handle session management
         if (ctx.session?.user?.id) {
           try {
-            // Get user's recent posts for personalized context
+            // Get user's recent posts
             const recentPosts = await ctx.db.post.findMany({
               where: { createdById: ctx.session.user.id },
               orderBy: { createdAt: "desc" },
