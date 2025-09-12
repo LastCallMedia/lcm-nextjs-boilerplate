@@ -63,7 +63,6 @@ model User {
   sessions      Session[]
   legalPages    LegalPage[]
   chatSessions  ChatSession[]
-  userProfile   UserProfile?
 }
 
 model LegalPage {
@@ -121,21 +120,6 @@ model ChatMessage {
   session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 
   @@map("chat_messages")
-}
-
-// User profile for personalized context
-model UserProfile {
-  id              String   @id @default(cuid())
-  userId          String   @unique
-  preferredTopics String[] // Array of preferred content topics
-  writingStyle    String? // Preferred writing style (casual, formal, etc.)
-  contentGoals    String? // User's content creation goals
-  targetAudience  String? // Who they write for
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("user_profiles")
 }
 
 enum MessageRole {
