@@ -145,7 +145,7 @@
     "prisma": "^6.15.0",
     "smtp-tester": "^2.1.0",
     "tailwindcss": "^4.1.11",
-    "tsx": "^4.20.3",
+    "tsx": "^4.20.5",
     "tw-animate-css": "^1.3.6",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.39.0"
