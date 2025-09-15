@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@auth/prisma-adapter':
         specifier: ^2.10.0
-        version: 2.10.0(@prisma/client@6.15.0(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2))(nodemailer@7.0.6)
+        version: 2.10.0(@prisma/client@6.16.1(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2))(nodemailer@7.0.6)
       '@aws-sdk/client-s3':
         specifier: ^3.879.0
         version: 3.879.0
@@ -21,11 +21,11 @@ importers:
         specifier: ^5.2.1
         version: 5.2.1(react-hook-form@7.62.0(react@19.1.0))
       '@prisma/client':
-        specifier: ^6.15.0
-        version: 6.15.0(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2)
+        specifier: ^6.16.1
+        version: 6.16.1(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2)
       '@prisma/extension-accelerate':
         specifier: ^2.0.2
-        version: 2.0.2(@prisma/client@6.15.0(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2))
+        version: 2.0.2(@prisma/client@6.16.1(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2))
       '@radix-ui/react-accordion':
         specifier: ^1.2.11
         version: 1.2.11(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1453,8 +1453,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@prisma/client@6.15.0':
-    resolution: {integrity: sha512-wR2LXUbOH4cL/WToatI/Y2c7uzni76oNFND7+23ypLllBmIS8e3ZHhO+nud9iXSXKFt1SoM3fTZvHawg63emZw==}
+  '@prisma/client@6.16.1':
+    resolution: {integrity: sha512-QaBCOY29lLAxEFFJgBPyW3WInCW52fJeQTmWx/h6YsP5u0bwuqP51aP0uhqFvhK9DaZPwvai/M4tSDYLVE9vRg==}
     engines: {node: '>=18.18'}
     peerDependencies:
       prisma: '*'
@@ -6588,10 +6588,10 @@ snapshots:
     optionalDependencies:
       nodemailer: 7.0.6
 
-  '@auth/prisma-adapter@2.10.0(@prisma/client@6.15.0(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2))(nodemailer@7.0.6)':
+  '@auth/prisma-adapter@2.10.0(@prisma/client@6.16.1(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2))(nodemailer@7.0.6)':
     dependencies:
       '@auth/core': 0.40.0(nodemailer@7.0.6)
-      '@prisma/client': 6.15.0(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2)
+      '@prisma/client': 6.16.1(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2)
     transitivePeerDependencies:
       - '@simplewebauthn/browser'
       - '@simplewebauthn/server'
@@ -8268,7 +8268,7 @@ snapshots:
     dependencies:
       playwright: 1.54.2
 
-  '@prisma/client@6.15.0(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2)':
+  '@prisma/client@6.16.1(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2)':
     optionalDependencies:
       prisma: 6.15.0(typescript@5.9.2)
       typescript: 5.9.2
@@ -8293,9 +8293,9 @@ snapshots:
       '@prisma/fetch-engine': 6.15.0
       '@prisma/get-platform': 6.15.0
 
-  '@prisma/extension-accelerate@2.0.2(@prisma/client@6.15.0(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2))':
+  '@prisma/extension-accelerate@2.0.2(@prisma/client@6.16.1(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2))':
     dependencies:
-      '@prisma/client': 6.15.0(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2)
+      '@prisma/client': 6.16.1(prisma@6.15.0(typescript@5.9.2))(typescript@5.9.2)
 
   '@prisma/fetch-engine@6.15.0':
     dependencies:
