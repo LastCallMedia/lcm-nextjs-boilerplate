@@ -9,16 +9,16 @@ importers:
   .:
     dependencies:
       '@ai-sdk/openai':
-        specifier: ^2.0.28
+        specifier: ^2.0.32
         version: 2.0.32(zod@3.25.76)
       '@ai-sdk/react':
-        specifier: ^2.0.39
+        specifier: ^2.0.46
         version: 2.0.46(react@19.1.1)(zod@3.25.76)
       '@auth/prisma-adapter':
         specifier: ^2.10.0
         version: 2.10.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2))(nodemailer@7.0.6)
       '@aws-sdk/client-s3':
-        specifier: ^3.882.0
+        specifier: ^3.879.0
         version: 3.892.0
       '@copilotkit/react-core':
         specifier: ^1.10.4
@@ -141,7 +141,7 @@ importers:
         specifier: ^7.0.1
         version: 7.0.1
       ai:
-        specifier: ^5.0.39
+        specifier: ^5.0.46
         version: 5.0.46(zod@3.25.76)
       class-variance-authority:
         specifier: ^0.7.1
@@ -216,8 +216,8 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1
       trpc-to-openapi:
-        specifier: ^3.0.1
-        version: 3.0.1(@trpc/server@11.5.1(typescript@5.9.2))(zod-openapi@5.4.1(zod@3.25.76))(zod@3.25.76)
+        specifier: ^2.3.2
+        version: 2.4.0(@trpc/server@11.5.1(typescript@5.9.2))(zod-openapi@4.2.4(zod@3.25.76))(zod@3.25.76)
       vaul:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.1.9(@types/react@19.1.13))(@types/react@19.1.13)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -6410,12 +6410,12 @@ packages:
   trough@2.2.0:
     resolution: {integrity: sha512-tmMpK00BjZiUyVyvrBK7knerNgmgvcV/KLVyuma/SC+TQN167GrMRciANTz09+k3zW8L8t60jWO1GpfkZdjTaw==}
 
-  trpc-to-openapi@3.0.1:
-    resolution: {integrity: sha512-XxQl/DvjrtSUkdkixyv403p+JAi/rKSqjfjQb30gR8hbIR4z2ixD+y3Sl0TJVRrx5dLPNJjt+UU/dfMQeTdfiQ==}
+  trpc-to-openapi@2.4.0:
+    resolution: {integrity: sha512-B6xrwOC3Ab0q1BWD/QbJzK4OUpCLoT02hAzshSUXEuIZGcJZkMG/OJ4/3gd20dyr8aI+CrFirpWKRIo7JmHbMQ==}
     peerDependencies:
       '@trpc/server': ^11.1.0
-      zod: ^4.0.0
-      zod-openapi: ^5.0.1
+      zod: ^3.23.8
+      zod-openapi: 4.2.4
 
   ts-api-utils@2.1.0:
     resolution: {integrity: sha512-CUgTZL1irw8u29bzrOD/nH85jqyc74D6SshFgujOIA7osm2Rz7dYH77agkx7H4FBNxDq7Cjf+IjaX/8zwFW+ZQ==}
@@ -6795,11 +6795,11 @@ packages:
   zenscroll@4.0.2:
     resolution: {integrity: sha512-jEA1znR7b4C/NnaycInCU6h/d15ZzCd1jmsruqOKnZP6WXQSMH3W2GL+OXbkruslU4h+Tzuos0HdswzRUk/Vgg==}
 
-  zod-openapi@5.4.1:
-    resolution: {integrity: sha512-deZCmezGJhi2urw7l8LWYCJEUaAb/Azo14c0wncCM7L7u7hz+1d4v3r4Uav7x4+zVkJj/ZYlCu6lwT0QQttW6g==}
-    engines: {node: '>=20'}
+  zod-openapi@4.2.4:
+    resolution: {integrity: sha512-tsrQpbpqFCXqVXUzi3TPwFhuMtLN3oNZobOtYnK6/5VkXsNdnIgyNr4r8no4wmYluaxzN3F7iS+8xCW8BmMQ8g==}
+    engines: {node: '>=18'}
     peerDependencies:
-      zod: ^3.25.74 || ^4.0.0
+      zod: ^3.21.4
 
   zod-to-json-schema@3.24.6:
     resolution: {integrity: sha512-h/z3PKvcTcTetyjl1fkj79MHNEjm+HpD6NXheWjzOekY7kV+lwDYnHw+ivHkijnCSMz1yJaWBD9vu/Fcmk+vEg==}
@@ -14578,14 +14578,14 @@ snapshots:
 
   trough@2.2.0: {}
 
-  trpc-to-openapi@3.0.1(@trpc/server@11.5.1(typescript@5.9.2))(zod-openapi@5.4.1(zod@3.25.76))(zod@3.25.76):
+  trpc-to-openapi@2.4.0(@trpc/server@11.5.1(typescript@5.9.2))(zod-openapi@4.2.4(zod@3.25.76))(zod@3.25.76):
     dependencies:
       '@trpc/server': 11.5.1(typescript@5.9.2)
       co-body: 6.2.0
       h3: 1.15.1
       openapi3-ts: 4.4.0
       zod: 3.25.76
-      zod-openapi: 5.4.1(zod@3.25.76)
+      zod-openapi: 4.2.4(zod@3.25.76)
     optionalDependencies:
       '@rollup/rollup-linux-x64-gnu': 4.6.1
 
@@ -15051,7 +15051,7 @@ snapshots:
 
   zenscroll@4.0.2: {}
 
-  zod-openapi@5.4.1(zod@3.25.76):
+  zod-openapi@4.2.4(zod@3.25.76):
     dependencies:
       zod: 3.25.76
 
