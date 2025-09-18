@@ -1,6 +1,8 @@
 import "~/styles/globals.css";
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
+import { CopilotKit } from "@copilotkit/react-core";
+import "@copilotkit/react-ui/styles.css";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -20,7 +22,11 @@ export default function RootLayout({
 }) {
   return (
     <html className={`${geist.variable}`}>
-      <body>{children}</body>
+      <body>
+        <CopilotKit publicApiKey={process.env.NEXT_PUBLIC_COPILOTKIT_API_KEY}>
+          {children}
+        </CopilotKit>
+      </body>
     </html>
   );
 }

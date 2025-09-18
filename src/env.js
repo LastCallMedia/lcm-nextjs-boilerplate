@@ -25,6 +25,7 @@ export const env = createEnv({
     AWS_ACCESS_KEY_ID: z.string().optional(),
     AWS_SECRET_ACCESS_KEY: z.string().optional(),
     AWS_BUCKET_NAME: z.string().optional(),
+    OPENAI_API_KEY: z.string().optional(),
   },
 
   /**

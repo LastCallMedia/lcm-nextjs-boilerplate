@@ -6,6 +6,7 @@ import { Toaster } from "~/_components/ui/sonner";
 import { ThemeProvider } from "~/_components/ui/theme-provider";
 import { IntlProvider, getMessages, getValidLocale, locales } from "~/i18n";
 import { TRPCReactProvider } from "~/trpc/react";
+import Chatbot from "~/_components/ai/Chatbot";
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -41,6 +42,7 @@ export default async function LocaleLayout({
                 <Footer />
               </div>
               <Toaster duration={4000} />
+              <Chatbot />
             </ThemeProvider>
           </IntlProvider>
         </AuthProvider>
