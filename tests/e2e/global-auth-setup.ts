@@ -1,4 +1,4 @@
-import { type FullConfig, chromium } from "@playwright/test";
+import { type FullConfig, chromium, expect } from "@playwright/test";
 import { init as smtpTesterInit, type MailServer } from "smtp-tester";
 import { load as cheerioLoad } from "cheerio";
 
@@ -59,7 +59,7 @@ export default async function globalSetup(config: FullConfig) {
     const successMessage = page.getByText(
       "Magic link sent! Check your email to sign in.",
     );
-    expect(successMessage).toBeVisible();
+    await expect(successMessage).toBeVisible();
     await page.waitForLoadState("networkidle");
 
     // Capture the email with magic link
