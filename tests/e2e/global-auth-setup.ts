@@ -47,47 +47,20 @@ export default async function globalSetup(config: FullConfig) {
 
   try {
     // Navigate to the login page
-    await page.goto(
-      `${config.projects[0]?.use?.baseURL ?? "http://localhost:3000"}/en/login`,
-    );
+    const baseURL = config.projects[0]?.use?.baseURL ?? "http://localhost:3000";
+    await page.goto(`${baseURL}/en/login`);
+    await page.waitForLoadState("networkidle");
 
-    // Wait for the login form to be visible
-    await page.waitForSelector("[data-testid='login-form']", {
-      timeout: 10000,
-    });
-
-    // Wait a bit for the page to fully load and CSRF token to be set
-    await page.waitForTimeout(1000);
-
-    // Fill in the email
+    // Fill in the email and submit the form
     await page
-      .locator('input[name="email"]')
-      .fill("test@example.com", { timeout: 1000 });
-
-    // Click the "Send Magic Link" button
-    await page.click('button[type="submit"]', { delay: 1000 });
-
-    // Wait for the success message to appear, but with a longer timeout and different approach
-    try {
-      await page.waitForSelector("[data-testid='success-alert']", {
-        timeout: 15000,
-      });
-    } catch (error) {
-      // If success alert doesn't appear, check if we can see a different success indicator
-      console.log(
-        "Success alert not found, checking for other success indicators...",
-      );
-      const successText = await page.textContent("body");
-      if (
-        successText?.includes("Check your email") ||
-        successText?.includes("Magic link sent")
-      ) {
-        console.log("Found alternative success message");
-      } else {
-        console.log("Page content:", successText);
-        throw error;
-      }
-    }
+      .getByRole("textbox", { name: /email/i })
+      .fill("test@example.com");
+    await page.getByRole("button", { name: /send magic link/i }).click();
+    const successMessage = page.getByText(
+      "Magic link sent! Check your email to sign in.",
+    );
+    expect(successMessage).toBeVisible();
+    await page.waitForLoadState("networkidle");
 
     // Capture the email with magic link
     let emailLink = null;
