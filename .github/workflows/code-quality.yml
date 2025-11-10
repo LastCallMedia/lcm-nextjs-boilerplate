@@ -24,14 +24,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - uses: pnpm/action-setup@v4
-        with:
-        version: 10        # or 9 / latest as you need
-        run_install: false
-
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
+          version: 10        # or 9 / latest as you need
           run_install: false
 
       - name: Get pnpm store directory
