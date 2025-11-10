@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { api } from "~/trpc/react";
 import { Alert, AlertDescription } from "~/_components/ui/alert";
 import { Button } from "~/_components/ui/button";
