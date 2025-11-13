@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { FormattedMessage } from "react-intl";
 import { t } from "~/i18n/messages";
 
