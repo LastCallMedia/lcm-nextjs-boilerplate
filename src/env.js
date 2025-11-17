@@ -13,14 +13,14 @@ export const env = createEnv({
         : z.string().optional(),
     AUTH_GOOGLE_ID: z.string().optional(),
     AUTH_GOOGLE_SECRET: z.string().optional(),
-    AUTH_URL: z.string().url(),
+    AUTH_URL: z.url(),
     EMAIL_SERVER: z.string().optional(),
-    EMAIL_FROM: z.string().email().optional(),
+    EMAIL_FROM: z.email().optional(),
     RESEND_API_KEY: z.string().optional(),
-    DATABASE_URL: z.string().url(),
+    DATABASE_URL: z.url(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
-      .default("development"),
+      .prefault("development"),
     AWS_REGION: z.string().optional(),
     AWS_ACCESS_KEY_ID: z.string().optional(),
     AWS_SECRET_ACCESS_KEY: z.string().optional(),
@@ -33,7 +33,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_BASE_URL: z.string().url(),
+    NEXT_PUBLIC_BASE_URL: z.url(),
   },
 
   /**
