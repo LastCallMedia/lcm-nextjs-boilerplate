@@ -31,9 +31,12 @@ export default async function Home({ params }: HomeProps) {
         <div className="m-4 flex w-full justify-center">
           {session && <LatestPost />}
         </div>
-          <Link href={`/${locale}/posts`} className="text-xl font-medium leading-6 px-3 py-2 transition-[background-color,color] duration-300 ease-out align-baseline bg-transparent border-4 border-glacier hover:text-white hover:bg-deep-ocean">
-            <SeeAllPostsButton />
-          </Link>
+        <Link
+          href={`/${locale}/posts`}
+          className="border-glacier hover:bg-deep-ocean border-4 bg-transparent px-3 py-2 align-baseline text-xl leading-6 font-medium transition-[background-color,color] duration-300 ease-out hover:text-white"
+        >
+          <SeeAllPostsButton />
+        </Link>
       </div>
     </HydrateClient>
   );
