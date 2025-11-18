@@ -119,23 +119,18 @@ export function Navbar({ currentLocale }: NavbarProps) {
       <div className="hidden sm:block">
         <NavigationMenu viewport={false} className="m-5 block max-w-full">
           <NavigationMenuList className="w-full justify-between">
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                asChild
-                className={navigationMenuTriggerStyle()}
-              >
-                <Link href={`/${currentLocale}`}>
-                  <Image
-                    src={"/lcm-logo-teal.svg"}
-                    width={40}
-                    height={40}
-                    alt="lcm logo"
-                    title="Home"
-                    aria-label="Home"
-                  />
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
+            <div>
+              <Link href={`/${currentLocale}`}>
+                <Image
+                  src={"/lcm-logo-teal.svg"}
+                  width={40}
+                  height={40}
+                  alt="lcm logo"
+                  title="Home"
+                  aria-label="Home"
+                />
+              </Link>
+            </div>
             <div className="flex items-center gap-4">
               <NavigationMenuItem>
                 <NavigationMenuTrigger>
