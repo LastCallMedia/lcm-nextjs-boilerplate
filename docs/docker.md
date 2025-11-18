@@ -1,6 +1,6 @@
 # Docker Guide
 
-This guide covers containerization, Docker configuration, and deployment strategies for the LCM Next.js Boilerplate.
+This guide covers containerization, Docker configuration, and deployment strategies for LCM Next.js Quickstart.
 
 ## Overview
 

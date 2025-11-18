@@ -1,6 +1,6 @@
 # Documentation Index
 
-Welcome to the LCM Next.js Boilerplate documentation! This comprehensive guide will help you understand, set up, and work with the boilerplate effectively.
+Welcome to the LCM Next.js Quickstart documentation! This comprehensive guide will help you understand, set up, and work with the project effectively.
 
 ## 📖 Getting Started
 
