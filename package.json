@@ -128,7 +128,7 @@
     "@types/jest": "^30.0.0",
     "@types/jest-axe": "^3.5.9",
     "@types/node": "^24.10.0",
-    "@types/react": "^19.2.2",
+    "@types/react": "^19.2.6",
     "@types/react-dom": "^19.2.2",
     "@types/swagger-ui-react": "^5.18.0",
     "axe-core": "^4.11.0",
