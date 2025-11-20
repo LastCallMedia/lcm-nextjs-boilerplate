@@ -106,7 +106,7 @@
     "richText": "This is <strong>bold text</strong> and this is <em>italic text</em>."
   },
   "footer": {
-    "text": "Built with Next.js, tRPC, and Prisma",
+    "text": "With love from LCM ❤️",
     "companyInfo": {
       "name": "Company name",
       "mission": "Making the world a better place through constructing elegant hierarchies."

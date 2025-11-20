@@ -103,7 +103,7 @@
     "richText": "Este es <strong>texto en negrita</strong> y este es <em>texto en cursiva</em>."
   },
   "footer": {
-    "text": "Construido con Next.js, tRPC y Prisma",
+    "text": "Con amor desde LCM ❤️",
     "companyInfo": {
       "name": "Nombre de la empresa",
       "mission": "Haciendo del mundo un lugar mejor a través de la construcción de jerarquías elegantes."
