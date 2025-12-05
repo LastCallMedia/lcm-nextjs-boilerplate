@@ -1,6 +1,6 @@
 # Copilot Instructions Template
 
-> **Important**: This is a template file. When you clone this boilerplate, customize these instructions to match your specific project requirements, business domain, and team preferences.
+> **Important**: This is a template file. When you clone this project, customize these instructions to match your specific project requirements, business domain, and team preferences.
 
 ## Why This File Matters
 

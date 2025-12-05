@@ -14,7 +14,7 @@ Profile changes (name, email, avatar) are saved to the database via tRPC and Pri
 
 Add these to your `.env` file for production deployments.
 
-This guide covers the development workflow, tools, and best practices for working with the LCM Next.js Boilerplate.
+This guide covers the development workflow, tools, and best practices for working with LCM Next.js Quickstart.
 
 ## Development Environment
 
