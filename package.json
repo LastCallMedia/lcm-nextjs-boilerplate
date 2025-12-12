@@ -157,5 +157,22 @@
     "node": ">=22.0.0",
     "pnpm": ">=8.0.0"
   },
-  "packageManager": "pnpm@10.13.1"
+  "packageManager": "pnpm@10.13.1",
+  "overrides": {
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "cypress",
+      "@prisma/client",
+      "@prisma/engines",
+      "prisma",
+      "esbuild",
+      "sharp"
+    ],
+    "ignoredBuiltDependencies": [
+      "@tailwindcss/oxide"
+    ]
+  }
 }
