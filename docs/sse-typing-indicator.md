@@ -1,6 +1,6 @@
 # 💬 Typing Indicator
 
-This boilerplate includes a real-time typing indicator using **tRPC subscriptions** and a lightweight **in-memory pub/sub** system. It's a simple pattern for building collaborative UI features _without_ requiring WebSockets, Redis, or other external infrastructure.
+This project includes a real-time typing indicator using **tRPC subscriptions** and a lightweight **in-memory pub/sub** system. It's a simple pattern for building collaborative UI features _without_ requiring WebSockets, Redis, or other external infrastructure.
 
 ---
 

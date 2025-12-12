@@ -1,6 +1,6 @@
 # UI & Styling Guide
 
-This guide covers the UI component system, styling approach, and design patterns used in the LCM Next.js Boilerplate.
+This guide covers the UI component system, styling approach, and design patterns used in LCM Next.js Quickstart.
 
 ## Overview
 

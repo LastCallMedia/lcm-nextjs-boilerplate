@@ -1,10 +1,10 @@
 # Architecture Overview
 
-This document outlines the architectural decisions, patterns, and structure of the LCM Next.js Boilerplate.
+This document outlines the architectural decisions, patterns, and structure of the LCM Next.js Quickstart.
 
 ## High-Level Architecture
 
-The boilerplate follows the **T3 Stack** philosophy, emphasizing type safety, developer experience, and modern web development practices.
+The project follows the **T3 Stack** philosophy, emphasizing type safety, developer experience, and modern web development practices.
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
