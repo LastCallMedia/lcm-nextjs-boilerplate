@@ -1,4 +1,3 @@
-import React from "react";
 import { Skeleton } from "~/_components/ui";
 
 export function PostSkeleton() {

@@ -49,7 +49,7 @@ function isAdmin(request: NextRequest): boolean {
   return isAuthenticated(request);
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // Skip middleware for static files, API routes, and browser requests

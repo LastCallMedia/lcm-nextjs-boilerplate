@@ -103,10 +103,10 @@ export const adminRouter = createTRPCRouter({
   getUsers: authenticatedProcedure
     .input(
       z.object({
-        page: z.number().min(1).default(1),
-        pageSize: z.number().min(1).max(100).default(10),
-        sortBy: userSortFields.default("createdAt"),
-        sortOrder: z.enum(["asc", "desc"]).default("desc"),
+        page: z.number().min(1).prefault(1),
+        pageSize: z.number().min(1).max(100).prefault(10),
+        sortBy: userSortFields.prefault("createdAt"),
+        sortOrder: z.enum(["asc", "desc"]).prefault("desc"),
         search: z.string().optional(),
       }),
     )
@@ -164,10 +164,10 @@ export const adminRouter = createTRPCRouter({
   getPosts: authenticatedProcedure
     .input(
       z.object({
-        page: z.number().min(1).default(1),
-        pageSize: z.number().min(1).max(100).default(10),
-        sortBy: postSortFields.default("createdAt"),
-        sortOrder: z.enum(["asc", "desc"]).default("desc"),
+        page: z.number().min(1).prefault(1),
+        pageSize: z.number().min(1).max(100).prefault(10),
+        sortBy: postSortFields.prefault("createdAt"),
+        sortOrder: z.enum(["asc", "desc"]).prefault("desc"),
         search: z.string().optional(),
       }),
     )
@@ -371,7 +371,7 @@ export const adminRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string().min(1),
-        email: z.string().email(),
+        email: z.email(),
         avatar: z
           .object({
             name: z.string(),

@@ -47,7 +47,7 @@ export default function AboutPage() {
             <div>
               <h4 className="font-medium">Tech Stack</h4>
               <div className="mt-2 flex flex-wrap gap-2">
-                <Badge variant="secondary">Next.js 14+</Badge>
+                <Badge variant="secondary">Next.js 16+</Badge>
                 <Badge variant="secondary">TypeScript</Badge>
                 <Badge variant="secondary">Tailwind CSS</Badge>
                 <Badge variant="secondary">Prisma</Badge>

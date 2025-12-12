@@ -1,9 +1,7 @@
-import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { HomeContent, SeeAllPostsButton } from "~/_components/home";
 import { LatestPost } from "~/_components/posts";
-import { Button } from "~/_components/ui/button";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 
@@ -33,12 +31,12 @@ export default async function Home({ params }: HomeProps) {
         <div className="m-4 flex w-full justify-center">
           {session && <LatestPost />}
         </div>
-        <Button>
-          <Link href={`/${locale}/posts`}>
-            <SeeAllPostsButton />
-          </Link>
-          <ArrowUpRight />
-        </Button>
+        <Link
+          href={`/${locale}/posts`}
+          className="border-glacier hover:bg-deep-ocean border-4 bg-transparent px-3 py-2 align-baseline text-xl leading-6 font-medium transition-[background-color,color] duration-300 ease-out hover:text-white"
+        >
+          <SeeAllPostsButton />
+        </Link>
       </div>
     </HydrateClient>
   );

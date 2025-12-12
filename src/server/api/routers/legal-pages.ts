@@ -62,7 +62,7 @@ export const legalPagesRouter = createTRPCRouter({
     .input(
       z.object({
         type: LegalPageTypeEnum.optional(), // Filter by type, or get all if not specified
-        limit: z.number().min(1).max(100).default(50),
+        limit: z.number().min(1).max(100).prefault(50),
         cursor: z.string().optional(),
       }),
     )
@@ -109,7 +109,7 @@ export const legalPagesRouter = createTRPCRouter({
         type: LegalPageTypeEnum,
         title: z.string().min(1, "Title is required"),
         content: z.string().min(1, "Content is required"),
-        isActive: z.boolean().default(true),
+        isActive: z.boolean().prefault(true),
       }),
     )
     .mutation(async ({ ctx, input }): Promise<LegalPageWithUser> => {
