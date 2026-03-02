@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
-    "@aws-sdk/client-s3": "^3.986.0",
+    "@aws-sdk/client-s3": "^3.1000.0",
     "@headlessui/react": "^2.2.9",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^6.19.0",
@@ -89,12 +89,13 @@
     "@trpc/client": "^11.8.1",
     "@trpc/react-query": "^11.8.1",
     "@trpc/server": "^11.8.1",
-    "@types/nodemailer": "^7.0.3",
+    "@types/nodemailer": "^7.0.11",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
+    "fast-xml-parser": "^5.3.8",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.552.0",
     "next": "^16.1.6",
@@ -120,7 +121,6 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",
-    "@eslint/eslintrc": "^3.3.1",
     "@playwright/test": "^1.56.1",
     "@tailwindcss/postcss": "^4.1.16",
     "@testing-library/jest-dom": "^6.9.1",
@@ -134,8 +134,7 @@
     "@types/swagger-ui-react": "^5.18.0",
     "axe-core": "^4.11.0",
     "cheerio": "^1.1.2",
-    "eslint": "^9.39.1",
-    "eslint-config-next": "^16.0.1",
+    "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.1.8",
     "jest": "^30.2.0",
     "jest-axe": "^10.0.0",
@@ -149,7 +148,7 @@
     "tsx": "^4.20.6",
     "tw-animate-css": "^1.4.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.3"
+    "typescript-eslint": "^8.56.1"
   },
   "ct3aMetadata": {
     "initVersion": "7.39.3"
@@ -179,7 +178,6 @@
       "qs@<6.14.1": ">=6.14.1",
       "undici@>=7.0.0 <7.18.2": ">=7.18.2",
       "h3@<=1.15.4": ">=1.15.5",
-      "fast-xml-parser@>=4.3.6 <=5.3.3": ">=5.3.4",
       "axios@<=1.13.4": ">=1.13.5",
       "lodash@>=4.0.0 <=4.17.22": ">=4.17.23"
     }
