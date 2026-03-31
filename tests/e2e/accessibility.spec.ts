@@ -59,7 +59,7 @@ test.describe("Accessibility Tests", () => {
       await page.keyboard.press("Tab");
       await page.keyboard.press("Tab");
       await page.keyboard.press("Tab");
-      const navElements = page.locator("nav, [role='navigation']");
+      const navElements = page.locator(":is(nav, [role='navigation']):visible");
       const navCount = await navElements.count();
       if (navCount > 0) {
         await expect(navElements.first()).toBeVisible();

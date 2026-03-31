@@ -96,7 +96,7 @@ export default function FourColumnWithMission() {
               src="/lcm-logo-teal.svg"
               width={36}
               height={36}
-              className="h-9"
+              className="h-9 w-auto"
             />
             <p className="text-balance text-gray-600">
               {intl.formatMessage({ id: "footer.companyInfo.mission" })}
