@@ -25,6 +25,7 @@ export default async function Home({ params }: HomeProps) {
           alt="LCM logo"
           width={100}
           height={100}
+          className="h-auto w-auto"
         />
         <HomeContent />
 
