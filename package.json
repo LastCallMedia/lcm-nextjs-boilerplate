@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.2",
-    "@aws-sdk/client-s3": "^3.1032.0",
+    "@aws-sdk/client-s3": "^3.1038.0",
     "@headlessui/react": "^2.2.10",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^6.19.3",
@@ -109,7 +109,7 @@
     "react-intl": "^7.1.14",
     "react-resizable-panels": "^3.0.6",
     "recharts": "^3.8.1",
-    "resend": "^6.12.0",
+    "resend": "^6.12.2",
     "server-only": "^0.0.1",
     "sonner": "^2.0.7",
     "superjson": "^2.2.6",
@@ -175,7 +175,9 @@
       "@tailwindcss/oxide"
     ],
     "overrides": {
-      "h3@<=1.15.8": ">=1.15.9"
+      "h3@<=1.15.8": ">=1.15.9",
+      "uuid": ">=14.0.0",
+      "postcss": ">=8.5.10"
     }
   }
 }
