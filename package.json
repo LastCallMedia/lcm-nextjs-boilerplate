@@ -89,13 +89,13 @@
     "@trpc/client": "^11.16.0",
     "@trpc/react-query": "^11.16.0",
     "@trpc/server": "^11.16.0",
-    "@types/nodemailer": "^8.0.0",
+    "@types/nodemailer": "^8.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
-    "fast-xml-parser": "^5.8.0",
+    "fast-xml-parser": "^5.9.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.552.0",
     "next": "^16.2.6",
@@ -109,7 +109,7 @@
     "react-intl": "^7.1.14",
     "react-resizable-panels": "^3.0.6",
     "recharts": "^3.8.1",
-    "resend": "^6.12.2",
+    "resend": "^6.12.4",
     "server-only": "^0.0.1",
     "sonner": "^2.0.7",
     "superjson": "^2.2.6",
@@ -120,7 +120,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.11.2",
+    "@axe-core/playwright": "^4.11.3",
     "@playwright/test": "^1.59.1",
     "@tailwindcss/postcss": "^4.2.2",
     "@testing-library/jest-dom": "^6.9.1",
@@ -132,15 +132,15 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/swagger-ui-react": "^5.18.0",
-    "axe-core": "^4.11.3",
+    "axe-core": "^4.12.1",
     "cheerio": "^1.2.0",
     "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
     "jest": "^30.3.0",
     "jest-axe": "^10.0.0",
     "jest-environment-jsdom": "^30.3.0",
-    "postcss": "^8.5.10",
-    "prettier": "^3.8.3",
+    "postcss": "^8.5.15",
+    "prettier": "^3.8.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "prisma": "^6.19.3",
     "smtp-tester": "^2.1.0",
@@ -177,7 +177,7 @@
     "overrides": {
       "h3@<=1.15.8": ">=1.15.9",
       "uuid": ">=14.0.0",
-      "postcss": ">=8.5.10"
+      "postcss": "^8.5.15"
     }
   }
 }
