@@ -28,7 +28,7 @@ function flattenMessages<T extends Record<string, unknown>>(
     }
   }
 
-  return result as Record<FlattenKeys<T>, string>;
+  return result;
 }
 
 // To support additional languages, import the new JSON and add it to messagesMap below.
