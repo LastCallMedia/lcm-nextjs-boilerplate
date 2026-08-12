@@ -16,6 +16,7 @@ Deep dive into the main components of the system:
 - **[Authentication](./authentication.md)** - NextAuth.js setup, providers, session management, and magic link emails
 - **[Database](./database.md)** - Prisma ORM, migrations, and database best practices
 - **[UI & Styling](./ui-styling.md)** - Component system, Tailwind CSS, and design patterns
+- **[AI Chatbot](./chatbot.md)** - AI-powered chatbot with chat history, personalized responses, and secure implementation
 - **[Admin Dashboard](./admin-dashboard.md)** - Complete admin interface with user and post management
 
 ## 🛠️ Development
