@@ -84,7 +84,7 @@ jobs:
           NEXTAUTH_URL: http://localhost:3000
           DATABASE_URL: postgresql://test-user:test-password@localhost:5432/test-db
           MAILHOG_SMTP_PORT: 1025
-          MAIL_SERVER: smtp://localhost:1025
+          EMAIL_SERVER: smtp://localhost:1025
           EMAIL_FROM: noreply@lcm-nextjs-boilerplate.local
 
       - name: Run Playwright tests
@@ -95,7 +95,7 @@ jobs:
           NEXTAUTH_URL: http://localhost:3000
           DATABASE_URL: postgresql://test-user:test-password@localhost:5432/test-db
 
-          MAIL_SERVER: smtp://localhost:1025
+          EMAIL_SERVER: smtp://localhost:1025
           MAILHOG_SMTP_PORT: 1025
           MAILHOG_API_URL: http://localhost:8025
 

@@ -1,5 +1,6 @@
-import { chromium, type FullConfig } from "@playwright/test";
+import { chromium, expect, type FullConfig } from "@playwright/test";
 import { load as cheerioLoad } from "cheerio";
+import { decodeMailHogBody } from "./utils/mailhog";
 
 // Extend global to include auth state
 declare global {
@@ -13,6 +14,7 @@ type MailHogMessage = {
       To?: string[];
       From?: string[];
       Subject?: string[];
+      "Content-Transfer-Encoding"?: string[];
     };
     Body: string;
   };
@@ -113,6 +115,23 @@ export default async function globalSetup(config: FullConfig) {
   try {
     const baseURL = config.projects[0]?.use?.baseURL ?? "http://localhost:3000";
 
+    const providersResponse = await context.request.get(
+      `${baseURL}/api/auth/providers`,
+    );
+    if (!providersResponse.ok()) {
+      throw new Error(
+        `Failed to load authentication providers: ${providersResponse.status()}`,
+      );
+    }
+    const providers = (await providersResponse.json()) as {
+      nodemailer?: unknown;
+    };
+    if (!providers.nodemailer) {
+      throw new Error(
+        "Nodemailer authentication provider is missing. Configure EMAIL_SERVER and EMAIL_FROM for the application server.",
+      );
+    }
+
     await page.goto(`${baseURL}/en/login`);
     await page.waitForLoadState("networkidle");
 
@@ -123,9 +142,17 @@ export default async function globalSetup(config: FullConfig) {
     let emailLink: string | undefined;
 
     try {
+      await expect(page.getByTestId("success-alert")).toHaveText(
+        "Magic link sent! Check your email to sign in.",
+        { timeout: 15_000 },
+      );
+
       const message = await waitForEmail(TEST_EMAIL);
 
-      const html = message.Content.Body;
+      const html = decodeMailHogBody(
+        message.Content.Body,
+        message.Content.Headers["Content-Transfer-Encoding"]?.[0],
+      );
 
       if (!html) {
         throw new Error("Email HTML content is missing or invalid.");
@@ -134,10 +161,8 @@ export default async function globalSetup(config: FullConfig) {
       const $ = cheerioLoad(html);
 
       emailLink = $("a[href*='auth/callback/nodemailer']").attr("href");
-
-      console.log("✅ Magic link captured successfully");
     } catch (cause) {
-      console.error(`❌ No message delivered to ${TEST_EMAIL}`);
+      console.error(`❌ Failed to send or read magic link for ${TEST_EMAIL}`);
       console.error("Current URL:", page.url());
 
       const notifications = await page
@@ -160,6 +185,8 @@ export default async function globalSetup(config: FullConfig) {
     if (!emailLink) {
       throw new Error("Magic link URL not found in email.");
     }
+
+    console.log("✅ Magic link captured successfully");
 
     await page.goto(emailLink);
 
