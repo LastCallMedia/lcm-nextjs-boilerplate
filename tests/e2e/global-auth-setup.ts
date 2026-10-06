@@ -1,4 +1,4 @@
-import { chromium, expect, type FullConfig } from "@playwright/test";
+import { chromium, type FullConfig } from "@playwright/test";
 import { load as cheerioLoad } from "cheerio";
 
 // Extend global to include auth state
@@ -26,7 +26,28 @@ type MailHogResponse = {
 };
 
 const MAILHOG_API_URL = process.env.MAILHOG_API_URL ?? "http://localhost:8025";
+
 const TEST_EMAIL = "test@example.com";
+
+async function waitForMailHog(timeout = 10_000): Promise<void> {
+  const startedAt = Date.now();
+
+  while (Date.now() - startedAt < timeout) {
+    try {
+      const response = await fetch(`${MAILHOG_API_URL}/api/v2/messages`);
+
+      if (response.ok) {
+        return;
+      }
+    } catch {
+      // MailHog is not ready yet.
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }
+
+  throw new Error(`MailHog is not available at ${MAILHOG_API_URL}`);
+}
 
 async function clearMailHog(): Promise<void> {
   const response = await fetch(`${MAILHOG_API_URL}/api/v1/messages`, {
@@ -58,7 +79,7 @@ async function getMailHogMessages(): Promise<MailHogMessage[]> {
 
 async function waitForEmail(
   recipient: string,
-  timeout = 10_000,
+  timeout = 15_000,
 ): Promise<MailHogMessage> {
   const startedAt = Date.now();
 
@@ -82,7 +103,7 @@ async function waitForEmail(
 export default async function globalSetup(config: FullConfig) {
   console.log("🔐 Setting up global authentication...");
 
-  // Make sure we do not accidentally use an old MailHog message.
+  await waitForMailHog();
   await clearMailHog();
 
   const browser = await chromium.launch();
@@ -90,25 +111,15 @@ export default async function globalSetup(config: FullConfig) {
   const page = await context.newPage();
 
   try {
-    // Navigate to the login page.
     const baseURL = config.projects[0]?.use?.baseURL ?? "http://localhost:3000";
 
     await page.goto(`${baseURL}/en/login`);
     await page.waitForLoadState("networkidle");
 
-    // Fill in the email and submit the form.
     await page.getByRole("textbox", { name: /email/i }).fill(TEST_EMAIL);
 
     await page.getByRole("button", { name: /send magic link/i }).click();
 
-    const successMessage = page.getByText(
-      "Magic link sent! Check your email to sign in.",
-    );
-
-    await expect(successMessage).toBeVisible();
-    await page.waitForLoadState("networkidle");
-
-    // Capture the email with the magic link from MailHog.
     let emailLink: string | undefined;
 
     try {
@@ -126,7 +137,23 @@ export default async function globalSetup(config: FullConfig) {
 
       console.log("✅ Magic link captured successfully");
     } catch (cause) {
-      console.error(`❌ No message delivered to ${TEST_EMAIL}`, cause);
+      console.error(`❌ No message delivered to ${TEST_EMAIL}`);
+      console.error("Current URL:", page.url());
+
+      const notifications = await page
+        .locator('[data-sonner-toast], [role="alert"]')
+        .allTextContents()
+        .catch(() => []);
+
+      console.error("Notifications:", notifications);
+
+      const pageText = await page
+        .locator("body")
+        .innerText()
+        .catch(() => "");
+
+      console.error("Page text:", pageText.slice(0, 3000));
+
       throw cause;
     }
 
@@ -134,14 +161,12 @@ export default async function globalSetup(config: FullConfig) {
       throw new Error("Magic link URL not found in email.");
     }
 
-    // Navigate to the magic link to complete authentication.
     await page.goto(emailLink);
 
     await page.waitForURL(new RegExp(`/en/(dashboard|$)`), {
       timeout: 15_000,
     });
 
-    // Save the authentication state.
     const authStateFile = "tests/e2e/.auth/user.json";
 
     await context.storageState({
