@@ -25,7 +25,7 @@ type MailHogResponse = {
   items: MailHogMessage[];
 };
 
-const MAILHOG_API_URL = "http://localhost:8025";
+const MAILHOG_API_URL = process.env.MAILHOG_API_URL ?? "http://localhost:8025";
 const TEST_EMAIL = "test@example.com";
 
 async function clearMailHog(): Promise<void> {
@@ -91,20 +91,15 @@ export default async function globalSetup(config: FullConfig) {
 
   try {
     // Navigate to the login page.
-    const baseURL =
-      config.projects[0]?.use?.baseURL ?? "http://localhost:3000";
+    const baseURL = config.projects[0]?.use?.baseURL ?? "http://localhost:3000";
 
     await page.goto(`${baseURL}/en/login`);
     await page.waitForLoadState("networkidle");
 
     // Fill in the email and submit the form.
-    await page
-      .getByRole("textbox", { name: /email/i })
-      .fill(TEST_EMAIL);
+    await page.getByRole("textbox", { name: /email/i }).fill(TEST_EMAIL);
 
-    await page
-      .getByRole("button", { name: /send magic link/i })
-      .click();
+    await page.getByRole("button", { name: /send magic link/i }).click();
 
     const successMessage = page.getByText(
       "Magic link sent! Check your email to sign in.",
