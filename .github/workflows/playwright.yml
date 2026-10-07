@@ -26,6 +26,12 @@ jobs:
         ports:
           - 5432:5432
 
+      mailhog:
+        image: mailhog/mailhog
+        ports:
+          - 1025:1025
+          - 8025:8025
+
     strategy:
       matrix:
         node-version: [22.x]
@@ -65,8 +71,7 @@ jobs:
         run: pnpm exec playwright install --with-deps
 
       - name: Setup test database
-        run: |
-          pnpm prisma db push --force-reset
+        run: pnpm prisma db push --force-reset
         env:
           DATABASE_URL: postgresql://test-user:test-password@localhost:5432/test-db
 
@@ -89,8 +94,11 @@ jobs:
           NEXTAUTH_SECRET: test-secret-for-ci
           NEXTAUTH_URL: http://localhost:3000
           DATABASE_URL: postgresql://test-user:test-password@localhost:5432/test-db
-          MAILHOG_SMTP_PORT: 1025
+
           EMAIL_SERVER: smtp://localhost:1025
+          MAILHOG_SMTP_PORT: 1025
+          MAILHOG_API_URL: http://localhost:8025
+
           EMAIL_FROM: noreply@lcm-nextjs-boilerplate.local
 
       - name: Upload test results

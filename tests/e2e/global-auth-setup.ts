@@ -1,97 +1,205 @@
-import { type FullConfig, chromium, expect } from "@playwright/test";
-import { init as smtpTesterInit, type MailServer } from "smtp-tester";
+import { chromium, expect, type FullConfig } from "@playwright/test";
 import { load as cheerioLoad } from "cheerio";
+import { decodeMailHogBody } from "./utils/mailhog";
 
-let globalMailServer: MailServer | null = null;
-
-// Extend global to include mailServer and auth state
+// Extend global to include auth state
 declare global {
-  var mailServer: MailServer | undefined;
   var authStateFile: string | undefined;
 }
 
-export default async function globalSetup(config: FullConfig) {
-  // Start a single SMTP server for all tests
-  try {
-    globalMailServer = smtpTesterInit(1025);
-    console.log("✅ Global SMTP server started on port 1025");
-
-    // Store the server reference globally so tests can access it
-    global.mailServer = globalMailServer;
-
-    // Set up cleanup on process exit
-    const cleanup = () => {
-      if (globalMailServer) {
-        try {
-          globalMailServer.stop(() => void 0);
-          console.log("✅ Global SMTP server stopped");
-        } catch (error) {
-          console.error("❌ Failed to stop global SMTP server:", error);
-        }
-      }
+type MailHogMessage = {
+  ID: string;
+  Content: {
+    Headers: {
+      To?: string[];
+      From?: string[];
+      Subject?: string[];
+      "Content-Transfer-Encoding"?: string[];
     };
+    Body: string;
+  };
+};
 
-    process.on("exit", cleanup);
-    process.on("SIGINT", cleanup);
-    process.on("SIGTERM", cleanup);
-  } catch (error) {
-    console.error("❌ Failed to start global SMTP server:", error);
-    throw error;
+type MailHogResponse = {
+  total: number;
+  count: number;
+  start: number;
+  items: MailHogMessage[];
+};
+
+const MAILHOG_API_URL = process.env.MAILHOG_API_URL ?? "http://localhost:8025";
+
+const TEST_EMAIL = "test@example.com";
+
+async function waitForMailHog(timeout = 10_000): Promise<void> {
+  const startedAt = Date.now();
+
+  while (Date.now() - startedAt < timeout) {
+    try {
+      const response = await fetch(`${MAILHOG_API_URL}/api/v2/messages`);
+
+      if (response.ok) {
+        return;
+      }
+    } catch {
+      // MailHog is not ready yet.
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
   }
 
-  // Perform global authentication
+  throw new Error(`MailHog is not available at ${MAILHOG_API_URL}`);
+}
+
+async function clearMailHog(): Promise<void> {
+  const response = await fetch(`${MAILHOG_API_URL}/api/v1/messages`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to clear MailHog messages: ${response.status} ${response.statusText}`,
+    );
+  }
+
+  console.log("✅ MailHog messages cleared");
+}
+
+async function getMailHogMessages(): Promise<MailHogMessage[]> {
+  const response = await fetch(`${MAILHOG_API_URL}/api/v2/messages`);
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch MailHog messages: ${response.status} ${response.statusText}`,
+    );
+  }
+
+  const data = (await response.json()) as MailHogResponse;
+
+  return data.items;
+}
+
+async function waitForEmail(
+  recipient: string,
+  timeout = 15_000,
+): Promise<MailHogMessage> {
+  const startedAt = Date.now();
+
+  while (Date.now() - startedAt < timeout) {
+    const messages = await getMailHogMessages();
+
+    const message = messages.find((item) =>
+      item.Content.Headers.To?.some((to) => to.includes(recipient)),
+    );
+
+    if (message) {
+      return message;
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }
+
+  throw new Error(`No message delivered to ${recipient}`);
+}
+
+export default async function globalSetup(config: FullConfig) {
   console.log("🔐 Setting up global authentication...");
+
+  await waitForMailHog();
+  await clearMailHog();
+
   const browser = await chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
 
   try {
-    // Navigate to the login page
     const baseURL = config.projects[0]?.use?.baseURL ?? "http://localhost:3000";
+
+    const providersResponse = await context.request.get(
+      `${baseURL}/api/auth/providers`,
+    );
+    if (!providersResponse.ok()) {
+      throw new Error(
+        `Failed to load authentication providers: ${providersResponse.status()}`,
+      );
+    }
+    const providers = (await providersResponse.json()) as {
+      nodemailer?: unknown;
+    };
+    if (!providers.nodemailer) {
+      throw new Error(
+        "Nodemailer authentication provider is missing. Configure EMAIL_SERVER and EMAIL_FROM for the application server.",
+      );
+    }
+
     await page.goto(`${baseURL}/en/login`);
     await page.waitForLoadState("networkidle");
 
-    // Fill in the email and submit the form
-    await page
-      .getByRole("textbox", { name: /email/i })
-      .fill("test@example.com");
+    await page.getByRole("textbox", { name: /email/i }).fill(TEST_EMAIL);
+
     await page.getByRole("button", { name: /send magic link/i }).click();
-    const successMessage = page.getByText(
-      "Magic link sent! Check your email to sign in.",
-    );
-    await expect(successMessage).toBeVisible();
-    await page.waitForLoadState("networkidle");
 
-    // Capture the email with magic link
-    let emailLink = null;
+    let emailLink: string | undefined;
+
     try {
-      const { email } = await globalMailServer.captureOne("test@example.com", {
-        wait: 3000,
-      });
+      await expect(page.getByTestId("success-alert")).toHaveText(
+        "Magic link sent! Check your email to sign in.",
+        { timeout: 15_000 },
+      );
 
-      if (typeof email.html !== "string") {
+      const message = await waitForEmail(TEST_EMAIL);
+
+      const html = decodeMailHogBody(
+        message.Content.Body,
+        message.Content.Headers["Content-Transfer-Encoding"]?.[0],
+      );
+
+      if (!html) {
         throw new Error("Email HTML content is missing or invalid.");
       }
 
-      const $ = cheerioLoad(email.html);
+      const $ = cheerioLoad(html);
+
       emailLink = $("a[href*='auth/callback/nodemailer']").attr("href");
-      console.log("✅ Magic link captured successfully");
     } catch (cause) {
-      console.error("❌ No message delivered to test@example.com", cause);
+      console.error(`❌ Failed to send or read magic link for ${TEST_EMAIL}`);
+      console.error("Current URL:", page.url());
+
+      const notifications = await page
+        .locator('[data-sonner-toast], [role="alert"]')
+        .allTextContents()
+        .catch(() => []);
+
+      console.error("Notifications:", notifications);
+
+      const pageText = await page
+        .locator("body")
+        .innerText()
+        .catch(() => "");
+
+      console.error("Page text:", pageText.slice(0, 3000));
+
       throw cause;
     }
 
-    if (typeof emailLink !== "string" || !emailLink) {
+    if (!emailLink) {
       throw new Error("Magic link URL not found in email.");
     }
 
-    // Navigate to the magic link to complete authentication
-    await page.goto(emailLink);
-    await page.waitForURL(new RegExp(`/en/(dashboard|$)`), { timeout: 15000 });
+    console.log("✅ Magic link captured successfully");
 
-    // Save the authentication state
+    await page.goto(emailLink);
+
+    await page.waitForURL(new RegExp(`/en/(dashboard|$)`), {
+      timeout: 15_000,
+    });
+
     const authStateFile = "tests/e2e/.auth/user.json";
-    await context.storageState({ path: authStateFile });
+
+    await context.storageState({
+      path: authStateFile,
+    });
+
     global.authStateFile = authStateFile;
 
     console.log("✅ Global authentication completed and saved");
