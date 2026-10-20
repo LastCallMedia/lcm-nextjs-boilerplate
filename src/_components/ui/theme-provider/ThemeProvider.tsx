@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { ThemeProvider as NextThemesProvider } from "@teispace/next-themes";
 
 export function ThemeProvider({
   children,
